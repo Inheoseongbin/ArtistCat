@@ -9,11 +9,10 @@ public class DrawLine : MonoBehaviour
     {
         NONE,
         WIDTH,
-        LENGTH
+        LENGTH,
+        CIRCLE
     }
     LineType currentType;
-
-    public Camera m_camera;
 
     Brush brush;
     LineRenderer currentLineRenderer;
@@ -35,7 +34,7 @@ public class DrawLine : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos = GameManager.Instance.mainCam.ScreenToWorldPoint(Input.mousePosition);
             if (mousePos != lastPos)
             {
                 AddPoint(mousePos);
@@ -46,6 +45,7 @@ public class DrawLine : MonoBehaviour
         {
             //Check and Erase Line
             LineCheck();
+
             PoolManager.Instance.Push(brush);
         }
         else
@@ -59,7 +59,7 @@ public class DrawLine : MonoBehaviour
         brush = PoolManager.Instance.Pop("Brush") as Brush;
         currentLineRenderer = brush.GetComponent<LineRenderer>();
 
-        Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos = GameManager.Instance.mainCam.ScreenToWorldPoint(Input.mousePosition);
 
         currentLineRenderer.SetPosition(0, mousePos);
         currentLineRenderer.SetPosition(1, mousePos);
@@ -99,6 +99,10 @@ public class DrawLine : MonoBehaviour
             {
                 currentType = LineType.WIDTH;
             }
+            else if(IsCircle())
+			{
+                currentType = LineType.CIRCLE;
+			}
             //잘못 그린거
             else
             {
@@ -106,7 +110,36 @@ public class DrawLine : MonoBehaviour
                 break;
             }
         }
-
         Debug.Log(currentType);
     }
+
+    private bool IsCircle()
+	{
+        Vector3[] positions = new Vector3[currentLineRenderer.positionCount];
+
+        currentLineRenderer.GetPositions(positions);
+        int mid = currentLineRenderer.positionCount / 2;
+        Vector2 f = currentLineRenderer.GetPosition(0);
+        Vector2 m = currentLineRenderer.GetPosition(mid);
+        Vector2 center = new Vector2((f.x + m.x)/2, (f.y + m.y)/2);
+        float radius = Vector2.Distance(center, f);
+
+        float errorRange = 1f;
+
+        print(f);
+        print(m);
+        print(center);
+        print(radius);
+
+        for (int i = 0; i < positions.Length; i++)
+        {
+            if(Vector2.Distance(center, positions[i]) > radius + errorRange || Vector2.Distance(center, positions[i]) < radius - errorRange)
+            {
+                print(Vector2.Distance(center, positions[i]));
+                return false;
+			}
+
+        }
+        return true;
+	}
 }
