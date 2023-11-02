@@ -8,8 +8,6 @@ public class EnemyMovement : MonoBehaviour
 	[SerializeField] private GameObject player;
 	[SerializeField] private float range = 2f;
 
-    private Vector2 movement;    
-
 	private void Awake()
 	{
 		player = GameObject.Find("Player");
@@ -19,22 +17,6 @@ public class EnemyMovement : MonoBehaviour
     {
         float dis = Vector3.Distance(transform.position, player.transform.position);
         if(dis > range)
-		{
-            Vector3 direction = player.transform.position - transform.position;
-            direction.Normalize();
-            movement = direction;
-		}
-        else
-            movement = transform.position;
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
     }
-
-    private void FixedUpdate()
-    {
-        MoveCharacter(movement);
-    }
-
-    private void MoveCharacter(Vector2 direction)
-    {
-        transform.position = Vector2.MoveTowards(transform.position, transform.position, speed * Time.deltaTime);
-    }	
 }
