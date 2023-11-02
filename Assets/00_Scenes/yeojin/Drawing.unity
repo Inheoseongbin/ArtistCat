@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71d6106caa64914182cecdf2f9ec8dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCam: {fileID: 0}
   poolingListSO: {fileID: 11400000, guid: 14b5c3b3d609ddf4f9fc9fb344d94613, type: 2}
 --- !u!4 &32525557
 Transform:
