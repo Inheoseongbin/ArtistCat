@@ -2,25 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum LineType
-{
-    NONE,
-    WIDTH,
-    LENGTH,
-    V,
-    REVERSEV,
-    THUNDER
-}
-
 public class Drawing : MonoBehaviour
 {
-    [SerializeField] private Camera m_camera;
+    public enum LineType
+    {
+        NONE,
+        WIDTH,
+        LENGTH,
+        V,
+        REVERSEV,
+        THUNDER
+    }
+
+    private Camera mainCam;
 
     private LineType currentType;
     private Brush brush;
     private LineRenderer currentLineRenderer;
     private Vector2 lastPos;
     private float _limitValue = 1.5f;
+
+    private void Awake()
+    {
+        mainCam = Camera.main;
+    }
 
     #region 건든거 없음
     private void Update()
@@ -35,7 +40,7 @@ public class Drawing : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
             if (mousePos != lastPos)
             {
                 AddPoint(mousePos);
@@ -58,7 +63,7 @@ public class Drawing : MonoBehaviour
         brush = PoolManager.Instance.Pop("Brush") as Brush;
         currentLineRenderer = brush.GetComponent<LineRenderer>();
 
-        Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
         currentLineRenderer.SetPosition(0, mousePos);
         currentLineRenderer.SetPosition(1, mousePos);
@@ -68,7 +73,7 @@ public class Drawing : MonoBehaviour
         currentLineRenderer.positionCount++;
         int positionIndex = currentLineRenderer.positionCount - 1;
         currentLineRenderer.SetPosition(positionIndex, pointPos);
-    }
+    }   
     #endregion
 
     private void LineCheck()

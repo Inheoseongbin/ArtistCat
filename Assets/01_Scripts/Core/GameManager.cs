@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum LineType
+{
+    NONE,
+    WIDTH,
+    LENGTH,
+    V,
+    REVERSEV,
+    THUNDER
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
