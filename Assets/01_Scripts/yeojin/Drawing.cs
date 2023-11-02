@@ -3,17 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Drawing : MonoBehaviour
-{
-    public enum LineType
-    {
-        NONE,
-        WIDTH,
-        LENGTH,
-        V,
-        REVERSEV,
-        THUNDER
-    }
-
+{ 
     private Camera mainCam;
 
     private LineType currentType;
@@ -32,6 +22,7 @@ public class Drawing : MonoBehaviour
     {
         Draw();
     }
+
     void Draw()
     {
         if (Input.GetMouseButtonDown(0))
@@ -71,8 +62,8 @@ public class Drawing : MonoBehaviour
     void AddPoint(Vector2 pointPos)
     {
         currentLineRenderer.positionCount++;
-        int positionIndex = currentLineRenderer.positionCount - 1;
-        currentLineRenderer.SetPosition(positionIndex, pointPos);
+        int idx = currentLineRenderer.positionCount - 1;
+        currentLineRenderer.SetPosition(idx, pointPos);
     }   
     #endregion
 
