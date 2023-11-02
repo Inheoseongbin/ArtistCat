@@ -8,8 +8,6 @@ public class GameManager : MonoBehaviour
 
     public PoolingListSO poolingListSO;
 
-    [HideInInspector] public Camera mainCam;
-
     private void Awake()
     {
         if (Instance != null)
@@ -18,7 +16,6 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
 
-        mainCam = Camera.main;
         MakePool();
     }
 
@@ -28,4 +25,5 @@ public class GameManager : MonoBehaviour
 
         poolingListSO.list.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
     }
+
 }

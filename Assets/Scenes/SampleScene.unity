@@ -168,7 +168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolingListSO: {fileID: 11400000, guid: 14b5c3b3d609ddf4f9fc9fb344d94613, type: 2}
-  mainCam: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,3 +441,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843a2d792fe5e0d44a0035e8de5a8950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_camera: {fileID: 519420031}
