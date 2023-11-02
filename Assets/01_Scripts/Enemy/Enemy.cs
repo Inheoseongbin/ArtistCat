@@ -11,13 +11,14 @@ public class Enemy : PoolableMono
 	{
 		for (int i = 0; i < typeCount; i++)
 		{
-			int r = Random.Range(0, 4);
+			int r = Random.Range(1, (int)LineType.END);
+			enemyTypes.Add((LineType)r);
 		}
 	}
 
 	private void Awake()
 	{
-		
+		Init();
 	}
 
 	private void Update()
