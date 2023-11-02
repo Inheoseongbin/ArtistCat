@@ -13,8 +13,6 @@ public class DrawLine : MonoBehaviour
     }
     LineType currentType;
 
-    public Camera m_camera;
-
     Brush brush;
     LineRenderer currentLineRenderer;
 
@@ -35,7 +33,7 @@ public class DrawLine : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos = GameManager.Instance.mainCam.ScreenToWorldPoint(Input.mousePosition);
             if (mousePos != lastPos)
             {
                 AddPoint(mousePos);
@@ -59,7 +57,7 @@ public class DrawLine : MonoBehaviour
         brush = PoolManager.Instance.Pop("Brush") as Brush;
         currentLineRenderer = brush.GetComponent<LineRenderer>();
 
-        Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos = GameManager.Instance.mainCam.ScreenToWorldPoint(Input.mousePosition);
 
         currentLineRenderer.SetPosition(0, mousePos);
         currentLineRenderer.SetPosition(1, mousePos);

@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+	[HideInInspector] public Camera mainCam;
+
     public PoolingListSO poolingListSO;
 
     private void Awake()
@@ -15,6 +17,8 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Multiple GameManager is running! Check!");
         }
         Instance = this;
+
+        mainCam = Camera.main;
 
         MakePool();
     }
