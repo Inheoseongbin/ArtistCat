@@ -4,12 +4,13 @@ using UnityEngine;
 
 public enum LineType
 {
-    NONE,
-    WIDTH,
+    NONE = 0,
+    WIDTH = 1,
     LENGTH,
     V,
     REVERSEV,
-    THUNDER
+    THUNDER,
+    END
 }
 
 public class GameManager : MonoBehaviour

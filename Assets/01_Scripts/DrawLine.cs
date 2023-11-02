@@ -5,12 +5,6 @@ using UnityEngine;
 
 public class DrawLine : MonoBehaviour
 {
-    public enum LineType
-    {
-        NONE,
-        WIDTH,
-        LENGTH
-    }
     LineType currentType;
 
     Brush brush;
@@ -42,7 +36,6 @@ public class DrawLine : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            //Check and Erase Line
             LineCheck();
             PoolManager.Instance.Push(brush);
         }
@@ -105,6 +98,8 @@ public class DrawLine : MonoBehaviour
             }
         }
 
+        Enemy e = FindObjectOfType<Enemy>();
+        e.PlayerDraw(currentType);
         Debug.Log(currentType);
     }
 }
