@@ -8,13 +8,11 @@ public class EnemyMovement : MonoBehaviour
 	[SerializeField] private GameObject player;
 	[SerializeField] private float range = 2f;
 
-	private Rigidbody2D rb;
     private Vector2 movement;    
 
 	private void Awake()
 	{
 		player = GameObject.Find("Player");
-        rb = GetComponent<Rigidbody2D>();
 	}
 
     private void Update()
