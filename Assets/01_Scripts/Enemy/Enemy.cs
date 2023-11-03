@@ -10,8 +10,8 @@ public class Enemy : PoolableMono
 	private int count;
 
 	public Dictionary<LineType, Sprite> showType = new Dictionary<LineType, Sprite>();
-	public List<Sprite> sprites;
-	private List<GameObject> typeList;
+	public List<Sprite> sprites = new List<Sprite>();
+	private List<GameObject> typeList = new List<GameObject>();
 	public GameObject imageParent;
 	public GameObject img;
 	private Sprite sprite;
@@ -28,10 +28,10 @@ public class Enemy : PoolableMono
 			if (showType.TryGetValue((LineType)r, out sprite))
 			{
 				sprites.Add(sprite);
+				GameObject g = Instantiate(img, imageParent.transform);
+				g.GetComponent<Image>().sprite = sprite;
+				typeList.Add(g);
 			}
-
-			GameObject g = Instantiate(img, imageParent.transform);
-			typeList.Add(g);
 		}
 	}
 	
