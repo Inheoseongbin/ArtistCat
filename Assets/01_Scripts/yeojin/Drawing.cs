@@ -79,6 +79,13 @@ public class Drawing : MonoBehaviour
         WidthHeightCheck(positions);
         VCheck(positions); // V 판별
         ThunderCheck(positions); // 번개판별
+
+        Enemy[] enemies = Object.FindObjectsOfType<Enemy>();
+        foreach(Enemy e in enemies)
+		{
+            e.PlayerDraw(currentType);
+		}
+
         Debug.Log(currentType);
     }
 
