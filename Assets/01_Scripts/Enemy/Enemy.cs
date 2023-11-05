@@ -45,8 +45,7 @@ public class Enemy : PoolableMono
 		{
 			showType.Add((LineType)i + 1, sprites[i]);
 		}
-
-		Init();
+		//Init();
 	}
 
 	private void Update()
