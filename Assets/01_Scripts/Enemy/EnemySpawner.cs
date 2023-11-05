@@ -6,4 +6,6 @@ public class EnemySpawner : MonoBehaviour
 {
 	public List<GameObject> enemyList;
 
+	private int atOnceCount;
+
 }
