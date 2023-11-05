@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 public class Enemy : PoolableMono
 {
+	[Header("적 설정")]
 	public List<LineType> enemyTypes;
 	public int typeCount;
 	private int count;
 
-	public Dictionary<LineType, Sprite> showType = new Dictionary<LineType, Sprite>();
+	[Header("UI 설정")]
 	public List<Sprite> sprites = new List<Sprite>();
-	private List<GameObject> typeList = new List<GameObject>();
 	public GameObject imageParent;
 	public GameObject img;
+
+	private Dictionary<LineType, Sprite> showType = new Dictionary<LineType, Sprite>();
+	private List<GameObject> typeList = new List<GameObject>();
 	private Sprite sprite;
 	
 
