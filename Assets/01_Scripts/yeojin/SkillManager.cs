@@ -7,6 +7,8 @@ using DG.Tweening;
 
 public class SkillManager : MonoBehaviour
 {
+    public static SkillManager Instance;
+
     [SerializeField] private SkillSO skillSO;
     [SerializeField] private GameObject includeSkillPanel;
 
@@ -14,27 +16,29 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private Transform[] panels;
     [SerializeField] private int[] panelID;
 
+    private void Awake()
+    {
+        if (Instance != null) 
+        {
+            print("SkillManager Error");
+        }
+        Instance = this;
+    }
+
     private void Start()
     {
         panelID = new int[3];
         includeSkillPanel.SetActive(false);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            SkillRandomChoose();
-        }
-    }
-
     // 이거 호출해주면 됨
     public void SkillRandomChoose()
     {
+        print("skillRandom");
         includeSkillPanel.SetActive(true);
-
         includeSkillPanel.transform.localPosition = new Vector3(0, 1000, 0);
-        includeSkillPanel.transform.DOLocalMoveY(-55f, 1f).SetEase(Ease.InOutQuad);
+        includeSkillPanel.transform.DOLocalMoveY(-55f, 0.5f).SetEase(Ease.InOutQuad)
+            .OnComplete(() => Time.timeScale = 0);
 
         int idx = skillSO.list.Count; // List 개수 받아오기 1개면 1개
  
@@ -71,10 +75,15 @@ public class SkillManager : MonoBehaviour
 
     public void ChooseButtonClick(int pIdx) // 골랐을 때
     {
+        Time.timeScale = 1;
         print(panelID[pIdx]);
         print(skillSO.list[panelID[pIdx]].name); // 맞는지확인(해당id아이템이름잘나옴)
 
         includeSkillPanel.transform.DOLocalMoveY(-1000f,1f)
-            .OnComplete(() => includeSkillPanel.SetActive(false));
+            .OnComplete(() =>
+            {
+                includeSkillPanel.SetActive(false);
+                Time.timeScale = 1;
+            });
     }
 }
