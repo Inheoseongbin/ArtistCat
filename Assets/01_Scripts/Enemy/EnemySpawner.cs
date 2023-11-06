@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
 	public List<GameObject> enemyList;
+	public List<GameObject> bossList;
 	private int atOnceCount;
 
 	public float minx;
