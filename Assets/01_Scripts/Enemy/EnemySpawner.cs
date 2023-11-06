@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
 	private void Start()
 	{
 		StartCoroutine(Spawn());
+		StartCoroutine(SpawnBoss());
 	}
 
 	IEnumerator Spawn()
@@ -27,6 +28,22 @@ public class EnemySpawner : MonoBehaviour
 			for (int i = 0; i < atOnceCount; i++)
 			{
 				Enemy e = PoolManager.Instance.Pop("Enemy") as Enemy;
+				Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
+				e.transform.position = pos;
+			}
+			yield return new WaitForSeconds(time);
+		}
+	}
+
+	IEnumerator SpawnBoss()
+	{
+		while (true)
+		{
+			float time = 5 * 60;
+			atOnceCount = Random.Range(1, 4);
+			for (int i = 0; i < atOnceCount; i++)
+			{
+				Boss e = PoolManager.Instance.Pop("Boss") as Boss;
 				Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
 				e.transform.position = pos;
 			}

@@ -99,7 +99,9 @@ public class DrawLine : MonoBehaviour
         }
 
         Enemy e = FindObjectOfType<Enemy>();
-        e.PlayerDraw(currentType);
+        e.PlayerDraw(currentType);  
+        Boss b = FindObjectOfType<Boss>();
+        b.PlayerDraw(currentType);
         Debug.Log(currentType);
     }
 }

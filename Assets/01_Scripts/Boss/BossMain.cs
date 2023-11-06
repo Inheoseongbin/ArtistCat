@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BossMain : MonoBehaviour
+public class BossMain : MonoBehaviour
 {
-    public virtual void OnMove() {}
+    public bool isSkill = false;
 }
