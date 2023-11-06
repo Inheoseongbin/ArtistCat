@@ -27,7 +27,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Hurt(10);
+        if(collision.CompareTag("Enemy"))
+            Hurt(10);
     }
 
     private void Hurt(int dmg)
@@ -42,11 +43,13 @@ public class PlayerHealth : MonoBehaviour
         }
 
         float val = 1.0f / (float)maxHP; // 0.01
+        anim.SetHurt(true);
         healthBar.GaugeUI(val * currentHP); 
     }
 
     private void Die()
     {
+        anim.SetDead();
         print("วรทนภฬพ๎มื");
     }
 }
