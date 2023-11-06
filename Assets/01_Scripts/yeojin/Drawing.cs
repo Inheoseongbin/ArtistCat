@@ -59,6 +59,9 @@ public class Drawing : MonoBehaviour
         cam = mainCam.transform;
         brush = PoolManager.Instance.Pop("Brush") as Brush;
         brush.transform.parent = mainCam.transform;
+        Vector3 pos = mainCam.transform.localPosition;
+        pos.z = 0;
+        brush.transform.position = pos;
         currentLineRenderer = brush.GetComponent<LineRenderer>();
 
         Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
