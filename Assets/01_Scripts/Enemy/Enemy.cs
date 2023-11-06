@@ -69,7 +69,6 @@ public class Enemy : PoolableMono
 	public void Die()
 	{
 		PoolManager.Instance.Push(this);
-		print("Á×À½");
 	}
 
 }

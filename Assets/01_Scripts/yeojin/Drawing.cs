@@ -12,9 +12,12 @@ public class Drawing : MonoBehaviour
     private Vector2 lastPos;
     private float _limitValue = 1.5f;
 
+    public Transform cam;
+
     private void Awake()
     {
-        mainCam = Camera.main;
+        mainCam = GameManager.Instance.mainCam;
+        cam = mainCam.transform;
     }
 
     #region 건든거 없음
@@ -31,11 +34,13 @@ public class Drawing : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
+            cam = mainCam.transform;
             Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-            if (mousePos != lastPos)
+            Vector2 camRelative = cam.InverseTransformPoint(mousePos);
+            if (camRelative != lastPos)
             {
-                AddPoint(mousePos);
-                lastPos = mousePos;
+                AddPoint(camRelative);
+                lastPos = camRelative;
             }
         }
         else if (Input.GetMouseButtonUp(0))
@@ -51,13 +56,16 @@ public class Drawing : MonoBehaviour
     }
     private void CreateBrush()
     {
+        cam = mainCam.transform;
         brush = PoolManager.Instance.Pop("Brush") as Brush;
+        brush.transform.parent = mainCam.transform;
         currentLineRenderer = brush.GetComponent<LineRenderer>();
 
         Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 camRelative = cam.InverseTransformPoint(mousePos);
 
-        currentLineRenderer.SetPosition(0, mousePos);
-        currentLineRenderer.SetPosition(1, mousePos);
+        currentLineRenderer.SetPosition(0, camRelative);
+        currentLineRenderer.SetPosition(1, camRelative);
     }
     void AddPoint(Vector2 pointPos)
     {
@@ -86,7 +94,7 @@ public class Drawing : MonoBehaviour
             e.PlayerDraw(currentType);
 		}
 
-        Debug.Log(currentType);
+        //Debug.Log(currentType);
     }
 
     private void WidthHeightCheck(Vector3[] positions)
