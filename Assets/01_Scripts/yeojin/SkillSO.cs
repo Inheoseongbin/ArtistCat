@@ -6,6 +6,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class SkillClass
 {
+    public int ID; // 스킬 고유 아이디
     public Sprite image;
     public string name;
     public string introduce;

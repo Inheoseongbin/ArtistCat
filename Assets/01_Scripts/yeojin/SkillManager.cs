@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class SkillManager : MonoBehaviour
 {
@@ -12,15 +13,16 @@ public class SkillManager : MonoBehaviour
 
     private void Start()
     {
-        // 처음 시작에는 꺼주기
-        //includeSkillPanel.SetActive(false);
-
-        SkillRandomChoose();
+        includeSkillPanel.SetActive(false);
+        SkillRandomChoose(); // 이건 임의
     }
 
+    // 이거 호출해주면 됨
     public void SkillRandomChoose()
     {
+        includeSkillPanel.transform.localPosition = new Vector3(0, 1000, 0);
         includeSkillPanel.SetActive(true);
+        includeSkillPanel.transform.DOLocalMoveY(-50f, 1f).SetEase(Ease.InOutExpo);
 
         int idx = skillSO.list.Count; // List 개수 받아오기 1개면 1개
  
@@ -34,24 +36,29 @@ public class SkillManager : MonoBehaviour
         {
             int randIdx = Random.Range(0, randomList.Count);
             RandomSkill(randomList[randIdx], panels[i]);
-            randomList.RemoveAt(randIdx);
+            randomList.RemoveAt(randIdx); // 중복 없게 하려고 삭제 -> 나중에 변경 가능성 O
         }
     }
 
     private void RandomSkill(int idx, Transform panel)
     {
-        TextMeshProUGUI skillName = panel.Find("NOCHANGE/SkillName").GetComponent<TextMeshProUGUI>();
+        // 찾아주고
+        TextMeshProUGUI skillName = panel.Find("NameContainer/SkillName").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI skillIntrouce = panel.Find("SkillIntroduce").GetComponent<TextMeshProUGUI>();
         Image skillImage = panel.Find("SkillImage").GetComponent<Image>();
 
+        // 해당 idx에 있는 거 넣어주깅
+        // skillSO.list[idx].ID; // 아이디 받아오는 거
         skillName.text = skillSO.list[idx].name;
         skillIntrouce.text = skillSO.list[idx].introduce;
         skillImage.sprite = skillSO.list[idx].image;
     }
 
-    public void DoneChoosing()
+    public void ChooseButtonClick(int panelIDX) // 골랐을 때
     {
-        // 다 골랐을 때 실행
-        includeSkillPanel.SetActive(false);
+        TextMeshProUGUI skillName = panels[panelIDX].Find("NameContainer/SkillName").GetComponent<TextMeshProUGUI>();
+        print(skillName.text);
+
+        includeSkillPanel.transform.DOLocalMoveY(-1000f,1f).OnComplete(() => includeSkillPanel.SetActive(false));
     }
 }
