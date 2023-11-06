@@ -1,24 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Level : MonoBehaviour
 {
     [SerializeField] private ExperienceBar expBar;
+    [SerializeField] private TextMeshProUGUI levelText;
 
     int level = 1;
     int experience = 0;
 
     int TO_LEVEL_UP
     {
-        get { return level * 50; }
+        get { return level * 20; }
     }
 
     private void Start()
     {
         expBar.UpdateExpBar(experience, TO_LEVEL_UP);
+        levelText.text = $"Level : {level}";
     }
 
     public void AddExperience(int amount)
@@ -26,6 +29,7 @@ public class Level : MonoBehaviour
         experience += amount;
         CheckLevelUp();
         expBar.UpdateExpBar(experience, TO_LEVEL_UP);
+        levelText.text = $"Level : {level}";
     }
 
     public void CheckLevelUp()
