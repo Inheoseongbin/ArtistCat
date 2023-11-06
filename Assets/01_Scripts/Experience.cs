@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,8 @@ using UnityEngine;
 public class Experience : PoolableMono
 {
 	public int expNum;
-	
-	public override void Init()
+		
+    public override void Init()
 	{
 
 	}
@@ -15,6 +16,7 @@ public class Experience : PoolableMono
 	{
 		if(collision.CompareTag("Player"))
 		{
+			collision.GetComponent<Level>().AddExperience(expNum);
 			PoolManager.Instance.Push(this);
 		}
 	}
