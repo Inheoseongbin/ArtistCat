@@ -21,8 +21,8 @@ public class AgentAnimator : MonoBehaviour
         animator.SetTrigger("Dead");
     }
 
-    public void SetHurt(bool value)
+    public void SetHurt()
     {
-        animator.SetBool("Hurt", value);
+        animator.SetTrigger("Hurt");
     }
 }

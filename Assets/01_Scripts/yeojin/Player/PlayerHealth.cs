@@ -10,7 +10,11 @@ public class PlayerHealth : MonoBehaviour
     // HP
     private int maxHP = 100;
     private int currentHP = 0;
+
+    private bool isDie = false;
+
     public int CurrentHP => currentHP;
+    public bool IsDie => isDie;
 
     [SerializeField] private HealthBarUI healthBar;
 
@@ -27,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy"))
             Hurt(10);
     }
 
@@ -36,20 +40,24 @@ public class PlayerHealth : MonoBehaviour
         currentHP -= dmg;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
-        if(currentHP <= 0)
+        if (currentHP <= 0)
         {
             Die();
             return;
         }
 
         float val = 1.0f / (float)maxHP; // 0.01
-        anim.SetHurt(true);
-        healthBar.GaugeUI(val * currentHP); 
+        anim.SetHurt();
+        healthBar.GaugeUI(val * currentHP);
     }
 
     private void Die()
     {
-        anim.SetDead();
-        print("ÇÃ·¹ÀÌ¾îÁ×");
+        if (!isDie)
+        {
+            anim.SetDead();
+            print("ÇÃ·¹ÀÌ¾îÁ×");
+            isDie = true;
+        }
     }
 }
