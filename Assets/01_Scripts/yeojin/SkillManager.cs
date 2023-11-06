@@ -37,7 +37,7 @@ public class SkillManager : MonoBehaviour
         print("skillRandom");
         includeSkillPanel.SetActive(true);
         includeSkillPanel.transform.localPosition = new Vector3(0, 1000, 0);
-        includeSkillPanel.transform.DOLocalMoveY(-55f, 0.5f).SetEase(Ease.InOutQuad)
+        includeSkillPanel.transform.DOLocalMoveY(-55f, 0.7f).SetEase(Ease.InOutQuad)
             .OnComplete(() => Time.timeScale = 0);
 
         int idx = skillSO.list.Count; // List 개수 받아오기 1개면 1개
