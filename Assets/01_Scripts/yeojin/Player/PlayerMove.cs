@@ -9,17 +9,26 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody2D rigid;
     private SpriteRenderer sr;
     private AgentAnimator anim;
+    private PlayerHealth playerHealth;
 
     private void Awake()
     {
         anim = GetComponent<AgentAnimator>();
         rigid = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     private void Update()
     {
-        Move();
+        if (!playerHealth.IsDie)
+        {
+            Move();
+        }
+        else
+        {
+            rigid.velocity = Vector3.zero;
+        }
     }
 
     private void Move()
@@ -27,14 +36,18 @@ public class PlayerMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         Vector3 movement = new Vector3(h, v, 0);
-        
+
         rigid.velocity = movement * speed;
 
         // Anim&flipX
         if (movement.magnitude > 0)
         {
             anim.SetMove(true);
-            sr.flipX = h > 0 ? true : false;
+            if(h > 0)
+                sr.flipX = true;
+            else if(h < 0) 
+                sr.flipX = false;
+            //sr.flipX = h > 0 ? true : false;
         }
         else anim.SetMove(false);
     }
