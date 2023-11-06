@@ -9,6 +9,7 @@ public class Level : MonoBehaviour
 {
     [SerializeField] private ExperienceBar expBar;
     [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private GameObject skillCanvas;
 
     int level = 1;
     int experience = 0;
@@ -38,6 +39,7 @@ public class Level : MonoBehaviour
         {
             experience -= TO_LEVEL_UP;
             level += 1;
+            SkillManager.Instance.SkillRandomChoose();
         }
     }
 }
