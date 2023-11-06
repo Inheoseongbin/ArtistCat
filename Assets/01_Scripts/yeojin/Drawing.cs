@@ -5,6 +5,7 @@ using UnityEngine;
 public class Drawing : MonoBehaviour
 { 
     private Camera mainCam;
+    private Transform cam;
 
     private LineType currentType;
     private Brush brush;
@@ -12,7 +13,6 @@ public class Drawing : MonoBehaviour
     private Vector2 lastPos;
     private float _limitValue = 1.5f;
 
-    public Transform cam;
 
     private void Awake()
     {
@@ -58,14 +58,14 @@ public class Drawing : MonoBehaviour
     {
         cam = mainCam.transform;
         brush = PoolManager.Instance.Pop("Brush") as Brush;
-        brush.transform.parent = mainCam.transform;
-        Vector3 pos = mainCam.transform.localPosition;
+        brush.transform.parent = mainCam.transform; // 카메라 자식으로 두고
+        Vector3 pos = mainCam.transform.localPosition; // 카메라를 따라가게 만들어
         pos.z = 0;
         brush.transform.position = pos;
         currentLineRenderer = brush.GetComponent<LineRenderer>();
 
-        Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 camRelative = cam.InverseTransformPoint(mousePos);
+        Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition); // 마우스 포지션 가져와서
+        Vector2 camRelative = cam.InverseTransformPoint(mousePos); // inverse
 
         currentLineRenderer.SetPosition(0, camRelative);
         currentLineRenderer.SetPosition(1, camRelative);
