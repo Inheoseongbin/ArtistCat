@@ -59,10 +59,15 @@ public class Enemy : PoolableMono
 	{
 		if (enemyTypes[0] == attack) // 딕셔너리 타입이랑 첫번째꺼의 타입이 같으면 하나 지울거얌
 		{
-			enemyTypes.RemoveAt(0);
-			Destroy(typeList[0]);
-			typeList.RemoveAt(0);
+			DrawReduce(0);
 		}
+	}
+
+	public void DrawReduce(int id)
+	{
+		enemyTypes.RemoveAt(id);
+		Destroy(typeList[id]);
+		typeList.RemoveAt(id);
 	}
 
 	public void Die()
