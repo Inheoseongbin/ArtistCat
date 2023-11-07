@@ -30,9 +30,6 @@ public class BossMovement : BossMain
     {
         float dis = Vector2.Distance(transform.position, _bossValue._playerTr.position);
 
-        //if(_bossValue._isDash)
-        //    _rb.AddForce(_bossValue.lookDir * _bossValue._DashSpeed * Time.deltaTime);
-        //else
         if (dis > _distance && !_bossValue._isSkill && !_bossValue._isDash)
         {
             print("direction이상하ㅏㄴㅇㄹ호");
