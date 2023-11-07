@@ -31,7 +31,7 @@ public class SkillManager : MonoBehaviour
         includeSkillPanel.SetActive(false);
     }
 
-    // ÀÌ°Å È£ÃâÇØÁÖ¸é µÊ
+    // ï¿½Ì°ï¿½ È£ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½
     public void SkillRandomChoose()
     {
         print("skillRandom");
@@ -40,44 +40,44 @@ public class SkillManager : MonoBehaviour
         includeSkillPanel.transform.DOLocalMoveY(-55f, 0.7f).SetEase(Ease.InOutQuad)
             .OnComplete(() => Time.timeScale = 0);
 
-        int idx = skillSO.list.Count; // List °³¼ö ¹Þ¾Æ¿À±â 1°³¸é 1°³
+        int idx = skillSO.list.Count; // List ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½
  
         List<int> randomList = new List<int>();
         for (int i = 0; i < idx; i++)
         {
-            randomList.Add(i); // 0 ~ °³¼ö¸¸Å­
+            randomList.Add(i); // 0 ~ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­
         }
 
         for (int i = 0; i < 3; i++)
         {
             int randIdx = Random.Range(0, randomList.Count);
             
-            // °¢°¢ÀÇ ÆÐ³Î¿¡ ÇØ´ç ¾ÆÀÌµð ÀúÀå
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³Î¿ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
             panelID[i] = skillSO.list[randomList[randIdx]].ID;
             RandomSkill(randomList[randIdx], panels[i]);
 
-            randomList.RemoveAt(randIdx); // Áßº¹ ¾ø°Ô ÇÏ·Á°í »èÁ¦ -> ³ªÁß¿¡ º¯°æ °¡´É¼º O
+            randomList.RemoveAt(randIdx); // ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¼ï¿½ O
         }
     }
 
     private void RandomSkill(int idx, Transform panel)
     {
-        // Ã£¾ÆÁÖ°í
+        // Ã£ï¿½ï¿½ï¿½Ö°ï¿½
         TextMeshProUGUI skillName = panel.Find("NameContainer/SkillName").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI skillIntrouce = panel.Find("SkillIntroduce").GetComponent<TextMeshProUGUI>();
         Image skillImage = panel.Find("SkillImage").GetComponent<Image>();
 
-        // ÇØ´ç idx¿¡ ÀÖ´Â °Å ³Ö¾îÁÖ±ë
+        // ï¿½Ø´ï¿½ idxï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö±ï¿½
         skillName.text = skillSO.list[idx].name;
         skillIntrouce.text = skillSO.list[idx].introduce;
         skillImage.sprite = skillSO.list[idx].image;
     }
 
-    public void ChooseButtonClick(int pIdx) // °ñ¶úÀ» ¶§
+    public void ChooseButtonClick(int pIdx) // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     {
         Time.timeScale = 1;
         print(panelID[pIdx]);
-        print(skillSO.list[panelID[pIdx]].name); // ¸Â´ÂÁöÈ®ÀÎ(ÇØ´çid¾ÆÀÌÅÛÀÌ¸§Àß³ª¿È)
+        print(skillSO.list[panelID[pIdx]].name); // ï¿½Â´ï¿½ï¿½ï¿½È®ï¿½ï¿½(ï¿½Ø´ï¿½idï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ï¿½ß³ï¿½ï¿½ï¿½)
 
         includeSkillPanel.transform.DOLocalMoveY(-1000f,1f)
             .OnComplete(() =>

@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float speed = 6f;
-
+    public float PlayerSpeed
+    {
+        get => speed;
+        set => speed = value;
+    }
     private Rigidbody2D rigid;
     private SpriteRenderer sr;
     private AgentAnimator anim;
