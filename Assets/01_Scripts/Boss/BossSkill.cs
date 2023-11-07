@@ -4,29 +4,80 @@ using UnityEngine;
 
 public class BossSkill : BossMain
 {
-    [SerializeField] private float _skillCool;
+    [SerializeField] private float _shootCool;
+    [SerializeField] private float _dashCool;
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private GameObject _dashImage;
 
-    private Vector2 _shootDir = Vector2.zero;
-    // Start is called before the first frame update
-    void Start()
+    private float _stunCool = 2f;
+
+    private Vector3 viewDir = Vector3.zero;
+
+    protected override void Awake()
     {
-        StartCoroutine(SkillRoutine());
+        base.Awake();
+
+        _bossValue._isDash = false;
+
+        _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
     }
 
-    IEnumerator SkillRoutine()
+    void Start()
+    {
+        StartCoroutine(ShootRoutine());
+        StartCoroutine(DashRoutine());
+    }
+
+    private void Update()
+    {
+        
+    }
+
+    IEnumerator DashRoutine()
+    {
+        while (true)
+        {
+
+            yield return new WaitForSeconds(3);
+
+            _bossValue._isDash = true;
+
+            viewDir = _bossValue._playerTr.transform.position - transform.position;
+
+            float angle = Mathf.Atan2(viewDir.y, viewDir.x) * Mathf.Rad2Deg;
+
+            _dashImage.transform.rotation = Quaternion.Euler(new Vector3(0,0, angle + 90));
+            _dashImage.SetActive(true);
+
+            yield return new WaitForSeconds(3);
+
+            _dashImage.SetActive(false);
+
+            _rb.AddForce(viewDir.normalized * _bossValue._DashSpeed);
+            _bossValue._isDash = false;
+        }
+    }
+
+    IEnumerator ShootRoutine()
     {
         int angleCount = 12;
         int angle = 360 / angleCount;
         while (true)
         {
-            for(int i = 0; i < angleCount; i++)
+            _bossValue._isSkill = true;
+
+            for (int i = 0; i < angleCount; i++)
             {
                 ShootBullet(angle * i);
             }
 
-            yield return new WaitForSeconds(_skillCool);
+            yield return new WaitForSeconds(_stunCool);
+
+            //다시 움직임
+            _bossValue._isSkill = false;
+
+            yield return new WaitForSeconds(_shootCool - _stunCool);
         }
     }
 

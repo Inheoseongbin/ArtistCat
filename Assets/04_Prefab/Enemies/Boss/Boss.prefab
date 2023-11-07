@@ -93,6 +93,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8946609133686518555}
+  - {fileID: 8506649066649942532}
   m_Father: {fileID: 8946609133822089038}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -176,6 +177,7 @@ GameObject:
   - component: {fileID: 8946609133822089035}
   - component: {fileID: 8946609133822089039}
   - component: {fileID: 9123469296906088459}
+  - component: {fileID: -5139868615271989546}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -285,9 +287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12631341c1032ac4087f91abbfa8cbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSkill: 0
-  _playerTr: {fileID: 0}
-  _speed: 2
   _distance: 3
 --- !u!114 &8946609133822089039
 MonoBehaviour:
@@ -324,10 +323,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9b674ee6111f04a8f835da3b7bb23f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSkill: 0
-  _skillCool: 10
+  _shootCool: 10
+  _dashCool: 13
   _bulletSpeed: 5
   _bulletPrefab: {fileID: 8070207097058054530, guid: 940f213a1c021114cb1487b55400f97a, type: 3}
+  _dashImage: {fileID: 8973787235497301203}
+--- !u!114 &-5139868615271989546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8946609133822089034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8656fb7c19a8efe44abfe15f8e348928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 4
+  _DashSpeed: 20
+  _isSkill: 0
+  _isDash: 0
+  lookDir: {x: 0, y: 0}
+  _playerTr: {fileID: 0}
 --- !u!1 &8946609134629686759
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,3 +515,79 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8973787235497301203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8506649066649942532}
+  - component: {fileID: 3491389221751118830}
+  - component: {fileID: 2598150323970565803}
+  m_Layer: 7
+  m_Name: DashImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &8506649066649942532
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973787235497301203}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8946609133726224757}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 540}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &3491389221751118830
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973787235497301203}
+  m_CullTransparentMesh: 1
+--- !u!114 &2598150323970565803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973787235497301203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
