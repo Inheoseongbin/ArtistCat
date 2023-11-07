@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 8946609133822089035}
   - component: {fileID: 8946609133822089039}
   - component: {fileID: 9123469296906088459}
+  - component: {fileID: -5139868615271989546}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -287,7 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSkill: 0
   _playerTr: {fileID: 0}
-  _speed: 2
+  _speed: 4
   _distance: 3
 --- !u!114 &8946609133822089039
 MonoBehaviour:
@@ -328,6 +329,19 @@ MonoBehaviour:
   _skillCool: 10
   _bulletSpeed: 5
   _bulletPrefab: {fileID: 8070207097058054530, guid: 940f213a1c021114cb1487b55400f97a, type: 3}
+--- !u!114 &-5139868615271989546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8946609133822089034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8656fb7c19a8efe44abfe15f8e348928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSkill: 0
 --- !u!1 &8946609134629686759
 GameObject:
   m_ObjectHideFlags: 0

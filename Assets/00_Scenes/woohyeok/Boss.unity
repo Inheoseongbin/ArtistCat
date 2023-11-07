@@ -558,6 +558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expBar: {fileID: 1713374545}
   levelText: {fileID: 471039116}
+  skillCanvas: {fileID: 0}
 --- !u!1 &471039114
 GameObject:
   m_ObjectHideFlags: 0

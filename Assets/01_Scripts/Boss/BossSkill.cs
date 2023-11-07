@@ -8,8 +8,8 @@ public class BossSkill : BossMain
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private GameObject _bulletPrefab;
 
-    private Vector2 _shootDir = Vector2.zero;
-    // Start is called before the first frame update
+    private float _stunCool = 2f;
+
     void Start()
     {
         StartCoroutine(SkillRoutine());
@@ -21,12 +21,19 @@ public class BossSkill : BossMain
         int angle = 360 / angleCount;
         while (true)
         {
+            _bossValue.isSkill = true;
+
             for(int i = 0; i < angleCount; i++)
             {
                 ShootBullet(angle * i);
             }
 
-            yield return new WaitForSeconds(_skillCool);
+            yield return new WaitForSeconds(_stunCool);
+
+            //다시 움직임
+            _bossValue.isSkill = false;
+
+            yield return new WaitForSeconds(_skillCool - _stunCool);
         }
     }
 
