@@ -58,6 +58,15 @@ public class PlayerHealth : MonoBehaviour
         healthBar.GaugeUI(val * currentHP);
     }
 
+    public void AddHP(int heal)
+    {
+        currentHP += heal;
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+
+        float val = 1.0f / (float)maxHP; // 0.01
+        healthBar.GaugeUI(val * currentHP);
+    }
+
     private void Die()
     {
         if (!isDie)

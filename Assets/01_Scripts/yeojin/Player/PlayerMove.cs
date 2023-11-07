@@ -6,11 +6,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float speed = 6f;
-    public float PlayerSpeed
-    {
-        get => speed;
-        set => speed = value;
-    }
+
     private Rigidbody2D rigid;
     private SpriteRenderer sr;
     private AgentAnimator anim;
@@ -55,5 +51,10 @@ public class PlayerMove : MonoBehaviour
             //sr.flipX = h > 0 ? true : false;
         }
         else anim.SetMove(false);
+    }
+
+    public void AddSpeed(float value)
+    {
+        speed += value;
     }
 }

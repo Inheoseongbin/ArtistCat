@@ -25,7 +25,7 @@ public class Experience : PoolableMono
 	{
 		if(collision.CompareTag("Player"))
 		{
-			collision.GetComponent<Level>().AddExperience(expNum);
+			UIManager.Instance.AddExperience(expNum);
 			PoolManager.Instance.Push(this);
 		}
 
