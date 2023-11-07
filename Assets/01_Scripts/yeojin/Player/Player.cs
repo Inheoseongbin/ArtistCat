@@ -20,16 +20,19 @@ public class Player : MonoBehaviour
 
 	public void OnHeal(int value) // 스킬 힐
 	{
-		playerHealth.PlayerHP += value;
+		print("힐 호출");
+		playerHealth.AddHP(value);
 	}
 
 	public void OnSpeedUp(float value) // 스킬 스피트 증가
 	{
-		playerMove.PlayerSpeed += value;
+		print("스피드 호출");
+		playerMove.AddSpeed(value);
 	}
 
 	public void OnMagnetUpgrade(float value) // 스킬 자석 업글
 	{
+		print("자석 호출");
 		magnetCollider.radius += value;
 	}
 }

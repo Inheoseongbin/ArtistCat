@@ -8,12 +8,24 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    
+
+    [Header("Level")]
+    [SerializeField] private ExperienceBar expBar;
+    [SerializeField] private TextMeshProUGUI levelText;
+
+    private int level = 1;
+    private int experience = 0;
+
+    private int levelUp
+    {
+        get { return level * 20; }
+    }
+
     [Header("Skill Manager")]
     [SerializeField] private SkillSO skillSO;
     [SerializeField] private GameObject includeSkillPanel;
     [SerializeField] private Transform[] panels;
-    [SerializeField] private int[] panelID;
+    private int[] panelID;
 
     [Header("GameOver")]
     [SerializeField] private GameObject gameOverPanel;
@@ -22,6 +34,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timeText;
     private float currentPlayTime = 0f;
     public float CurrentPlayTime => currentPlayTime; // 나중에 일정 시간 지나면 보스 불러올 때 쓰는 함수
+
+    [Header("Setting")]
+    [SerializeField] private GameObject settingPanel;
+    private bool isSetting = false;
 
     private void Awake()
     {
@@ -34,15 +50,31 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        settingPanel.SetActive(false);
         gameOverPanel.SetActive(false);
         includeSkillPanel.SetActive(false);
         panelID = new int[3];
         currentPlayTime = 0f;
+
+        expBar.UpdateExpBar(experience, levelUp);
+        levelText.text = $"Level : {level}";
     }
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape)) // setting
+        {
+            isSetting = !isSetting;
+            Time.timeScale = isSetting ? 0 : 1;
+            settingPanel.SetActive(isSetting);
+        }
         TimeShow();
+
+        // 디버그용(추후 삭제)
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            AddExperience(10);
+        }
     }
 
     private void TimeShow() // 시간 보여주는거
@@ -57,8 +89,27 @@ public class UIManager : MonoBehaviour
         print("게임오버패널호출");
     }
 
+    // Level UP
+    public void AddExperience(int amount)
+    {
+        experience += amount;
+        CheckLevelUp();
+        expBar.UpdateExpBar(experience, levelUp);
+        levelText.text = $"Level : {level}";
+    }
+
+    public void CheckLevelUp()
+    {
+        if (experience >= levelUp)
+        {
+            experience -= levelUp;
+            level += 1;
+            SkillRandomChoose();
+        }
+    }
+
     #region 스킬 관련 함수
-    
+
     public void SkillRandomChoose() // 레벨업시 이거 호출
     {
         print("skillRandom");
@@ -103,8 +154,8 @@ public class UIManager : MonoBehaviour
     public void ChooseButtonClick(int pIdx) // 골랐을 때
     {
         Time.timeScale = 1;
-        print(panelID[pIdx]);
-        print(skillSO.list[panelID[pIdx]].name); // 맞는지확인(해당id아이템이름잘나옴)
+        //print(panelID[pIdx]);
+        //print(skillSO.list[panelID[pIdx]].name); // 맞는지확인(해당id아이템이름잘나옴)
 
         includeSkillPanel.transform.DOLocalMoveY(-1000f, 1f)
             .OnComplete(() =>
@@ -112,12 +163,32 @@ public class UIManager : MonoBehaviour
                 includeSkillPanel.SetActive(false);
                 Time.timeScale = 1;
             });
-        returnID(skillSO.list[panelID[pIdx]].ID);
+        SkillUpgrade(skillSO.list[panelID[pIdx]].ID);
     }
 
-    public int returnID(int id) // 아아디 리턴 (이거 사용하여 어떤 아이템인지 알기)
+    private void SkillUpgrade(int id)
     {
-        return id;
+        Player player = GameManager.Instance.playerTrm.GetComponent<Player>();
+        switch(id)
+        {
+            case 0: // 속도 증가
+                player.OnSpeedUp(1f);
+                break;
+            case 1: // 자석 범위 증가
+                player.OnMagnetUpgrade(1);
+                break;
+            case 2: // 체력 회복
+                player.OnHeal(10);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            default:
+                break;
+        }
     }
     
     #endregion

@@ -11,6 +11,8 @@ public class SkillClass
     public string name;
     [TextArea]
     public string introduce;
+
+    public int upgradeLevel = 0;
 }
 
 [CreateAssetMenu(menuName ="SO/Skill")]
