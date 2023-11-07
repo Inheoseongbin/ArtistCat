@@ -5,12 +5,12 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
 	[SerializeField] private float speed = 1f;
-	[SerializeField] private GameObject player;
 	[SerializeField] private float range = 2f;
+	private Transform player;
 
 	private void Awake()
 	{
-		player = GameObject.Find("Player");
+		player = GameManager.Instance.playerTrm;
 	}
 
     private void Update()

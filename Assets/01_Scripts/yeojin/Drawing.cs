@@ -13,7 +13,6 @@ public class Drawing : MonoBehaviour
     private Vector2 lastPos;
     private float _limitValue = 1.5f;
 
-
     private void Awake()
     {
         mainCam = GameManager.Instance.mainCam;

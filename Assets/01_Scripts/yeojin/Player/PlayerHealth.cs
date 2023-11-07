@@ -10,6 +10,11 @@ public class PlayerHealth : MonoBehaviour
     // HP
     private int maxHP = 100;
     private int currentHP = 0;
+    public int PlayerHP
+    {
+        get => currentHP;
+        set => currentHP = value;
+    }
 
     private bool isDie = false;
 
@@ -20,13 +25,13 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        sr = GetComponent<SpriteRenderer>(); // ¸ÂÀ¸¸é »¡°²°Ô ÇÏ°í
-        anim = GetComponent<AgentAnimator>(); // ¸ÂÀ¸¸é Hurt animation Àç»ýÇÏ´Â°Å
+        sr = GetComponent<SpriteRenderer>(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½
+        anim = GetComponent<AgentAnimator>(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Hurt animation ï¿½ï¿½ï¿½ï¿½Ï´Â°ï¿½
     }
 
     private void Start()
     {
-        currentHP = maxHP; // ÃÊ±â HP ¼³Á¤
+        currentHP = maxHP; // ï¿½Ê±ï¿½ HP ï¿½ï¿½ï¿½ï¿½
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -56,7 +61,7 @@ public class PlayerHealth : MonoBehaviour
         if (!isDie)
         {
             anim.SetDead();
-            print("ÇÃ·¹ÀÌ¾îÁ×");
+            print("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½");
             isDie = true;
 
             UIManager.Instance.SetDeadUI();
