@@ -181,8 +181,10 @@ public class UIManager : MonoBehaviour
                 player.OnHeal(10);
                 break;
             case 3:
+                player.OnYarnTrue();
                 break;
             case 4:
+                player.OnFishTrue();
                 break;
             case 5:
                 break;

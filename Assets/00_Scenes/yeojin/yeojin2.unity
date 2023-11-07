@@ -4418,7 +4418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63c6c260909f55c4a9134793efb0322c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainPlayer: {fileID: 0}
   expBar: {fileID: 1713374545}
   levelText: {fileID: 471039116}
   skillSO: {fileID: 11400000, guid: 648410e35e9cab74782bc4d7db4c7ce9, type: 2}
@@ -4429,3 +4428,4 @@ MonoBehaviour:
   - {fileID: 2089312706}
   gameOverPanel: {fileID: 1781535974}
   timeText: {fileID: 277415301}
+  settingPanel: {fileID: 0}
