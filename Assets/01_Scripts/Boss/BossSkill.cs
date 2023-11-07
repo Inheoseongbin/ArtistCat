@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class BossSkill : BossMain
 {
+    [Header("쿨타임")]
     [SerializeField] private float _shootCool;
     [SerializeField] private float _dashCool;
+
+    [Header("총알")]
     [SerializeField] private float _bulletSpeed;
+
+    [Header("대쉬")]
+    [SerializeField] protected float _waitDashTime;
+    [SerializeField] protected float _dashingTime;
+
+    [Header("오브젝트")]
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private GameObject _dashImage;
 
+    protected bool _isCharging = false;
+
     private float _stunCool = 2f;
+    private float dTime;
 
     private Vector3 viewDir = Vector3.zero;
 
@@ -29,34 +41,39 @@ public class BossSkill : BossMain
         StartCoroutine(DashRoutine());
     }
 
-    private void Update()
-    {
-        
-    }
-
     IEnumerator DashRoutine()
     {
+        dTime = _dashCool - _waitDashTime - _dashingTime;
         while (true)
         {
-
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(dTime);
 
             _bossValue._isDash = true;
 
-            viewDir = _bossValue._playerTr.transform.position - transform.position;
+            viewDir = _bossValue._playerTr.position - transform.position;
+            _bossValue.lookDir = viewDir;
 
             float angle = Mathf.Atan2(viewDir.y, viewDir.x) * Mathf.Rad2Deg;
 
-            _dashImage.transform.rotation = Quaternion.Euler(new Vector3(0,0, angle + 90));
+            _dashImage.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
             _dashImage.SetActive(true);
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(_waitDashTime);
 
             _dashImage.SetActive(false);
+            _isCharging = true;
 
-            _rb.AddForce(viewDir.normalized * _bossValue._DashSpeed);
+            _rb.velocity = viewDir.normalized * _bossValue._DashSpeed;
+
+            yield return new WaitForSeconds(_dashingTime);
+
             _bossValue._isDash = false;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(transform.position, viewDir, Color.red);
     }
 
     IEnumerator ShootRoutine()
@@ -95,6 +112,6 @@ public class BossSkill : BossMain
         rb.velocity = direction * _bulletSpeed;
 
         // 총알 일정 시간 후에 파괴
-        Destroy(bullet, 2.0f);
+        Destroy(bullet, 10.0f);
     }
 }
