@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
 	[HideInInspector] public Camera mainCam;
+    public Transform playerTrm;
 
     public PoolingListSO poolingListSO;
 
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         mainCam = Camera.main;
+        playerTrm = GameObject.Find("Player").transform;
 
         MakePool();
     }
