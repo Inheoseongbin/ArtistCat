@@ -6,18 +6,19 @@ public class Bullet : PoolableMono
 {
     public override void Init()
     {
-        throw new System.NotImplementedException();
+        transform.Rotate(Vector3.zero);
+    }
+
+    private void OnEnable()
+    {
+        Invoke("BulletPool", 3.0f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player"))
+    {        
+        if (collision.CompareTag("Player"))
         {
             BulletPool();
-        }
-        else
-        {
-            Invoke("BulletPool", 10.0f);
         }
     }
 

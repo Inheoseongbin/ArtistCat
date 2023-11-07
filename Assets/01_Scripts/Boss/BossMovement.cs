@@ -32,7 +32,6 @@ public class BossMovement : BossMain
 
         if (dis > _distance && !_bossValue._isSkill && !_bossValue._isDash)
         {
-            print("direction이상하ㅏㄴㅇㄹ호");
             _rb.velocity = Vector2.zero;
             transform.position = Vector2.MoveTowards(transform.position, _bossValue._playerTr.position, _bossValue._speed * Time.deltaTime);
         }
