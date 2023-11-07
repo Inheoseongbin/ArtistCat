@@ -96,6 +96,12 @@ public class Drawing : MonoBehaviour
             e.PlayerDraw(currentType);
 		}
 
+        Boss[] bosses = Object.FindObjectsOfType<Boss>();
+        foreach (Boss b in bosses)
+        {
+            b.PlayerDraw(currentType);
+        }
+
         //Debug.Log(currentType);
     }
 

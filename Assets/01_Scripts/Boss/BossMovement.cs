@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossMovement : MonoBehaviour
+public class BossMovement : BossMain
 {
-    [SerializeField] private Transform _playerTr;
-    [SerializeField] private float _speed;
     [SerializeField] private float _distance;
 
-    private Rigidbody2D _rb;
+    //private Rigidbody2D _rb;
 
-    // Start is called before the first frame update
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
+    }
+
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _bossValue._isSkill = false;
     }
 
     // Update is called once per frame
@@ -22,10 +26,14 @@ public class BossMovement : MonoBehaviour
         OnMove();
     }
 
-    public  void OnMove()
+    public void OnMove()
     {
-        Vector3 viewDir = _playerTr.position - transform.position;
+        float dis = Vector2.Distance(transform.position, _bossValue._playerTr.position);
 
-        transform.position = Vector2.MoveTowards(transform.position, _playerTr.position,  3);
+        if (dis > _distance && !_bossValue._isSkill && !_bossValue._isDash)
+        {
+            print("direction이상하ㅏㄴㅇㄹ호");
+            transform.position = Vector2.MoveTowards(transform.position, _bossValue._playerTr.position, _bossValue._speed * Time.deltaTime);
+        }
     }
 }
