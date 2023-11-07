@@ -4,5 +4,12 @@ using UnityEngine;
 
 public class BossValue : MonoBehaviour
 {
-    public bool isSkill;
+    public float _speed;
+    public float _DashSpeed;
+
+    public bool _isSkill;
+    public bool _isDash;
+
+    public Vector2 lookDir;
+    public Transform _playerTr;
 }

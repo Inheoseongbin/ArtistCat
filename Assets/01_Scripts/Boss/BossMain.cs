@@ -6,9 +6,11 @@ using UnityEngine;
 public abstract class BossMain : MonoBehaviour
 {
     protected BossValue _bossValue;
+    protected Rigidbody2D _rb;
 
     protected virtual void Awake()
     {
         _bossValue = transform.GetComponent<BossValue>();
+        _rb = transform.GetComponent<Rigidbody2D>();
     }
 }

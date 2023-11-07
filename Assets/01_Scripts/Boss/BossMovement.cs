@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BossMovement : BossMain
 {
-    [SerializeField] private Transform _playerTr;
-    [SerializeField] private float _speed;
     [SerializeField] private float _distance;
 
     //private Rigidbody2D _rb;
@@ -14,26 +12,28 @@ public class BossMovement : BossMain
     {
         base.Awake();
 
-        _playerTr = GameObject.Find("Player").GetComponent<Transform>();
+        _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
     }
 
     void Start()
     {
-        _bossValue.isSkill = false;
+        _bossValue._isSkill = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         OnMove();
-        print(_bossValue.isSkill);
     }
 
     public void OnMove()
     {
-        float dis = Vector2.Distance(transform.position, _playerTr.position);
+        float dis = Vector2.Distance(transform.position, _bossValue._playerTr.position);
 
-        if (dis > _distance && !_bossValue.isSkill)
-            transform.position = Vector2.MoveTowards(transform.position, _playerTr.position, _speed * Time.deltaTime);
+        if (dis > _distance && !_bossValue._isSkill && !_bossValue._isDash)
+        {
+            print("direction이상하ㅏㄴㅇㄹ호");
+            transform.position = Vector2.MoveTowards(transform.position, _bossValue._playerTr.position, _bossValue._speed * Time.deltaTime);
+        }
     }
 }
