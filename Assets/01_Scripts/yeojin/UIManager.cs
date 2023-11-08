@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject includeSkillPanel;
     [SerializeField] private Transform[] panels;
     private int[] panelID;
+    private int maxLevel = 5;
 
     [Header("GameOver")]
     [SerializeField] private GameObject gameOverPanel;
@@ -75,7 +76,7 @@ public class UIManager : MonoBehaviour
         // 디버그용(추후 삭제)
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            AddExperience(10);
+            AddExperience(20);
         }
     }
 
@@ -123,18 +124,21 @@ public class UIManager : MonoBehaviour
         int idx = skillSO.list.Count; // List 개수 받아오기 1개면 1개
 
         List<int> randomList = new List<int>();
-        for (int i = 0; i < idx; i++)   
+        for (int i = 0; i < idx; i++)  // 0은 체력 회복
         {
-            for (int j = 0; j < 5 - skillSO.list[i].upgradeLevel; j++) // 5단계까지 업그레이드 할 수 있음
+            if(skillSO.list[i].upgradeLevel == maxLevel) // 레벨 다 됐을 때
             {
-                randomList.Add(i); // 0 ~ 개수만큼
+                continue;
             }
+            randomList.Add(i); // 0 ~ 개수만큼
         }
 
-        if(randomList.Count == 0)
+        if (randomList.Count < 3) // 3보다 작으면
         {
-            print("업그레이드끝ㅊ");
-            return;
+            while (randomList.Count < 3)
+            {
+                randomList.Add(0); // 체력 회복만 넣어주기
+            }
         }
 
         for (int i = 0; i < 3; i++)
@@ -149,18 +153,52 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void CheckUpgradeBox(int idx, Transform panel)
+    {
+        //print($"{idx}Upgrade");
+        for (int i = 0; i < 5; i++)
+        {
+            Transform upgradeImage = panel.Find($"UpgradeContainer/CheckContain_{i + 1}");
+            GameObject checkImg = upgradeImage.Find("Check").gameObject;
+            checkImg.SetActive(false);
+        }
+        for (int i = 0; i < skillSO.list[idx].upgradeLevel; i++)
+        {
+            Transform upgradeImage = panel.Find($"UpgradeContainer/CheckContain_{i + 1}");
+            GameObject checkImg = upgradeImage.Find("Check").gameObject;
+            checkImg.SetActive(true);
+        }
+    }
+
     private void RandomSkill(int idx, Transform panel)
     {
         // 찾아주고
         TextMeshProUGUI skillName = panel.Find("NameContainer/SkillName").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI skillIntrouce = panel.Find("SkillIntroduce").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI upgradeStatus = panel.Find("UpgradeText").GetComponent<TextMeshProUGUI>();
         Image skillImage = panel.Find("SkillImage").GetComponent<Image>();
+
+        if (skillSO.list[idx].ID != 0)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                GameObject upgradeImage = panel.Find($"UpgradeContainer/CheckContain_{i + 1}").gameObject;
+                upgradeImage.SetActive(true);
+            }
+            CheckUpgradeBox(idx, panel);
+        }
+        else
+        {
+            //print("0");
+            for (int i = 0; i < 5; i++)
+            {
+                GameObject upgradeImage = panel.Find($"UpgradeContainer/CheckContain_{i + 1}").gameObject;
+                upgradeImage.SetActive(false);
+            }
+        }
 
         // 해당 idx에 있는 거 넣어주깅
         skillName.text = skillSO.list[idx].name;
         skillIntrouce.text = skillSO.list[idx].introduce;
-        upgradeStatus.text = $"현재 능력 레벨: {skillSO.list[idx].upgradeLevel}";
         skillImage.sprite = skillSO.list[idx].image;
     }
 
@@ -176,7 +214,7 @@ public class UIManager : MonoBehaviour
                 includeSkillPanel.SetActive(false);
                 Time.timeScale = 1;
             });
-        ++skillSO.list[panelID[pIdx]].upgradeLevel;
+        if(skillSO.list[panelID[pIdx]].ID != 0) ++skillSO.list[panelID[pIdx]].upgradeLevel; // 0은 업그레이드 안함
         SkillUpgrade(skillSO.list[panelID[pIdx]].ID);
     }
 
@@ -185,14 +223,14 @@ public class UIManager : MonoBehaviour
         Player player = GameManager.Instance.playerTrm.GetComponent<Player>();
         switch(id)
         {
-            case 0: // 속도 증가
-                player.OnSpeedUp(1f);
+            case 0: // 힐
+                player.OnHeal(10);
                 break;
             case 1: // 자석 범위 증가
-                player.OnMagnetUpgrade(1);
+                player.OnSpeedUp(1f);
                 break;
             case 2: // 체력 회복
-                player.OnHeal(10);
+                player.OnMagnetUpgrade(1);
                 break;
             case 3:
                 player.OnYarnTrue();
