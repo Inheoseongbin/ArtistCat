@@ -50,6 +50,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        skillSO.ResetUpgrade();
+
         settingPanel.SetActive(false);
         gameOverPanel.SetActive(false);
         includeSkillPanel.SetActive(false);
@@ -121,9 +123,18 @@ public class UIManager : MonoBehaviour
         int idx = skillSO.list.Count; // List 개수 받아오기 1개면 1개
 
         List<int> randomList = new List<int>();
-        for (int i = 0; i < idx; i++)
+        for (int i = 0; i < idx; i++)   
         {
-            randomList.Add(i); // 0 ~ 개수만큼
+            for (int j = 0; j < 5 - skillSO.list[i].upgradeLevel; j++) // 5단계까지 업그레이드 할 수 있음
+            {
+                randomList.Add(i); // 0 ~ 개수만큼
+            }
+        }
+
+        if(randomList.Count == 0)
+        {
+            print("업그레이드끝ㅊ");
+            return;
         }
 
         for (int i = 0; i < 3; i++)
@@ -143,11 +154,13 @@ public class UIManager : MonoBehaviour
         // 찾아주고
         TextMeshProUGUI skillName = panel.Find("NameContainer/SkillName").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI skillIntrouce = panel.Find("SkillIntroduce").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI upgradeStatus = panel.Find("UpgradeText").GetComponent<TextMeshProUGUI>();
         Image skillImage = panel.Find("SkillImage").GetComponent<Image>();
 
         // 해당 idx에 있는 거 넣어주깅
         skillName.text = skillSO.list[idx].name;
         skillIntrouce.text = skillSO.list[idx].introduce;
+        upgradeStatus.text = $"현재 능력 레벨: {skillSO.list[idx].upgradeLevel}";
         skillImage.sprite = skillSO.list[idx].image;
     }
 
@@ -163,6 +176,7 @@ public class UIManager : MonoBehaviour
                 includeSkillPanel.SetActive(false);
                 Time.timeScale = 1;
             });
+        ++skillSO.list[panelID[pIdx]].upgradeLevel;
         SkillUpgrade(skillSO.list[panelID[pIdx]].ID);
     }
 
@@ -181,8 +195,10 @@ public class UIManager : MonoBehaviour
                 player.OnHeal(10);
                 break;
             case 3:
+                player.OnYarnTrue();
                 break;
             case 4:
+                player.OnFishTrue();
                 break;
             case 5:
                 break;

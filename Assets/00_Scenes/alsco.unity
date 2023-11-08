@@ -1801,13 +1801,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c40910c9d507646915c88e95673938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillSO: {fileID: 11400000, guid: 648410e35e9cab74782bc4d7db4c7ce9, type: 2}
-  includeSkillPanel: {fileID: 2061420997}
-  panels:
-  - {fileID: 441096959}
-  - {fileID: 182091569}
-  - {fileID: 725468061}
-  panelID: 
 --- !u!114 &663779115
 MonoBehaviour:
   m_ObjectHideFlags: 0

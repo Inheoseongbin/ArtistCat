@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	public int goalExp;
-	public int curExp;
-	public int curLevel;
-
 	private PlayerHealth playerHealth;
 	private PlayerMove playerMove;
 	[SerializeField] private CircleCollider2D magnetCollider;
@@ -35,4 +31,16 @@ public class Player : MonoBehaviour
 		print("자석 호출");
 		magnetCollider.radius += value;
 	}
+
+	public void OnYarnTrue()
+    {
+		print("털실호출");
+		PoolManager.Instance.Pop("String");
+    }
+
+	public void OnFishTrue()
+    {
+		print("물고기호출");
+		PoolManager.Instance.Pop("FishThorn");
+    }
 }
