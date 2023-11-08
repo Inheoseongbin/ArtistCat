@@ -21,7 +21,8 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    // 배경음악은 메인 카메라로 재생하면 됨
+    // 배경음악은 메인 카메라로 재생
+
     // 이런 식으로 쓰면 됨
     public void PlayPlayerMoveSound()
     {

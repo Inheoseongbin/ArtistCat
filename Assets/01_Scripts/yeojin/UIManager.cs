@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SkillSO skillSO;
     [SerializeField] private GameObject includeSkillPanel;
     [SerializeField] private Transform[] panels;
+
     private int[] panelID;
     private int maxLevel = 5;
     private bool isSkillChooseOn;
@@ -45,6 +47,7 @@ public class UIManager : MonoBehaviour
     [Header("Setting")]
     [SerializeField] private GameObject settingPanel;
     private bool isSetting = false;
+    public bool IsSetting => isSetting;
 
     private void Awake()
     {
@@ -103,7 +106,8 @@ public class UIManager : MonoBehaviour
         
         float t = PlayerPrefs.GetFloat(keyName);
         float endTime = GameManager.Instance.EndTime;
-        if (t < endTime) // 더 오래 버텼을 경우 최고기록 갱신 
+
+        if (t < endTime) // 더 오래 버텼을 경우 최고기록 갱신 // 이것도 나중에 게임 매니저로 옮기고
         {
             PlayerPrefs.SetFloat(keyName, endTime);
             bestTime = endTime;
@@ -116,13 +120,15 @@ public class UIManager : MonoBehaviour
         print("게임오버패널호출");
     }
 
-    public void RestartButttonClick()
+    public void RestartSceneBtn()
     {
-        print("다시시작");
+        // 재시작 눌렀으면 enemy 모두 삭제 시키고
+        gameOverPanel.transform.DOScale(0, 0.8f).OnComplete(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
     }
-    public void BackToFirstButtonClick()
+
+    public void GoBackToFirstSceneBtn()
     {
-        print("처음으로");
+        // 처음으로 버튼
     }
 
     // Level UP
