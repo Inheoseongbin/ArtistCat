@@ -53,6 +53,7 @@ public class EnemySpawner : MonoBehaviour
 		while (true)
 		{
 			float time = 5 * 60;
+			yield return new WaitForSeconds(time);
 			atOnceCount = Random.Range(1, 4);
 			for (int i = 0; i < atOnceCount; i++)
 			{
@@ -60,7 +61,6 @@ public class EnemySpawner : MonoBehaviour
 				Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
 				e.transform.position = pos;
 			}
-			yield return new WaitForSeconds(time);
 		}
 	}
 }

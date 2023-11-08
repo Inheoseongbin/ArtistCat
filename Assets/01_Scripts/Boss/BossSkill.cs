@@ -107,11 +107,13 @@ public class BossSkill : BossMain
         Vector2 direction = new Vector2(Mathf.Cos(radianAngle), Mathf.Sin(radianAngle));
 
         // 총알 생성 및 설정
-        GameObject bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
+        //GameObject bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
+        Bullet bullet = PoolManager.Instance.Pop("Bullet") as Bullet;
+        bullet.transform.position = transform.position;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.velocity = direction * _bulletSpeed;
 
         // 총알 일정 시간 후에 파괴
-        Destroy(bullet, 10.0f);
+        //Destroy(bullet, 10.0f);
     }
 }

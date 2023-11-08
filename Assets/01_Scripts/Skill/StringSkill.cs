@@ -6,6 +6,7 @@ public class StringSkill : PoolableMono
 {
 	[SerializeField] private float speed = 10;
 	[SerializeField] private int liveTime = 4;
+	[SerializeField] private int coolTime = 5;
 
 	private float xDir;
 	private float yDir;
