@@ -583,6 +583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCam: {fileID: 0}
+  playerTrm: {fileID: 0}
   poolingListSO: {fileID: 11400000, guid: 14b5c3b3d609ddf4f9fc9fb344d94613, type: 2}
 --- !u!1 &519420028
 GameObject:
@@ -1228,10 +1229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyList: []
-  minx: -9
-  miny: -5
-  maxx: 9
-  maxy: 5
+  bossList: []
+  range: 0
 --- !u!1 &1586747952
 GameObject:
   m_ObjectHideFlags: 0
