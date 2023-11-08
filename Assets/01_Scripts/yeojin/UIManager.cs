@@ -226,7 +226,6 @@ public class UIManager : MonoBehaviour
             .OnComplete(() =>
             {
                 includeSkillPanel.SetActive(false);
-                Time.timeScale = 1;
             });
         if(skillSO.list[panelID[pIdx]].ID != 0) ++skillSO.list[panelID[pIdx]].upgradeLevel; // 0은 업그레이드 안함
         SkillUpgrade(skillSO.list[panelID[pIdx]].ID);
@@ -238,7 +237,7 @@ public class UIManager : MonoBehaviour
         switch(id)
         {
             case 0: // 힐
-                player.OnHeal(10);
+                player.OnHeal(30);
                 break;
             case 1: // 자석 범위 증가
                 player.OnSpeedUp(1f);
