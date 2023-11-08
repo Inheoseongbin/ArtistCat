@@ -15,6 +15,12 @@ public enum LineType
 
 public class GameManager : MonoBehaviour
 {
+    private int currentEnemyKills = 0;
+    public int EnemyKill => currentEnemyKills;
+
+    private bool isGameOver = false;
+    public bool IsGameOver => isGameOver;
+
     public static GameManager Instance;
 
 	[HideInInspector] public Camera mainCam;
@@ -32,7 +38,9 @@ public class GameManager : MonoBehaviour
 
         mainCam = Camera.main;
         playerTrm = GameObject.Find("Player").transform;
-
+        
+        currentEnemyKills = 0;
+        
         MakePool();
     }
 
@@ -43,4 +51,13 @@ public class GameManager : MonoBehaviour
         poolingListSO.list.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
     }
 
+    public void AddEnemy()
+    {
+        ++currentEnemyKills;
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+    }
 }

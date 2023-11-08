@@ -73,6 +73,7 @@ public class Enemy : PoolableMono
 	public void Die()
 	{
 		PoolManager.Instance.Push(this); // 죽으면 풀링 넣기
+		GameManager.Instance.AddEnemy(); // 죽은 에너미 수 세주기
 		FallExp();
 	}
 

@@ -22,6 +22,7 @@ public class Drawing : MonoBehaviour
     #region 건든거 없음
     private void Update()
     {
+        if (UIManager.Instance.IsSkillChooseOn) return;
         Draw();
     }
 
