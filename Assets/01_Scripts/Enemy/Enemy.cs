@@ -108,6 +108,7 @@ public class Enemy : PoolableMono
             yield return null;
         }
         PoolManager.Instance.Push(this); // Á×À¸¸é Ç®¸µ ³Ö±â
+		GameManager.Instance.AddEnemy(); // Á×Àº ¿¡³Ê¹Ì
     }
 
     private void FallExp() // Exp ¶³±¸±â
