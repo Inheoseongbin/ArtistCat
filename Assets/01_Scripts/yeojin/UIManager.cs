@@ -39,9 +39,6 @@ public class UIManager : MonoBehaviour
     [Header("Timer")]
     [SerializeField] private TextMeshProUGUI timeText;
     private string keyName = "BestScore";
-    private float currentPlayTime = 0f;
-    public float CurrentPlayTime => currentPlayTime; // 나중에 일정 시간 지나면 보스 불러올 때 쓰는 함수
-    private float endTime = 0f;
 
     private float bestTime = 0f;
 
@@ -72,7 +69,6 @@ public class UIManager : MonoBehaviour
         gameOverPanel.transform.localScale = new Vector3(0, 0, 0);
 
         panelID = new int[3];
-        currentPlayTime = 0f;
 
         expBar.UpdateExpBar(experience, levelUp);
         levelText.text = $"Level : {level}";
@@ -89,36 +85,31 @@ public class UIManager : MonoBehaviour
             Time.timeScale = isSetting ? 0 : 1;
             settingPanel.SetActive(isSetting);
         }
-        TimeShow();
 
         // 디버그용(추후 삭제)
         if(Input.GetKeyDown(KeyCode.Q))
         {
             AddExperience(20);
         }
-    }
-
-    private void TimeShow() // 시간 보여주는거
-    {
-        currentPlayTime += Time.deltaTime;
-        timeText.text = $"{Mathf.FloorToInt(currentPlayTime / 60) % 60:00}:{currentPlayTime % 60:00}";
+        timeText.text = $"{Mathf.FloorToInt(GameManager.Instance.CurrentPlayTime / 60) % 60:00}" +
+            $":{GameManager.Instance.CurrentPlayTime % 60:00}";
     }
 
     // 게임 오버 관련
     public void SetDeadUI() // 사망시 불러옴
     {
-        endTime = currentPlayTime;
         gameOverPanel.transform.DOScale(1, 0.8f);
         gameOverPanel.SetActive(true);
         
         float t = PlayerPrefs.GetFloat(keyName);
+        float endTime = GameManager.Instance.EndTime;
         if (t < endTime) // 더 오래 버텼을 경우 최고기록 갱신 
         {
             PlayerPrefs.SetFloat(keyName, endTime);
             bestTime = endTime;
         }
 
-        currentTimeText.text = $"{Mathf.FloorToInt(currentPlayTime / 60) % 60:00}:{currentPlayTime % 60:00}";
+        currentTimeText.text = $"{Mathf.FloorToInt(endTime / 60) % 60:00}:{endTime % 60:00}";
         bestTimeText.text = $"최고기록 {Mathf.FloorToInt(bestTime / 60) % 60:00}:{bestTime % 60:00}";
         killEnemyText.text = $"처치한 적 {GameManager.Instance.EnemyKill}마리";
 

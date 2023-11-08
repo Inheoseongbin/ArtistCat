@@ -28,6 +28,11 @@ public class GameManager : MonoBehaviour
 
     public PoolingListSO poolingListSO;
 
+    private float currentPlayTime = 0f;
+    public float CurrentPlayTime => currentPlayTime; // 나중에 일정 시간 지나면 보스 불러올 때 쓰는 함수
+    private float endTime = 0f;
+    public float EndTime => endTime;
+
     private void Awake()
     {
         if (Instance != null)
@@ -40,6 +45,7 @@ public class GameManager : MonoBehaviour
         playerTrm = GameObject.Find("Player").transform;
         
         currentEnemyKills = 0;
+        currentPlayTime = 0;
         
         MakePool();
     }
@@ -51,6 +57,11 @@ public class GameManager : MonoBehaviour
         poolingListSO.list.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
     }
 
+    private void Update()
+    {
+        currentPlayTime += Time.deltaTime;
+    }
+
     public void AddEnemy()
     {
         ++currentEnemyKills;
@@ -58,6 +69,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        endTime = currentPlayTime;
         isGameOver = true;
     }
 }
