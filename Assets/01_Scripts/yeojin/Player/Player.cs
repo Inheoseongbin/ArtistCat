@@ -35,12 +35,14 @@ public class Player : MonoBehaviour
 	public void OnYarnTrue()
     {
 		print("털실호출");
-		PoolManager.Instance.Pop("String");
+		StringSkill s = PoolManager.Instance.Pop("String") as StringSkill;
+		s.transform.position = transform.position;
     }
 
 	public void OnFishTrue()
     {
 		print("물고기호출");
-		PoolManager.Instance.Pop("FishThorn");
+		FishthornSkill f = PoolManager.Instance.Pop("FishThorn") as FishthornSkill;
+		f.transform.position = transform.position;
     }
 }
