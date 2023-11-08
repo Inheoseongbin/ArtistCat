@@ -5687,6 +5687,9 @@ MonoBehaviour:
   - {fileID: 617049712}
   - {fileID: 926898226}
   gameOverPanel: {fileID: 420908076}
+  currentTimeText: {fileID: 0}
+  bestTimeText: {fileID: 0}
+  killEnemyText: {fileID: 0}
   timeText: {fileID: 427222012}
   settingPanel: {fileID: 477258028}
 --- !u!4 &1524549631

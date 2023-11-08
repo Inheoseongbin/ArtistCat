@@ -21,7 +21,7 @@ public class Enemy : PoolableMono
 	private List<GameObject> typeList = new List<GameObject>();
 	private Sprite sprite;
 
-	[SerializeField] private SpriteRenderer _backSprite;
+	private SpriteRenderer _sr;
 	private readonly int _dissolve = Shader.PropertyToID("_Dissolve");
 	private readonly string _isDissolve = "_IsDissolve";
 	private readonly string _isHit = "_IsSolidColor";
@@ -31,13 +31,13 @@ public class Enemy : PoolableMono
 
 	public override void Init()
 	{
-        _backSprite.material.SetInt(_isHit, 0);
-        _backSprite.material.SetInt(_isDissolve, 0);
+        _sr.material.SetInt(_isHit, 0);
+        _sr.material.SetInt(_isDissolve, 0);
         _hitDecision.enabled = true;
 		_isDead = false;
 
 		//쉐이더 값 초기화
-		_backSprite.material.SetFloat(_dissolve, 1f);
+		_sr.material.SetFloat(_dissolve, 1f);
 
 		count = typeCount;
 		for (int i = 0; i < count; i++) // 이제 개수만큼 랜덤으로 애마다 공격 타입 받아주기
@@ -57,7 +57,8 @@ public class Enemy : PoolableMono
 	
 	private void Awake()
 	{
-		_hitDecision = GetComponent<BoxCollider2D>();
+        _sr = GetComponentInChildren<SpriteRenderer>();
+        _hitDecision = GetComponent<BoxCollider2D>();
 
 		for (int i = 0; i < sprites.Count; i++) // 처음에 딕셔너리에 타입이랑 그림 넣어
 		{
@@ -91,9 +92,9 @@ public class Enemy : PoolableMono
 
     private IEnumerator Hit()
 	{
-        _backSprite.material.SetInt(_isHit, 1);
+        _sr.material.SetInt(_isHit, 1);
         yield return new WaitForSeconds(.1f);
-        _backSprite.material.SetInt(_isHit, 0);
+        _sr.material.SetInt(_isHit, 0);
 	}
 
 
@@ -107,7 +108,7 @@ public class Enemy : PoolableMono
 
     private IEnumerator DieDissolve(float time)
     {
-		_backSprite.material.SetInt(_isDissolve, 1);
+		_sr.material.SetInt(_isDissolve, 1);
         float currentRate;
         float percent = 0;
         float currentTime = 0;
@@ -117,7 +118,7 @@ public class Enemy : PoolableMono
             currentTime += Time.deltaTime;
             percent = currentTime / time;
             currentRate = Mathf.Lerp(1, -1, percent);
-            _backSprite.material.SetFloat(_dissolve, currentRate);
+            _sr.material.SetFloat(_dissolve, currentRate);
 
             yield return null;
         }
