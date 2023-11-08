@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EnemyMat
+  m_Name: HitMat
   m_Shader: {fileID: -6465566751694194690, guid: 94678c386008417478c58af705f089ad, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -40,7 +40,7 @@ Material:
     m_Floats:
     - _Dissolve: 1
     - _DissolveOutline: 0.05
-    - _IsDissolve: 1
+    - _IsDissolve: 0
     - _IsSolidColor: 0
     - _NoiseScale: 20
     - _ShowBorder: 0.04

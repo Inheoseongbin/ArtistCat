@@ -23,13 +23,17 @@ public class Enemy : PoolableMono
 
 	[SerializeField] private SpriteRenderer _backSprite;
 	private readonly int _dissolve = Shader.PropertyToID("_Dissolve");
+	private readonly string _isDissolve = "_IsDissolve";
+	private readonly string _isHit = "_IsSolidColor";
 
-	bool _isDead = false;
+    bool _isDead = false;
 	private BoxCollider2D _hitDecision;
 
 	public override void Init()
 	{
-		_hitDecision.enabled = true;
+        _backSprite.material.SetInt(_isHit, 0);
+        _backSprite.material.SetInt(_isDissolve, 0);
+        _hitDecision.enabled = true;
 		_isDead = false;
 
 		//쉐이더 값 초기화
@@ -82,9 +86,18 @@ public class Enemy : PoolableMono
 		enemyTypes.RemoveAt(id);
 		Destroy(typeList[id]);
 		typeList.RemoveAt(id);
+		StartCoroutine(Hit());
 	}
 
-	public void Die()
+    private IEnumerator Hit()
+	{
+        _backSprite.material.SetInt(_isHit, 1);
+        yield return new WaitForSeconds(.1f);
+        _backSprite.material.SetInt(_isHit, 0);
+	}
+
+
+    public void Die()
 	{
 		_isDead = true;
         _hitDecision.enabled = false;
@@ -94,6 +107,7 @@ public class Enemy : PoolableMono
 
     private IEnumerator DieDissolve(float time)
     {
+		_backSprite.material.SetInt(_isDissolve, 1);
         float currentRate;
         float percent = 0;
         float currentTime = 0;
