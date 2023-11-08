@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (isSkillChooseOn) return;
+        //if (isSkillChooseOn) return;
         if(Input.GetKeyDown(KeyCode.Escape)) // setting
         {
             isSetting = !isSetting;
@@ -112,14 +112,25 @@ public class UIManager : MonoBehaviour
         {
             experience -= levelUp;
             level += 1;
-            SkillRandomChoose();
+            if (!isSkillChooseOn) SkillRandomChoose();
+            else StartCoroutine(SequentialSkillRandomChoose());
         }
+    }
+
+    private IEnumerator SequentialSkillRandomChoose()
+    {
+        print("기다리는중");
+        yield return new WaitUntil(() => !isSkillChooseOn);
+        print("기다림끝!");
+        SkillRandomChoose();
     }
 
     #region 스킬 관련 함수
 
     public void SkillRandomChoose() // 레벨업시 이거 호출
     {
+        StopAllCoroutines();
+
         isSkillChooseOn = true;
         //print("skillRandom");
         includeSkillPanel.SetActive(true);
@@ -218,13 +229,14 @@ public class UIManager : MonoBehaviour
     public void ChooseButtonClick(int pIdx) // 골랐을 때
     {
         Time.timeScale = 1;
-        isSkillChooseOn = false;
+    
         //print(panelID[pIdx]);
         //print(skillSO.list[panelID[pIdx]].name); // 맞는지확인(해당id아이템이름잘나옴)
 
         includeSkillPanel.transform.DOLocalMoveY(-1000f, 1f)
             .OnComplete(() =>
             {
+                isSkillChooseOn = false;
                 includeSkillPanel.SetActive(false);
             });
         if(skillSO.list[panelID[pIdx]].ID != 0) ++skillSO.list[panelID[pIdx]].upgradeLevel; // 0은 업그레이드 안함
