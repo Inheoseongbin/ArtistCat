@@ -12,6 +12,8 @@ public class Boss : PoolableMono
     private int count;
     public GameObject exp;
 
+    [SerializeField] private SpriteRenderer _sr;
+
     [Header("UI 설정")]
     public List<Sprite> sprites = new List<Sprite>();
     public GameObject imageParent;
@@ -25,6 +27,8 @@ public class Boss : PoolableMono
 
     public override void Init()
     {
+        _sr.material.SetInt("_IsSolidColor", 0);
+
         count = typeCount;
         for (int i = 0; i < count; i++) // 이제 개수만큼 랜덤으로 애마다 공격 타입 받아주기
         {
@@ -60,6 +64,8 @@ public class Boss : PoolableMono
 
     private void Awake()
     {
+        _sr = GetComponentInChildren<SpriteRenderer>();
+
         for (int i = 0; i < sprites.Count; i++) // 처음에 딕셔너리에 타입이랑 그림 넣어
         {
             showType.Add((LineType)i + 1, sprites[i]);
@@ -72,10 +78,18 @@ public class Boss : PoolableMono
         {
             dieCount--;
             ReCharging();
+            StartCoroutine(Hit());
         }
 
         if (dieCount == 0)
             Die();
+    }
+
+    private IEnumerator Hit()
+    {
+        _sr.material.SetInt("_IsSolidColor", 1);
+        yield return new WaitForSeconds(.1f);
+        _sr.material.SetInt("_IsSolidColor", 0);
     }
 
     public void PlayerDraw(LineType attack)

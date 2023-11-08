@@ -2829,7 +2829,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 87f050a7d149d4047890753c38f090a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5687,6 +5687,9 @@ MonoBehaviour:
   - {fileID: 617049712}
   - {fileID: 926898226}
   gameOverPanel: {fileID: 420908076}
+  currentTimeText: {fileID: 0}
+  bestTimeText: {fileID: 0}
+  killEnemyText: {fileID: 0}
   timeText: {fileID: 427222012}
   settingPanel: {fileID: 477258028}
 --- !u!4 &1524549631

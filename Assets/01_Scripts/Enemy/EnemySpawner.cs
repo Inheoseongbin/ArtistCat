@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
 			{
 				Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
 				
-				Enemy e = PoolManager.Instance.Pop(enemyList[0].name) as Enemy;
+				Enemy e = PoolManager.Instance.Pop(enemyList[i].name) as Enemy;
 				e.transform.position = pos;
 			}
 
