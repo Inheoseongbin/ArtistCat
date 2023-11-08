@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
 	{
 		while (true)
 		{
-			float time = 1 * 60;
+			float time = 1 * 10;
 			yield return new WaitForSeconds(time);
 				Boss e = PoolManager.Instance.Pop("Boss") as Boss;
 				Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));

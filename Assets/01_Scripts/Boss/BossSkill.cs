@@ -48,33 +48,38 @@ public class BossSkill : BossMain
         {
             yield return new WaitForSeconds(dTime);
 
-            _bossValue._isDash = true;
-
-            viewDir = _bossValue._playerTr.position - transform.position;
-            _bossValue.lookDir = viewDir;
-
-            float angle = Mathf.Atan2(viewDir.y, viewDir.x) * Mathf.Rad2Deg;
-
-            _dashImage.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
-            _dashImage.SetActive(true);
+            ReadyDash();
 
             yield return new WaitForSeconds(_waitDashTime);
 
-            _dashImage.SetActive(false);
-            _isCharging = true;
-
-            _rb.velocity = viewDir.normalized * _bossValue._DashSpeed;
-
+            Dashing();
+          
             yield return new WaitForSeconds(_dashingTime);
 
             _bossValue._isDash = false;
         }
     }
-
-    private void OnDrawGizmos()
+    #region 대쉬 요소
+    private void ReadyDash()
     {
-        Debug.DrawRay(transform.position, viewDir, Color.red);
+        _bossValue._isDash = true;
+
+        viewDir = _bossValue._playerTr.position - transform.position;
+
+        float angle = Mathf.Atan2(viewDir.y, viewDir.x) * Mathf.Rad2Deg;
+
+        _dashImage.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
+        _dashImage.SetActive(true);
     }
+
+    private void Dashing()
+    {
+        _dashImage.SetActive(false);
+        _isCharging = true;
+
+        _rb.velocity = viewDir.normalized * _bossValue._DashSpeed;
+    }
+    #endregion
 
     IEnumerator ShootRoutine()
     {

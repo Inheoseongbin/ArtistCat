@@ -6,11 +6,15 @@ public class BossMovement : BossMain
 {
     [SerializeField] private float _distance;
 
-    //private Rigidbody2D _rb;
+    private Fence _fence;
 
+    
     protected override void Awake()
     {
         base.Awake();
+        _fence = PoolManager.Instance.Pop("Fence") as Fence;
+
+        _fence.transform.position = transform.position;
 
         _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
     }
@@ -24,6 +28,7 @@ public class BossMovement : BossMain
     void Update()
     {
         OnMove();
+        print(_fence);
     }
 
     public void OnMove()
@@ -35,5 +40,10 @@ public class BossMovement : BossMain
             _rb.velocity = Vector2.zero;
             transform.position = Vector2.MoveTowards(transform.position, _bossValue._playerTr.position, _bossValue._speed * Time.deltaTime);
         }
+    }
+
+    private void OnDisable()
+    {
+        PoolManager.Instance.Push(_fence);
     }
 }
