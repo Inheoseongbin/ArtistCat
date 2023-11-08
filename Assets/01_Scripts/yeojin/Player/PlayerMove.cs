@@ -12,6 +12,8 @@ public class PlayerMove : MonoBehaviour
     private AgentAnimator anim;
     private PlayerHealth playerHealth;
 
+    public bool isFilp = false;
+
     private void Awake()
     {
         anim = GetComponent<AgentAnimator>();
@@ -45,9 +47,15 @@ public class PlayerMove : MonoBehaviour
         {
             anim.SetMove(true);
             if(h > 0)
+			{
+                isFilp = true; 
                 sr.flipX = true;
-            else if(h < 0) 
+			}
+            else if(h < 0)
+			{
+                isFilp = false;
                 sr.flipX = false;
+			}
             //sr.flipX = h > 0 ? true : false;
         }
         else anim.SetMove(false);
