@@ -19,4 +19,13 @@ public class SkillClass
 public class SkillSO : ScriptableObject
 {
     public List<SkillClass> list;
+
+    public void ResetUpgrade()
+    {
+        // 업그레이드 레벨 초기화
+        foreach (SkillClass skill in list)
+        {
+            skill.upgradeLevel = 0;
+        }
+    }
 }
