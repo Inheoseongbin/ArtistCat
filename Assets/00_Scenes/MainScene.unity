@@ -1857,9 +1857,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a77f15e6f971ccb4ca94d5cd19f44066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goalExp: 0
-  curExp: 0
-  curLevel: 0
   magnetCollider: {fileID: 240832879}
 --- !u!70 &780858347
 CapsuleCollider2D:
