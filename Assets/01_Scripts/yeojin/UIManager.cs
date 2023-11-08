@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform[] panels;
     private int[] panelID;
     private int maxLevel = 5;
+    private bool isSkillChooseOn;
 
     [Header("GameOver")]
     [SerializeField] private GameObject gameOverPanel;
@@ -51,6 +52,9 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        isSkillChooseOn = false;
+        isSetting = false;
+
         skillSO.ResetUpgrade();
 
         settingPanel.SetActive(false);
@@ -65,6 +69,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        if (isSkillChooseOn) return;
         if(Input.GetKeyDown(KeyCode.Escape)) // setting
         {
             isSetting = !isSetting;
@@ -115,7 +120,8 @@ public class UIManager : MonoBehaviour
 
     public void SkillRandomChoose() // 레벨업시 이거 호출
     {
-        print("skillRandom");
+        isSkillChooseOn = true;
+        //print("skillRandom");
         includeSkillPanel.SetActive(true);
         includeSkillPanel.transform.localPosition = new Vector3(0, 1000, 0);
         includeSkillPanel.transform.DOLocalMoveY(-55f, 0.7f).SetEase(Ease.InOutQuad)
@@ -164,10 +170,17 @@ public class UIManager : MonoBehaviour
         }
         for (int i = 0; i < skillSO.list[idx].upgradeLevel; i++)
         {
+            // 여기는 애니메이션 재생 안함
             Transform upgradeImage = panel.Find($"UpgradeContainer/CheckContain_{i + 1}");
             GameObject checkImg = upgradeImage.Find("Check").gameObject;
             checkImg.SetActive(true);
+            checkImg.GetComponent<Image>().color = Color.green; // 그린으로 통일
+            checkImg.GetComponent<Animator>().enabled = false;
         }
+        Transform image = panel.Find($"UpgradeContainer/CheckContain_{skillSO.list[idx].upgradeLevel + 1}");
+        GameObject check = image.Find("Check").gameObject;
+        check.SetActive(true);
+        check.GetComponent<Animator>().enabled = true;
     }
 
     private void RandomSkill(int idx, Transform panel)
@@ -205,6 +218,7 @@ public class UIManager : MonoBehaviour
     public void ChooseButtonClick(int pIdx) // 골랐을 때
     {
         Time.timeScale = 1;
+        isSkillChooseOn = false;
         //print(panelID[pIdx]);
         //print(skillSO.list[panelID[pIdx]].name); // 맞는지확인(해당id아이템이름잘나옴)
 
@@ -232,11 +246,11 @@ public class UIManager : MonoBehaviour
             case 2: // 체력 회복
                 player.OnMagnetUpgrade(1);
                 break;
-            case 3:
-                player.OnYarnTrue();
+            case 3: // 털실 호출
+                player.OnYarnTrue(skillSO.list[id].upgradeLevel);
                 break;
-            case 4:
-                player.OnFishTrue();
+            case 4: // 물고기 호출
+                player.OnFishTrue(skillSO.list[id].upgradeLevel);
                 break;
             case 5:
                 break;
