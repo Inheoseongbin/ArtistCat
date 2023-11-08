@@ -28,14 +28,19 @@ public class UIManager : MonoBehaviour
     private int[] panelID;
     private int maxLevel = 5;
     private bool isSkillChooseOn;
+    public bool IsSkillChooseOn => isSkillChooseOn;
 
     [Header("GameOver")]
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TextMeshProUGUI currentTimeText;
+    [SerializeField] private TextMeshProUGUI bestTimeText;
+    [SerializeField] private TextMeshProUGUI killEnemyText;
 
     [Header("Timer")]
     [SerializeField] private TextMeshProUGUI timeText;
-    private float currentPlayTime = 0f;
-    public float CurrentPlayTime => currentPlayTime; // 나중에 일정 시간 지나면 보스 불러올 때 쓰는 함수
+    private string keyName = "BestScore";
+
+    private float bestTime = 0f;
 
     [Header("Setting")]
     [SerializeField] private GameObject settingPanel;
@@ -60,41 +65,64 @@ public class UIManager : MonoBehaviour
         settingPanel.SetActive(false);
         gameOverPanel.SetActive(false);
         includeSkillPanel.SetActive(false);
+
+        gameOverPanel.transform.localScale = new Vector3(0, 0, 0);
+
         panelID = new int[3];
-        currentPlayTime = 0f;
 
         expBar.UpdateExpBar(experience, levelUp);
         levelText.text = $"Level : {level}";
+
+        bestTime = PlayerPrefs.GetFloat(keyName, float.MinValue);
     }
 
     private void Update()
     {
-        //if (isSkillChooseOn) return;
+        if (GameManager.Instance.IsGameOver) return; // 게임오버일 경우 리턴
         if(Input.GetKeyDown(KeyCode.Escape)) // setting
         {
             isSetting = !isSetting;
             Time.timeScale = isSetting ? 0 : 1;
             settingPanel.SetActive(isSetting);
         }
-        TimeShow();
 
         // 디버그용(추후 삭제)
         if(Input.GetKeyDown(KeyCode.Q))
         {
             AddExperience(20);
         }
+        timeText.text = $"{Mathf.FloorToInt(GameManager.Instance.CurrentPlayTime / 60) % 60:00}" +
+            $":{GameManager.Instance.CurrentPlayTime % 60:00}";
     }
 
-    private void TimeShow() // 시간 보여주는거
-    {
-        currentPlayTime += Time.deltaTime;
-        timeText.text = $"{Mathf.FloorToInt(currentPlayTime / 60) % 60:00}:{currentPlayTime % 60:00}";
-    }
-
+    // 게임 오버 관련
     public void SetDeadUI() // 사망시 불러옴
     {
+        gameOverPanel.transform.DOScale(1, 0.8f);
         gameOverPanel.SetActive(true);
+        
+        float t = PlayerPrefs.GetFloat(keyName);
+        float endTime = GameManager.Instance.EndTime;
+        if (t < endTime) // 더 오래 버텼을 경우 최고기록 갱신 
+        {
+            PlayerPrefs.SetFloat(keyName, endTime);
+            bestTime = endTime;
+        }
+
+        currentTimeText.text = $"{Mathf.FloorToInt(endTime / 60) % 60:00}:{endTime % 60:00}";
+        bestTimeText.text = $"최고기록 {Mathf.FloorToInt(bestTime / 60) % 60:00}:{bestTime % 60:00}";
+        killEnemyText.text = $"처치한 적 {GameManager.Instance.EnemyKill}마리";
+
         print("게임오버패널호출");
+    }
+
+    public void RestartButttonClick()
+    {
+        print("다시시작");
+    }
+    public void BackToFirstButtonClick()
+    {
+        print("처음으로");
     }
 
     // Level UP
