@@ -32,6 +32,9 @@
         },
         {
             "m_Id": "91cdde02ff924e72927d57d275549556"
+        },
+        {
+            "m_Id": "2990567843de4423b13ef26284fb0d23"
         }
     ],
     "m_Keywords": [],
@@ -1404,10 +1407,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -653.0,
-            "y": -119.9999771118164,
-            "width": 208.0,
-            "height": 435.0000305175781
+            "x": -828.800048828125,
+            "y": -152.00001525878907,
+            "width": 183.2000732421875,
+            "height": 248.0
         }
     },
     "m_Slots": [
@@ -1926,6 +1929,28 @@
     },
     "m_Labels": [],
     "m_Space": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.BooleanShaderProperty",
+    "m_ObjectId": "2990567843de4423b13ef26284fb0d23",
+    "m_Guid": {
+        "m_GuidSerialized": "11779f29-5bcd-426e-b010-7d97e80794c9"
+    },
+    "m_Name": "IsOutLine",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "IsOutLine",
+    "m_DefaultReferenceName": "_IsOutLine",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": false
 }
 
 {
@@ -4196,6 +4221,9 @@
         },
         {
             "m_Id": "91cdde02ff924e72927d57d275549556"
+        },
+        {
+            "m_Id": "2990567843de4423b13ef26284fb0d23"
         }
     ]
 }
@@ -4283,10 +4311,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -869.0000610351563,
-            "y": -81.00000762939453,
-            "width": 128.99993896484376,
-            "height": 34.00001525878906
+            "x": -1019.9998779296875,
+            "y": -112.80003356933594,
+            "width": 128.7999267578125,
+            "height": 33.600006103515628
         }
     },
     "m_Slots": [

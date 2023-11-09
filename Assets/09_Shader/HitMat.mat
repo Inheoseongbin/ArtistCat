@@ -41,6 +41,7 @@ Material:
     - _Dissolve: 1
     - _DissolveOutline: 0.05
     - _IsDissolve: 0
+    - _IsOutLine: 1
     - _IsSolidColor: 0
     - _NoiseScale: 20
     - _ShowBorder: 0

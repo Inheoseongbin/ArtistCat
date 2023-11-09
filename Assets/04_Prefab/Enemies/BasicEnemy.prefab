@@ -375,6 +375,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 126a98ec4c94cda48bb511c68cf06a71, type: 3}
   imageParent: {fileID: 433176230}
   img: {fileID: 7077652877445151162, guid: 4b54cd6c8df225646b9fa1855b6480d6, type: 3}
+  _emo: {fileID: 7548177575480685266}
 --- !u!114 &7548177575724573243
 MonoBehaviour:
   m_ObjectHideFlags: 0
