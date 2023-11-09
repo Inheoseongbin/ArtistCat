@@ -37,9 +37,20 @@ public class PlayerHealth : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
+		{
+            print(collision.name);
             Hurt(10); 
+		}
         else if (collision.CompareTag("Boss"))
+		{
+            print(collision.name);
             Hurt(10);
+		}
+
+        if(!collision.CompareTag("Ground"))
+		{
+            print(collision.gameObject.transform.position);
+		}
     }
 
     private void Hurt(int dmg)
