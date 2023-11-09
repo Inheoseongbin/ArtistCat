@@ -35,8 +35,28 @@ public class UIManager : MonoBehaviour
 
     [Header("¼³Á¤ UI")]
     [SerializeField] private GameObject settingPanel;
+    [SerializeField] private Slider bgmSlider;
+    [SerializeField] private Slider effectSlider;
+
     private bool isSetting = false;
     public bool IsSetting => isSetting;
+
+
+    public void OnBgmSliderValueChanged()
+    {
+        float bgmVolume = bgmSlider.value;
+
+        SoundManager.Instance.SetBGMVolume(bgmVolume);
+        PlayerPrefs.SetFloat("BGMVolume", bgmVolume);
+    }
+
+    public void OnEffectSliderValueChanged()
+    {
+        float effectVolume = effectSlider.value;
+
+        SoundManager.Instance.SetEffectVolume(effectVolume);
+        PlayerPrefs.SetFloat("EffectVolume", effectVolume);
+    }
 
     private void Awake()
     {
@@ -48,6 +68,9 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
+        PlayerPrefs.GetFloat("BGMVolume", 0.1f);
+        PlayerPrefs.GetFloat("EffectVolume", 0.4f);
+
         isSkillChooseOn = false;
         isSetting = false;
 

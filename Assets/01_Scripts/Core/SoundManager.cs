@@ -22,6 +22,15 @@ public class SoundManager : MonoBehaviour
     }
 
     // 배경음악은 메인 카메라로 재생
+    public void SetBGMVolume(float value)
+    {
+        Camera.main.GetComponent<AudioSource>().volume = value;
+    }
+
+    public void SetEffectVolume(float value)
+    {
+        audioSource.volume = value;
+    }
 
     // 이런 식으로 쓰면 됨
     public void PlayPlayerMoveSound()
