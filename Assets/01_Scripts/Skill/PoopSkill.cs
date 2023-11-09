@@ -19,7 +19,7 @@ public class PoopSkill : PoolableMono
 		sp.enabled = true;
 		col.enabled = true;
 
-		float x = Random.Range(-5, 5);
+/*		float x = Random.Range(-5, 5);
 		float y = Random.Range(-5, 5);
 
 		if (dir == Vector3.zero)
@@ -28,7 +28,11 @@ public class PoopSkill : PoolableMono
 			y = Random.Range(-5, 5);
 		}
 
-		dir = new Vector3(x, y).normalized;
+		dir = new Vector3(x, y).normalized;*/
+
+		Enemy e = FindFirstObjectByType<Enemy>();
+		if(e != null)
+			dir = e.transform.position - transform.position;
 	}
 
 	private void Awake()
