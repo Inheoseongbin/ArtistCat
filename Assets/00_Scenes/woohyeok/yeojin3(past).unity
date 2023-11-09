@@ -6472,7 +6472,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expBar: {fileID: 1188227961}
   levelText: {fileID: 1079765139}
-  skillSO: {fileID: 11400000, guid: 648410e35e9cab74782bc4d7db4c7ce9, type: 2}
   includeSkillPanel: {fileID: 242955483}
   panels:
   - {fileID: 1285503017}
@@ -6484,6 +6483,9 @@ MonoBehaviour:
   killEnemyText: {fileID: 573199608}
   timeText: {fileID: 427222012}
   settingPanel: {fileID: 477258028}
+  settingImage: {fileID: 0}
+  bgmSlider: {fileID: 0}
+  effectSlider: {fileID: 0}
 --- !u!4 &1524549631
 Transform:
   m_ObjectHideFlags: 0
