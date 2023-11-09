@@ -21,7 +21,10 @@ public class PoopSkill : PoolableMono
 
 		Enemy e = FindAnyObjectByType<Enemy>();
 		if(e != null)
+		{
 			dir = e.transform.position - transform.position;
+			dir.Normalize();
+		}
 		else
 		{
 			float x = Random.Range(-5, 5);
