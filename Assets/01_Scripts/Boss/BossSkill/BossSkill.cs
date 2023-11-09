@@ -14,6 +14,7 @@ public class BossSkill : BossMain
     [Header("대쉬")]
     [SerializeField] protected float _waitDashTime;
     [SerializeField] protected float _dashingTime;
+    [SerializeField] protected float _knockPower;
 
     [Header("오브젝트")]
     [SerializeField] private GameObject _bulletPrefab;
@@ -48,33 +49,38 @@ public class BossSkill : BossMain
         {
             yield return new WaitForSeconds(dTime);
 
-            _bossValue._isDash = true;
-
-            viewDir = _bossValue._playerTr.position - transform.position;
-            _bossValue.lookDir = viewDir;
-
-            float angle = Mathf.Atan2(viewDir.y, viewDir.x) * Mathf.Rad2Deg;
-
-            _dashImage.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
-            _dashImage.SetActive(true);
+            ReadyDash();
 
             yield return new WaitForSeconds(_waitDashTime);
 
-            _dashImage.SetActive(false);
-            _isCharging = true;
-
-            _rb.velocity = viewDir.normalized * _bossValue._DashSpeed;
+            Dashing();
 
             yield return new WaitForSeconds(_dashingTime);
 
             _bossValue._isDash = false;
         }
     }
-
-    private void OnDrawGizmos()
+    #region 대쉬 요소
+    private void ReadyDash()
     {
-        Debug.DrawRay(transform.position, viewDir, Color.red);
+        _bossValue._isDash = true;
+
+        viewDir = _bossValue._playerTr.position - transform.position;
+
+        float angle = Mathf.Atan2(viewDir.y, viewDir.x) * Mathf.Rad2Deg;
+
+        _dashImage.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
+        _dashImage.SetActive(true);
     }
+
+    private void Dashing()
+    {
+        _dashImage.SetActive(false);
+        _isCharging = true;
+
+        _rb.velocity = viewDir.normalized * _bossValue._DashSpeed;
+    }
+    #endregion
 
     IEnumerator ShootRoutine()
     {
@@ -112,8 +118,21 @@ public class BossSkill : BossMain
         bullet.transform.position = transform.position;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.velocity = direction * _bulletSpeed;
+    }
 
-        // 총알 일정 시간 후에 파괴
-        //Destroy(bullet, 10.0f);
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            print("efrgtjuki");
+            Knockback(collision.gameObject, viewDir);
+        }
+    }
+
+    private void Knockback(GameObject colObj, Vector2 knockDir)
+    {
+        colObj.gameObject.GetComponent<Rigidbody2D>().AddForce( knockDir * _knockPower);
+
+        _rb.velocity = Vector2.zero;
     }
 }
