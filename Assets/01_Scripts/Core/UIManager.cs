@@ -29,34 +29,21 @@ public class UIManager : MonoBehaviour
 
     [Header("타이머 UI")]
     [SerializeField] private TextMeshProUGUI timeText;
-    private string keyName = "BestScore";
+    private string bestScoreKey = "BestScore";
 
     private float bestTime = 0f;
 
     [Header("설정 UI")]
     [SerializeField] private GameObject settingPanel;
+    [SerializeField] private GameObject settingImage;
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider effectSlider;
 
+    private string bgmKey = "BGMVolume";
+    private string effectKey = "EffectVolume";
+
     private bool isSetting = false;
     public bool IsSetting => isSetting;
-
-
-    public void OnBgmSliderValueChanged()
-    {
-        float bgmVolume = bgmSlider.value;
-
-        SoundManager.Instance.SetBGMVolume(bgmVolume);
-        PlayerPrefs.SetFloat("BGMVolume", bgmVolume);
-    }
-
-    public void OnEffectSliderValueChanged()
-    {
-        float effectVolume = effectSlider.value;
-
-        SoundManager.Instance.SetEffectVolume(effectVolume);
-        PlayerPrefs.SetFloat("EffectVolume", effectVolume);
-    }
 
     private void Awake()
     {
@@ -68,9 +55,6 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
-        PlayerPrefs.GetFloat("BGMVolume", 0.1f);
-        PlayerPrefs.GetFloat("EffectVolume", 0.4f);
-
         isSkillChooseOn = false;
         isSetting = false;
 
@@ -85,7 +69,9 @@ public class UIManager : MonoBehaviour
         expBar.UpdateExpBar(0, 0);
         levelText.text = $"Level : {1}";
 
-        bestTime = PlayerPrefs.GetFloat(keyName, float.MinValue);
+        bestTime = PlayerPrefs.GetFloat(bestScoreKey, float.MinValue);
+        bgmSlider.value = PlayerPrefs.GetFloat(bgmKey);
+        effectSlider.value = PlayerPrefs.GetFloat(effectKey);
     }
     private void Update()
     {
@@ -93,13 +79,19 @@ public class UIManager : MonoBehaviour
         
         if(Input.GetKeyDown(KeyCode.Escape)) // 설정 눌렀을 경우
         {
-            isSetting = !isSetting;
-            Time.timeScale = isSetting ? 0 : 1;
-            settingPanel.SetActive(isSetting);
+            OnSetting();
         }
 
         timeText.text = $"{Mathf.FloorToInt(GameManager.Instance.CurrentPlayTime / 60) % 60:00}" +
             $":{GameManager.Instance.CurrentPlayTime % 60:00}";
+    }
+
+    // 설정
+    public void OnSetting()
+    {
+        isSetting = !isSetting;
+        settingPanel.SetActive(isSetting);
+        Time.timeScale = isSetting ? 0 : 1;
     }
 
     // 게임 오버 관련
@@ -108,12 +100,12 @@ public class UIManager : MonoBehaviour
         gameOverPanel.transform.DOScale(1, 0.8f).OnComplete(() => Time.timeScale = 0);
         gameOverPanel.SetActive(true);
         
-        float t = PlayerPrefs.GetFloat(keyName);
+        float t = PlayerPrefs.GetFloat(bestScoreKey);
         float endTime = GameManager.Instance.EndTime;
 
         if (t < endTime) // 더 오래 버텼을 경우 최고기록 갱신 // 이것도 나중에 게임 매니저로 옮기고
         {
-            PlayerPrefs.SetFloat(keyName, endTime);
+            PlayerPrefs.SetFloat(bestScoreKey, endTime);
             bestTime = endTime;
         }
 
@@ -127,11 +119,21 @@ public class UIManager : MonoBehaviour
     {
         // 재시작 눌렀으면 enemy 모두 삭제 시키고
         Time.timeScale = 1;
-        gameOverPanel.transform.DOScale(0, 0.8f).OnComplete(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
+
+        if (GameManager.Instance.IsGameOver)
+            gameOverPanel.transform.DOScale(0, 0.8f)
+                .OnComplete(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
+        else
+            settingImage.transform.DOScale(0, 0.8f)
+                .OnComplete(() =>
+                {
+                    settingPanel.SetActive(false);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                });
     }
     public void GoBackToFirstSceneBtn()
     {
-        // 처음으로 버튼
+        // 시작화면 버튼
     }
 
     // Level UP
@@ -140,7 +142,6 @@ public class UIManager : MonoBehaviour
         expBar.UpdateExpBar(experience, levelUp);
         levelText.text = $"Level : {level}";
     }
-
     public void CheckingCanLevelUp()
     {
         if (!isSkillChooseOn) SkillRandomChoose();
@@ -238,5 +239,17 @@ public class UIManager : MonoBehaviour
             });
 
         SkillManager.Instance.PressBtnAndUpgrade(panelID[pIdx]);
+    }
+
+    // 음악 소리 변경
+    public void OnBgmSliderValueChanged()
+    {
+        float bgmVolume = bgmSlider.value;
+        SoundManager.Instance.SetBGMVolume(bgmVolume);
+    }
+    public void OnEffectSliderValueChanged()
+    {
+        float effectVolume = effectSlider.value;
+        SoundManager.Instance.SetEffectVolume(effectVolume);
     }
 }

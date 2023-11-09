@@ -22,7 +22,8 @@ public class Drawing : MonoBehaviour
     #region 건든거 없음
     private void Update()
     {
-        if (UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting || GameManager.Instance.IsGameOver) return;
+        if (UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting || 
+            GameManager.Instance.IsGameOver) return;
         Draw();
     }
 
