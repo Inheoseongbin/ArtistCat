@@ -101,7 +101,7 @@ public class UIManager : MonoBehaviour
     // 게임 오버 관련
     public void SetDeadUI() // 사망시 불러옴
     {
-        gameOverPanel.transform.DOScale(1, 0.8f);
+        gameOverPanel.transform.DOScale(1, 0.8f).OnComplete(() => Time.timeScale = 0);
         gameOverPanel.SetActive(true);
         
         float t = PlayerPrefs.GetFloat(keyName);
@@ -116,13 +116,12 @@ public class UIManager : MonoBehaviour
         currentTimeText.text = $"{Mathf.FloorToInt(endTime / 60) % 60:00}:{endTime % 60:00}";
         bestTimeText.text = $"최고기록 {Mathf.FloorToInt(bestTime / 60) % 60:00}:{bestTime % 60:00}";
         killEnemyText.text = $"처치한 적 {GameManager.Instance.EnemyKill}마리";
-
-        print("게임오버패널호출");
     }
 
     public void RestartSceneBtn()
     {
         // 재시작 눌렀으면 enemy 모두 삭제 시키고
+        Time.timeScale = 1;
         gameOverPanel.transform.DOScale(0, 0.8f).OnComplete(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
     }
 
@@ -163,7 +162,7 @@ public class UIManager : MonoBehaviour
 
     public void SkillRandomChoose() // 레벨업시 이거 호출
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
 
         isSkillChooseOn = true;
         //print("skillRandom");
