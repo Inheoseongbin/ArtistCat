@@ -44,15 +44,13 @@ public class PoopSkill : PoolableMono
 	{
 		sp = GetComponent<SpriteRenderer>();
 		col = GetComponent<Collider2D>();
-		StartCoroutine(Poop(lifeTime, coolTime));
+		StartCoroutine(Poop(lifeTime));
 		Init();
 	}
 
 	private void Update()
 	{
 		transform.position += dir * speed * Time.deltaTime;
-
-		Dead();
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -61,33 +59,12 @@ public class PoopSkill : PoolableMono
 		{
 			Enemy e = collision.GetComponent<Enemy>();
 			e.DrawReduce(0);
-			Disappear();
 		}
 	}
 
-	private IEnumerator Poop(int life, int cool)
+	private IEnumerator Poop(int life)
 	{
 		yield return new WaitForSeconds(life);
-		Disappear();
-		yield return new WaitForSeconds(cool);
-		transform.position = GameManager.Instance.playerTrm.position;
-		Init();
-		StartCoroutine(Poop(lifeTime, coolTime));
-	}
-
-	private void Disappear()
-	{
-		speed = 0;
-		sp.enabled = false;
-		col.enabled = false;
-	}
-
-	void Dead()
-	{
-		Transform target = GameManager.Instance.playerTrm;
-		Vector3 targetPos = target.position;
-		float dir = Vector3.Distance(targetPos, transform.position);
-		if (dir > 20f)
-			PoolManager.Instance.Push(this);
+		PoolManager.Instance.Push(this);
 	}
 }
