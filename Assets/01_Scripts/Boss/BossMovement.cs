@@ -6,17 +6,13 @@ public class BossMovement : BossMain
 {
     [SerializeField] private float _distance;
 
-    //private Rigidbody2D _rb;
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
-    }
+    //private Fence _fence;
 
     void Start()
     {
+        Fence _fence = PoolManager.Instance.Pop("Fence") as Fence;
+        _fence.transform.position = transform.position;
+        _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
         _bossValue._isSkill = false;
     }
 
@@ -24,6 +20,7 @@ public class BossMovement : BossMain
     void Update()
     {
         OnMove();
+        //print(_fence);
     }
 
     public void OnMove()

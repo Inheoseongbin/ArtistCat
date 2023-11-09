@@ -7,7 +7,10 @@ public class EnemySpawner : MonoBehaviour
 	public List<GameObject> enemyList;
 	public List<GameObject> bossList;
 
-	public float range;
+	[SerializeField]private float range;
+	[SerializeField] private float bSpawnTime;
+	[SerializeField] private int eSpawnTimeMax;
+	[SerializeField] private int eSpawnTimeMin;
 
 	private int atOnceCount;
 	private float minx;
@@ -33,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
 			maxx = player.transform.position.x + range;
 			maxy = player.transform.position.y + range;
 
-			float time = Random.Range(2, 5);
+			int time = Random.Range(eSpawnTimeMin, eSpawnTimeMax);
 			atOnceCount = Random.Range(1, 2);
 
 			for (int i = 0; i < atOnceCount; i++)
@@ -52,8 +55,7 @@ public class EnemySpawner : MonoBehaviour
 	{
 		while (true)
 		{
-			float time = 1 * 60;
-			yield return new WaitForSeconds(time);
+			yield return new WaitForSeconds(bSpawnTime);
 				Boss e = PoolManager.Instance.Pop("Boss") as Boss;
 				Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
 				e.transform.position = pos;
