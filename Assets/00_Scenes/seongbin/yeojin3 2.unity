@@ -5410,7 +5410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1233907148
 Transform:
   m_ObjectHideFlags: 0
@@ -6743,6 +6743,9 @@ MonoBehaviour:
   killEnemyText: {fileID: 573199608}
   timeText: {fileID: 427222012}
   settingPanel: {fileID: 477258028}
+  settingImage: {fileID: 477258028}
+  bgmSlider: {fileID: 0}
+  effectSlider: {fileID: 0}
 --- !u!4 &1524549631
 Transform:
   m_ObjectHideFlags: 0
@@ -8254,6 +8257,9 @@ MonoBehaviour:
   - {fileID: 5249893713551284873, guid: ebe05d14096751d41970597d913c3e3a, type: 3}
   bossList: []
   range: 20
+  bSpawnTime: 100
+  eSpawnTimeMax: 5
+  eSpawnTimeMin: 5
 --- !u!1 &1994942223
 GameObject:
   m_ObjectHideFlags: 0
