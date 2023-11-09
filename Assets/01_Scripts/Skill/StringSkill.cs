@@ -6,25 +6,15 @@ public class StringSkill : PoolableMono
 {
 	[SerializeField] private float speed = 10;
 	[SerializeField] private int liveTime = 4;
-	[SerializeField] private int coolTime = 5;
 
 	private float xDir;
 	private float yDir;
 
-	private SpriteRenderer sp;
-	private CircleCollider2D col;
-
 	public override void Init()
 	{
-		StartCoroutine(TimeToLive(liveTime, coolTime));
+		StartCoroutine(TimeToLive(liveTime));
 		xDir = Random.Range(-1.0f, 1.0f);
 		yDir = Random.Range(-1.0f, 1.0f);
-	}
-
-	void Start()
-	{
-		sp = GetComponent<SpriteRenderer>();
-		col = GetComponent<CircleCollider2D>();
 	}
 
 	void Update()
@@ -67,14 +57,9 @@ public class StringSkill : PoolableMono
 		}
 	}
 
-	IEnumerator TimeToLive(int time, int cool)
+	IEnumerator TimeToLive(int time)
 	{
 		yield return new WaitForSeconds(time);
-		sp.enabled = false;
-		col.enabled = false;
-		yield return new WaitForSeconds(cool);
-		sp.enabled = true;
-		col.enabled = true;
-		//PoolManager.Instance.Push(this);
+		PoolManager.Instance.Push(this);
 	}
 }

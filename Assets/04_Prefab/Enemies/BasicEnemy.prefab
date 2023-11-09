@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1.5
-  range: 2
+  range: 1
 --- !u!1 &7548177576095823582
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ScratchSkill : PoolableMono
 {
-	[SerializeField] private int coolTime;
 	[SerializeField] private float speed = 1;
 
 	private PlayerMove player;
@@ -19,7 +18,7 @@ public class ScratchSkill : PoolableMono
 	{
 		col.enabled = true;
 		pos = transform.parent.position;
-		if (player.isFilp)
+/*		if (player.isFilp)
 		{
 			sp.flipX = false;
 			pos.x += 1.2f;
@@ -30,7 +29,7 @@ public class ScratchSkill : PoolableMono
 			sp.flipX = true;
 			pos.x -= 1.2f;
 			pos.y -= 0.3f;
-		}
+		}*/
 		transform.position = pos;
 		StartCoroutine(Rate(speed));
 	}
@@ -41,7 +40,6 @@ public class ScratchSkill : PoolableMono
 		transform.parent = player.transform;
 		sp = GetComponent<SpriteRenderer>();
 		col = GetComponent<Collider2D>();
-		StartCoroutine(Scratch(coolTime));
 		Init();
 	}
 
@@ -82,6 +80,7 @@ public class ScratchSkill : PoolableMono
 		yield return new WaitForSeconds(0.2f);
 		col.enabled = false;
 		sp.material.SetFloat(rate, 1);
+		PoolManager.Instance.Push(this);
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -91,12 +90,5 @@ public class ScratchSkill : PoolableMono
 			Enemy e = collision.GetComponent<Enemy>();
 			e.DrawReduce(0);
 		}
-	}
-
-	IEnumerator Scratch(int cool)
-	{
-		yield return new WaitForSeconds(cool);
-		Init();
-		StartCoroutine(Scratch(coolTime));
 	}
 }
