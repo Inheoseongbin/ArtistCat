@@ -47,6 +47,8 @@ public class PlayerHealth : MonoBehaviour
         currentHP -= dmg;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
+        StartCoroutine(Hit());
+
         if (currentHP <= 0)
         {
             Die();
@@ -56,6 +58,13 @@ public class PlayerHealth : MonoBehaviour
         float val = 1.0f / (float)maxHP; // 0.01
         anim.SetHurt();
         healthBar.GaugeUI(val * currentHP);
+    }
+
+    private IEnumerator Hit()
+    {
+        sr.material.SetInt("_IsSolidColor", 1);
+        yield return new WaitForSeconds(.1f);
+        sr.material.SetInt("_IsSolidColor", 0);
     }
 
     public void AddHP(int heal)
@@ -74,7 +83,7 @@ public class PlayerHealth : MonoBehaviour
             anim.SetDead();
             print("�÷��̾���");
             isDie = true;
-
+            GameManager.Instance.GameOver();
             UIManager.Instance.SetDeadUI();
         }
     }

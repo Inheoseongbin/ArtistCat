@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RePosition : MonoBehaviour
 {
-    [SerializeField] GameObject player;
     Collider2D coll;
 
     private void Awake()
@@ -21,7 +20,7 @@ public class RePosition : MonoBehaviour
             return;
 
         //Player의 거리 확인. 어디에 재배치를 할까?
-        Vector3 playerPos = player.transform.position;
+        Vector3 playerPos = GameManager.Instance.playerTrm.transform.position;
         Vector3 myPos = transform.position;
         float diffX = Mathf.Abs(playerPos.x - myPos.x);
         float diffY = Mathf.Abs(playerPos.y - myPos.y);

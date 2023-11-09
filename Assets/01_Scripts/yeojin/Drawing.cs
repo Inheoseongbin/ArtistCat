@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Drawing : MonoBehaviour
-{ 
+{
     private Camera mainCam;
     private Transform cam;
 
@@ -22,6 +22,7 @@ public class Drawing : MonoBehaviour
     #region 건든거 없음
     private void Update()
     {
+        if (UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting || GameManager.Instance.IsGameOver) return;
         Draw();
     }
 
