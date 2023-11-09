@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner Instance;
+
     public List<GameObject> enemyList;
     public List<GameObject> bossList;
+
+    [HideInInspector] public List<Enemy> saveEnemyList;
+
+    public bool isSpawnLock = false;
 
     [SerializeField] private float range;
     [SerializeField] private float bSpawnTime;
@@ -21,9 +27,17 @@ public class EnemySpawner : MonoBehaviour
 
     private Transform player;
 
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("Spawner is running! Check!");
+        }
+        Instance = this;
+    }
+
     private void Start()
     {
-        StartCoroutine(Spawn());
         StartCoroutine(SpawnBoss());
     }
 
@@ -56,9 +70,11 @@ public class EnemySpawner : MonoBehaviour
                 //case 2://º¸½º
                     //break;
                 default:
-                    e = null;
+                    e = PoolManager.Instance.Pop(enemyList[0].name) as Enemy;
                     break;
             }
+
+            saveEnemyList.Add(e);
 
             Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
             e.transform.position = pos;
