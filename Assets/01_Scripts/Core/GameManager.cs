@@ -12,7 +12,12 @@ public enum LineType
     THUNDER,
     END
 }
-
+public struct SkillInclude
+{
+    public string name;
+    public string info;
+    public Sprite image;
+}
 public class GameManager : MonoBehaviour
 {
     private int currentEnemyKills = 0;

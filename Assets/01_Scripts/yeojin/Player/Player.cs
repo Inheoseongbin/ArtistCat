@@ -32,17 +32,31 @@ public class Player : MonoBehaviour
 		magnetCollider.radius += value;
 	}
 
-	public void OnYarnTrue(int level)
+	public void OnYarnSpawn(int level)
     {
 		print($"털실호출 현재레벨:{level}");
 		StringSkill s = PoolManager.Instance.Pop("String") as StringSkill;
 		s.transform.position = transform.position;
     }
 
-	public void OnFishTrue(int level)
+	public void OnFishSpawn(int level)
     {
 		print($"물고기호출 현재레벨:{level}");
 		FishthornSkill f = PoolManager.Instance.Pop("FishThorn") as FishthornSkill;
 		f.transform.position = transform.position;
     }
+
+	public void OnPoopSpawn(int level)
+    {
+		print($"똥호출 현재레벨:{level}");
+		PoopSkill p = PoolManager.Instance.Pop("Ddong") as PoopSkill;
+		p.transform.position = transform.position;
+	}
+
+	public void OnScratchOn(int level)
+    {
+		print($"스크래치호출 현재레벨:{level}");
+		ScratchSkill s = PoolManager.Instance.Pop("Scratch") as ScratchSkill;
+		s.transform.position = transform.position;
+	}
 }

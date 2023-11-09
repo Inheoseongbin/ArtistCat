@@ -10,41 +10,30 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    [Header("Level")]
+    [Header("레벨업 UI")]
     [SerializeField] private ExperienceBar expBar;
     [SerializeField] private TextMeshProUGUI levelText;
 
-    private int level = 1;
-    private int experience = 0;
-
-    private int levelUp
-    {
-        get { return level * 20; }
-    }
-
-    [Header("Skill Manager")]
-    [SerializeField] private SkillSO skillSO;
+    [Header("스킬 UI")]
     [SerializeField] private GameObject includeSkillPanel;
     [SerializeField] private Transform[] panels;
-
     private int[] panelID;
-    private int maxLevel = 5;
     private bool isSkillChooseOn;
     public bool IsSkillChooseOn => isSkillChooseOn;
 
-    [Header("GameOver")]
+    [Header("게임오버 UI")]
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private TextMeshProUGUI currentTimeText;
     [SerializeField] private TextMeshProUGUI bestTimeText;
     [SerializeField] private TextMeshProUGUI killEnemyText;
 
-    [Header("Timer")]
+    [Header("타이머 UI")]
     [SerializeField] private TextMeshProUGUI timeText;
     private string keyName = "BestScore";
 
     private float bestTime = 0f;
 
-    [Header("Setting")]
+    [Header("설정 UI")]
     [SerializeField] private GameObject settingPanel;
     private bool isSetting = false;
     public bool IsSetting => isSetting;
@@ -57,13 +46,10 @@ public class UIManager : MonoBehaviour
         }
         Instance = this;
     }
-
     private void Start()
     {
         isSkillChooseOn = false;
         isSetting = false;
-
-        skillSO.ResetUpgrade();
 
         settingPanel.SetActive(false);
         gameOverPanel.SetActive(false);
@@ -73,27 +59,22 @@ public class UIManager : MonoBehaviour
 
         panelID = new int[3];
 
-        expBar.UpdateExpBar(experience, levelUp);
-        levelText.text = $"Level : {level}";
+        expBar.UpdateExpBar(0, 0);
+        levelText.text = $"Level : {1}";
 
         bestTime = PlayerPrefs.GetFloat(keyName, float.MinValue);
     }
-
     private void Update()
     {
         if (GameManager.Instance.IsGameOver) return; // 게임오버일 경우 리턴
-        if(Input.GetKeyDown(KeyCode.Escape)) // setting
+        
+        if(Input.GetKeyDown(KeyCode.Escape)) // 설정 눌렀을 경우
         {
             isSetting = !isSetting;
             Time.timeScale = isSetting ? 0 : 1;
             settingPanel.SetActive(isSetting);
         }
 
-        // 디버그용(추후 삭제)
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            AddExperience(20);
-        }
         timeText.text = $"{Mathf.FloorToInt(GameManager.Instance.CurrentPlayTime / 60) % 60:00}" +
             $":{GameManager.Instance.CurrentPlayTime % 60:00}";
     }
@@ -117,39 +98,33 @@ public class UIManager : MonoBehaviour
         bestTimeText.text = $"최고기록 {Mathf.FloorToInt(bestTime / 60) % 60:00}:{bestTime % 60:00}";
         killEnemyText.text = $"처치한 적 {GameManager.Instance.EnemyKill}마리";
     }
-
+    
+    // 버튼 (다시시작&처음으로)
     public void RestartSceneBtn()
     {
         // 재시작 눌렀으면 enemy 모두 삭제 시키고
         Time.timeScale = 1;
         gameOverPanel.transform.DOScale(0, 0.8f).OnComplete(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
     }
-
     public void GoBackToFirstSceneBtn()
     {
         // 처음으로 버튼
     }
 
     // Level UP
-    public void AddExperience(int amount)
+    public void UpdateExp(int experience, int levelUp, int level)
     {
-        experience += amount;
-        CheckLevelUp();
         expBar.UpdateExpBar(experience, levelUp);
         levelText.text = $"Level : {level}";
     }
 
-    public void CheckLevelUp()
+    public void CheckingCanLevelUp()
     {
-        if (experience >= levelUp)
-        {
-            experience -= levelUp;
-            level += 1;
-            if (!isSkillChooseOn) SkillRandomChoose();
-            else StartCoroutine(SequentialSkillRandomChoose());
-        }
+        if (!isSkillChooseOn) SkillRandomChoose();
+        else StartCoroutine(SequentialSkillRandomChoose());
     }
 
+    // 아래는 다 스킬
     private IEnumerator SequentialSkillRandomChoose()
     {
         print("기다리는중");
@@ -157,62 +132,28 @@ public class UIManager : MonoBehaviour
         print("기다림끝!");
         SkillRandomChoose();
     }
-
-    #region 스킬 관련 함수
-
     public void SkillRandomChoose() // 레벨업시 이거 호출
     {
-        //StopAllCoroutines();
-
         isSkillChooseOn = true;
-        //print("skillRandom");
         includeSkillPanel.SetActive(true);
         includeSkillPanel.transform.localPosition = new Vector3(0, 1000, 0);
         includeSkillPanel.transform.DOLocalMoveY(-55f, 0.7f).SetEase(Ease.InOutQuad)
             .OnComplete(() => Time.timeScale = 0);
 
-        int idx = skillSO.list.Count; // List 개수 받아오기 1개면 1개
-
-        List<int> randomList = new List<int>();
-        for (int i = 0; i < idx; i++)  // 0은 체력 회복
-        {
-            if(skillSO.list[i].upgradeLevel == maxLevel) // 레벨 다 됐을 때
-            {
-                continue;
-            }
-            randomList.Add(i); // 0 ~ 개수만큼
-        }
-
-        if (randomList.Count < 3) // 3보다 작으면
-        {
-            while (randomList.Count < 3)
-            {
-                randomList.Add(0); // 체력 회복만 넣어주기
-            }
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            int randIdx = Random.Range(0, randomList.Count);
-
-            // 각각의 패널에 해당 아이디 저장
-            panelID[i] = skillSO.list[randomList[randIdx]].ID;
-            RandomSkill(randomList[randIdx], panels[i]);
-
-            randomList.RemoveAt(randIdx); // 중복 없게 하려고 삭제 -> 나중에 변경 가능성 O
-        }
+        SkillManager.Instance.SkillRandomChoose();
     }
-
     private void CheckUpgradeBox(int idx, Transform panel)
     {
-        //print($"{idx}Upgrade");
         for (int i = 0; i < 5; i++)
         {
             Transform upgradeImage = panel.Find($"UpgradeContainer/CheckContain_{i + 1}");
             GameObject checkImg = upgradeImage.Find("Check").gameObject;
             checkImg.SetActive(false);
         }
-        for (int i = 0; i < skillSO.list[idx].upgradeLevel; i++)
+
+        int upgradeLevel = SkillManager.Instance.CheckSkillUpgradeLevel(idx);
+        
+        for (int i = 0; i < upgradeLevel; i++)
         {
             // 여기는 애니메이션 재생 안함
             Transform upgradeImage = panel.Find($"UpgradeContainer/CheckContain_{i + 1}");
@@ -221,20 +162,24 @@ public class UIManager : MonoBehaviour
             checkImg.GetComponent<Image>().color = Color.green; // 그린으로 통일
             checkImg.GetComponent<Animator>().enabled = false;
         }
-        Transform image = panel.Find($"UpgradeContainer/CheckContain_{skillSO.list[idx].upgradeLevel + 1}");
+
+        Transform image = panel.Find($"UpgradeContainer/CheckContain_{upgradeLevel + 1}");
         GameObject check = image.Find("Check").gameObject;
         check.SetActive(true);
         check.GetComponent<Animator>().enabled = true;
     }
-
-    private void RandomSkill(int idx, Transform panel)
+    public void RandomSkill(int iPanelID, int idx, int iPanel)
     {
+        panelID[iPanel] = iPanelID;
+
+        Transform panel = panels[iPanel];
         // 찾아주고
         TextMeshProUGUI skillName = panel.Find("NameContainer/SkillName").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI skillIntrouce = panel.Find("SkillIntroduce").GetComponent<TextMeshProUGUI>();
         Image skillImage = panel.Find("SkillImage").GetComponent<Image>();
 
-        if (skillSO.list[idx].ID != 0)
+        int id = SkillManager.Instance.CheckCurrentID(idx);
+        if (id != 0)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -245,7 +190,6 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            //print("0");
             for (int i = 0; i < 5; i++)
             {
                 GameObject upgradeImage = panel.Find($"UpgradeContainer/CheckContain_{i + 1}").gameObject;
@@ -253,55 +197,23 @@ public class UIManager : MonoBehaviour
             }
         }
 
+        SkillInclude includeData = SkillManager.Instance.ReturnCurrentInfo(idx);
         // 해당 idx에 있는 거 넣어주깅
-        skillName.text = skillSO.list[idx].name;
-        skillIntrouce.text = skillSO.list[idx].introduce;
-        skillImage.sprite = skillSO.list[idx].image;
+        skillName.text = includeData.name;
+        skillIntrouce.text = includeData.info;
+        skillImage.sprite = includeData.image;
     }
-
     public void ChooseButtonClick(int pIdx) // 골랐을 때
     {
         Time.timeScale = 1;
-    
-        //print(panelID[pIdx]);
-        //print(skillSO.list[panelID[pIdx]].name); // 맞는지확인(해당id아이템이름잘나옴)
-
+   
         includeSkillPanel.transform.DOLocalMoveY(-1000f, 1f)
             .OnComplete(() =>
             {
                 isSkillChooseOn = false;
                 includeSkillPanel.SetActive(false);
             });
-        if(skillSO.list[panelID[pIdx]].ID != 0) ++skillSO.list[panelID[pIdx]].upgradeLevel; // 0은 업그레이드 안함
-        SkillUpgrade(skillSO.list[panelID[pIdx]].ID);
-    }
 
-    private void SkillUpgrade(int id)
-    {
-        Player player = GameManager.Instance.playerTrm.GetComponent<Player>();
-        switch(id)
-        {
-            case 0: // 힐
-                player.OnHeal(30);
-                break;
-            case 1: // 자석 범위 증가
-                player.OnSpeedUp(1f);
-                break;
-            case 2: // 체력 회복
-                player.OnMagnetUpgrade(1);
-                break;
-            case 3: // 털실 호출
-                player.OnYarnTrue(skillSO.list[id].upgradeLevel);
-                break;
-            case 4: // 물고기 호출
-                player.OnFishTrue(skillSO.list[id].upgradeLevel);
-                break;
-            case 5:
-                break;
-            default:
-                break;
-        }
+        SkillManager.Instance.PressBtnAndUpgrade(panelID[pIdx]);
     }
-    
-    #endregion
 }

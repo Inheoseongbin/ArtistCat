@@ -38,3 +38,13 @@ MonoBehaviour:
     name: "\uAC00\uC2DC"
     introduce: "\uAC00\uC2DC \uC18C\uD658"
     upgradeLevel: 0
+  - ID: 5
+    image: {fileID: 21300000, guid: 1dde4d8fb0722eb42b29ef35c12310f4, type: 3}
+    name: "\uB625"
+    introduce: "\uB625 \uB358\uC9C0\uAE30"
+    upgradeLevel: 0
+  - ID: 6
+    image: {fileID: 21300000, guid: 3cde362fd5adb06468ddf664a8570fed, type: 3}
+    name: "\uBC1C\uD1B1"
+    introduce: "\uD560\uD034\uAE30"
+    upgradeLevel: 0
