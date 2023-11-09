@@ -19,7 +19,7 @@ public class PoopSkill : PoolableMono
 		sp.enabled = true;
 		col.enabled = true;
 
-		float x = Random.Range(-5, 5);
+/*		float x = Random.Range(-5, 5);
 		float y = Random.Range(-5, 5);
 
 		if (dir == Vector3.zero)
@@ -28,9 +28,11 @@ public class PoopSkill : PoolableMono
 			y = Random.Range(-5, 5);
 		}
 
-		dir = new Vector3(x, y).normalized;
-		//float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg; // È¸Àü
-		//transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		dir = new Vector3(x, y).normalized;*/
+
+		Enemy e = FindFirstObjectByType<Enemy>();
+		if(e != null)
+			dir = e.transform.position - transform.position;
 	}
 
 	private void Awake()
@@ -45,6 +47,7 @@ public class PoopSkill : PoolableMono
 	{
 		transform.position += dir * speed * Time.deltaTime;
 
+		Dead();
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -72,5 +75,14 @@ public class PoopSkill : PoolableMono
 		speed = 0;
 		sp.enabled = false;
 		col.enabled = false;
+	}
+
+	void Dead()
+	{
+		Transform target = GameManager.Instance.playerTrm;
+		Vector3 targetPos = target.position;
+		float dir = Vector3.Distance(targetPos, transform.position);
+		if (dir > 20f)
+			PoolManager.Instance.Push(this);
 	}
 }
