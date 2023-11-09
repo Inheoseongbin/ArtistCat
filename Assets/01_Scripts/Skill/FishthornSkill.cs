@@ -26,7 +26,6 @@ public class FishthornSkill : PoolableMono
 		transform.DOJump(target, 2, 1, 0.5f);
 		Thorn t = PoolManager.Instance.Pop("Thorn") as Thorn;
 		t.transform.position = target;
-		t.StartCoroutine(t.Live());
 		yield return new WaitForSeconds(0.6f);
 		PoolManager.Instance.Push(this);
 	}
