@@ -94,7 +94,6 @@ public class Enemy : PoolableMono
 		}
 		else
 			return;
-
 	}
 
     private IEnumerator Hit()
@@ -109,9 +108,7 @@ public class Enemy : PoolableMono
 	{
 		_isDead = true;
         _hitDecision.enabled = false;
-		//StartCoroutine(DieDissolve(1));
-		PoolManager.Instance.Push(this); // 죽으면 풀링 넣기
-		GameManager.Instance.AddEnemy(); // 죽은 에너미
+		StartCoroutine(DieDissolve(1));
 		FallExp();
 	}
 
@@ -131,6 +128,8 @@ public class Enemy : PoolableMono
 
             yield return null;
         }
+        PoolManager.Instance.Push(this); // 죽으면 풀링 넣기
+        GameManager.Instance.AddEnemy(); // 죽은 에너미
     }
 
     private void FallExp() // Exp 떨구기
