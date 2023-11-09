@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Linq;
 
 public class Enemy : PoolableMono
 {
@@ -84,10 +85,16 @@ public class Enemy : PoolableMono
 
 	public void DrawReduce(int id)
 	{
-		enemyTypes.RemoveAt(id);
-		Destroy(typeList[id]);
-		typeList.RemoveAt(id);
-		StartCoroutine(Hit());
+		if(enemyTypes.Any()) // 여러개의 공격을 한번에 받아서 지울게 하나밖에 없을때 
+		{
+			enemyTypes.RemoveAt(id);
+			Destroy(typeList[id]);
+			typeList.RemoveAt(id);
+			StartCoroutine(Hit());
+		}
+		else
+			return;
+
 	}
 
     private IEnumerator Hit()

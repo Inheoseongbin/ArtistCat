@@ -14,25 +14,27 @@ public class PoopSkill : PoolableMono
 
 	public override void Init()
 	{
-		speed = 10;
+		speed = 6;
 		
 		sp.enabled = true;
 		col.enabled = true;
 
-/*		float x = Random.Range(-5, 5);
-		float y = Random.Range(-5, 5);
-
-		if (dir == Vector3.zero)
-		{
-			x = Random.Range(-5, 5);
-			y = Random.Range(-5, 5);
-		}
-
-		dir = new Vector3(x, y).normalized;*/
-
-		Enemy e = FindFirstObjectByType<Enemy>();
+		Enemy e = FindAnyObjectByType<Enemy>();
 		if(e != null)
 			dir = e.transform.position - transform.position;
+		else
+		{
+			float x = Random.Range(-5, 5);
+			float y = Random.Range(-5, 5);
+
+			if (dir == Vector3.zero)
+			{
+				x = Random.Range(-5, 5);
+				y = Random.Range(-5, 5);
+			}
+
+			dir = new Vector3(x, y).normalized;
+		}
 	}
 
 	private void Awake()
