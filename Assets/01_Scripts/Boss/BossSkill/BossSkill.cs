@@ -14,6 +14,7 @@ public class BossSkill : BossMain
     [Header("대쉬")]
     [SerializeField] protected float _waitDashTime;
     [SerializeField] protected float _dashingTime;
+    [SerializeField] protected float _knockPower;
 
     [Header("오브젝트")]
     [SerializeField] private GameObject _bulletPrefab;
@@ -53,7 +54,7 @@ public class BossSkill : BossMain
             yield return new WaitForSeconds(_waitDashTime);
 
             Dashing();
-          
+
             yield return new WaitForSeconds(_dashingTime);
 
             _bossValue._isDash = false;
@@ -117,8 +118,21 @@ public class BossSkill : BossMain
         bullet.transform.position = transform.position;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.velocity = direction * _bulletSpeed;
+    }
 
-        // 총알 일정 시간 후에 파괴
-        //Destroy(bullet, 10.0f);
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            print("efrgtjuki");
+            Knockback(collision.gameObject, viewDir);
+        }
+    }
+
+    private void Knockback(GameObject colObj, Vector2 knockDir)
+    {
+        colObj.gameObject.GetComponent<Rigidbody2D>().AddForce( knockDir * _knockPower);
+
+        _rb.velocity = Vector2.zero;
     }
 }

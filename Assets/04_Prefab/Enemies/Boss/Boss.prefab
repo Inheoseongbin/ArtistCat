@@ -49,6 +49,7 @@ MonoBehaviour:
   _bulletSpeed: 0
   _waitDashTime: 0
   _dashingTime: 0
+  _knockPower: 0
   _bulletPrefab: {fileID: 0}
   _dashImage: {fileID: 0}
 --- !u!1 &8946609133686518553
@@ -342,7 +343,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _distance: 3
-  _fence: {fileID: 8658021280896657159, guid: a5f7bc2dd148e7347a440d24b3955384, type: 3}
 --- !u!114 &8946609133822089039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,6 +384,7 @@ MonoBehaviour:
   _bulletSpeed: 5
   _waitDashTime: 3
   _dashingTime: 1
+  _knockPower: 1000
   _bulletPrefab: {fileID: 8070207097058054530, guid: 940f213a1c021114cb1487b55400f97a, type: 3}
   _dashImage: {fileID: 8973787235497301203}
 --- !u!114 &-5139868615271989546

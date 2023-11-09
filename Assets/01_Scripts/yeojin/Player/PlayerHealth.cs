@@ -40,6 +40,8 @@ public class PlayerHealth : MonoBehaviour
             Hurt(10); 
         else if (collision.CompareTag("Boss"))
             Hurt(10);
+        else if (collision.CompareTag("Bullet"))
+            Hurt(10);
     }
 
     private void Hurt(int dmg)
