@@ -77,7 +77,7 @@ public class Enemy : PoolableMono
 
 	public void PlayerDraw(LineType attack)
 	{
-		if (enemyTypes[0] == attack) // 딕셔너리 타입이랑 첫번째꺼의 타입이 같으면 하나 지울거얌
+		if (enemyTypes[0] == attack && !_isDead) // 딕셔너리 타입이랑 첫번째꺼의 타입이 같으면 하나 지울거얌
 		{
 			DrawReduce(0);
 		}
