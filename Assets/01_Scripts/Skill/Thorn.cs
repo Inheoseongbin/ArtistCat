@@ -17,12 +17,7 @@ public class Thorn : PoolableMono
 		{
 			Enemy e = collision.GetComponent<Enemy>();
 			e.DrawReduce(0);
+			PoolManager.Instance.Push(this);
 		}
-	}
-
-	public IEnumerator Live()
-	{
-		yield return new WaitForSeconds(liveTime);
-		PoolManager.Instance.Push(this);
 	}
 }
