@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Thorn : PoolableMono
 {
+	[SerializeField] private int liveTime;
+
 	public override void Init()
 	{
+
 	}
 
 	private void OnTriggerStay2D(Collider2D collision)
@@ -14,6 +17,7 @@ public class Thorn : PoolableMono
 		{
 			Enemy e = collision.GetComponent<Enemy>();
 			e.DrawReduce(0);
+			PoolManager.Instance.Push(this);
 		}
 	}
 }
