@@ -29,8 +29,6 @@ public class PoopSkill : PoolableMono
 		}
 
 		dir = new Vector3(x, y).normalized;
-		//float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg; // È¸Àü
-		//transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 	}
 
 	private void Awake()
@@ -45,6 +43,7 @@ public class PoopSkill : PoolableMono
 	{
 		transform.position += dir * speed * Time.deltaTime;
 
+		Dead();
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -72,5 +71,14 @@ public class PoopSkill : PoolableMono
 		speed = 0;
 		sp.enabled = false;
 		col.enabled = false;
+	}
+
+	void Dead()
+	{
+		Transform target = GameManager.Instance.playerTrm;
+		Vector3 targetPos = target.position;
+		float dir = Vector3.Distance(targetPos, transform.position);
+		if (dir > 20f)
+			PoolManager.Instance.Push(this);
 	}
 }
