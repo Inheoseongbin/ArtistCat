@@ -29,7 +29,7 @@ public class Enemy : PoolableMono
     private readonly string _isHit = "_IsSolidColor";
 
     public bool _isDead = false;
-    private BoxCollider2D _hitDecision;
+    private CapsuleCollider2D _hitDecision;
 
     public override void Init()
     {
@@ -61,7 +61,7 @@ public class Enemy : PoolableMono
     private void Awake()
     {
         _sr = GetComponentInChildren<SpriteRenderer>();
-        _hitDecision = GetComponent<BoxCollider2D>();
+        _hitDecision = GetComponent<CapsuleCollider2D>();
 
         for (int i = 0; i < sprites.Count; i++) // Ã³À½¿¡ µñ¼Å³Ê¸®¿¡ Å¸ÀÔÀÌ¶û ±×¸² ³Ö¾î
         {

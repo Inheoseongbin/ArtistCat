@@ -7131,6 +7131,7 @@ MonoBehaviour:
   mainCam: {fileID: 178324536}
   playerTrm: {fileID: 0}
   poolingListSO: {fileID: 11400000, guid: 14b5c3b3d609ddf4f9fc9fb344d94613, type: 2}
+  isTimeStop: 0
 --- !u!1 &1346366774
 GameObject:
   m_ObjectHideFlags: 0

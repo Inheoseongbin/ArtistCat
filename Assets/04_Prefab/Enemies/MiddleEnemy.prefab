@@ -257,9 +257,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5249893713551284877}
   - component: {fileID: 5249893713551284878}
-  - component: {fileID: 5249893713551284913}
   - component: {fileID: 5249893713551284876}
   - component: {fileID: 5249893713551284872}
+  - component: {fileID: -18603409238714180}
   m_Layer: 7
   m_Name: MiddleEnemy
   m_TagString: Enemy
@@ -305,22 +305,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &5249893713551284913
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5249893713551284873}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.002923727, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.4035144
 --- !u!114 &5249893713551284876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,6 +329,7 @@ MonoBehaviour:
   imageParent: {fileID: 2313685856654165525}
   img: {fileID: 7077652877445151162, guid: 4b54cd6c8df225646b9fa1855b6480d6, type: 3}
   _emo: {fileID: 5249893713781344865}
+  _isDead: 0
 --- !u!114 &5249893713551284872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,6 +344,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.5
   range: 2
+--- !u!70 &-18603409238714180
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5249893713551284873}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.04615909, y: 0}
+  m_Size: {x: 1.7133228, y: 1.05}
+  m_Direction: 1
 --- !u!1 &5249893713781344867
 GameObject:
   m_ObjectHideFlags: 0

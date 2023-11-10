@@ -278,9 +278,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7548177575724573246}
   - component: {fileID: 7548177575724573245}
-  - component: {fileID: 7548177575724573244}
   - component: {fileID: 7548177575724573247}
   - component: {fileID: 7548177575724573243}
+  - component: {fileID: -3821345997978343136}
   m_Layer: 7
   m_Name: BasicEnemy
   m_TagString: Enemy
@@ -326,32 +326,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &7548177575724573244
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548177575724573242}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.029970706, y: -0.09847522}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.7963649, y: 0.80304956}
-  m_EdgeRadius: 0
 --- !u!114 &7548177575724573247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +350,7 @@ MonoBehaviour:
   imageParent: {fileID: 433176230}
   img: {fileID: 7077652877445151162, guid: 4b54cd6c8df225646b9fa1855b6480d6, type: 3}
   _emo: {fileID: 7548177575480685266}
+  _isDead: 0
 --- !u!114 &7548177575724573243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +365,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.5
   range: 1
+--- !u!70 &-3821345997978343136
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548177575724573242}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.04615909, y: 0}
+  m_Size: {x: 1.7133228, y: 1.05}
+  m_Direction: 1
 --- !u!1 &7548177576095823582
 GameObject:
   m_ObjectHideFlags: 0
