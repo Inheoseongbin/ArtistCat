@@ -7,7 +7,6 @@ using UnityEngine;
 public class Experience : PoolableMono
 {
 	public int expNum;
-	private float moveSpeed = 4f;
 	private bool isMagnet = false;
 		
     public override void Init()

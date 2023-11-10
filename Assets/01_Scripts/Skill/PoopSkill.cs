@@ -5,7 +5,6 @@ using UnityEngine;
 public class PoopSkill : PoolableMono
 {
 	[SerializeField] private float speed = 10;
-	[SerializeField] private int coolTime = 4;
 	[SerializeField] private int lifeTime = 5;
 	private Vector3 dir;
 
@@ -44,7 +43,6 @@ public class PoopSkill : PoolableMono
 	{
 		sp = GetComponent<SpriteRenderer>();
 		col = GetComponent<Collider2D>();
-		StartCoroutine(Poop(lifeTime));
 		Init();
 	}
 
@@ -62,9 +60,9 @@ public class PoopSkill : PoolableMono
 		}
 	}
 
-	private IEnumerator Poop(int life)
+	public IEnumerator Poop()
 	{
-		yield return new WaitForSeconds(life);
+		yield return new WaitForSeconds(lifeTime);
 		PoolManager.Instance.Push(this);
 	}
 }

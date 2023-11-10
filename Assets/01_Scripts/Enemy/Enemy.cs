@@ -33,14 +33,16 @@ public class Enemy : PoolableMono
 
     public override void Init()
     {
-        _emo.enabled = true;
-        _sr.material.SetInt(_isHit, 0);
-        _sr.material.SetInt(_isDissolve, 0);
         _hitDecision.enabled = true;
         _isDead = false;
 
         //쉐이더 값 초기화
+        _sr.material.SetInt(_isHit, 0);
+        _sr.material.SetInt(_isDissolve, 0);
+        _emo.material.SetInt(_isDissolve, 0);
+
         _sr.material.SetFloat(_dissolve, 1f);
+        _emo.material.SetFloat(_dissolve, 1f);
 
         count = typeCount;
         for (int i = 0; i < count; i++) // 이제 개수만큼 랜덤으로 애마다 공격 타입 받아주기
@@ -113,7 +115,6 @@ public class Enemy : PoolableMono
     {
         _isDead = true;
         _hitDecision.enabled = false;
-        _emo.enabled = false;
         StartCoroutine(DieDissolve(1));
         FallExp();
     }
@@ -121,6 +122,7 @@ public class Enemy : PoolableMono
     private IEnumerator DieDissolve(float time)
     {
         _sr.material.SetInt(_isDissolve, 1);
+        _emo.material.SetInt(_isDissolve, 1);
         float currentRate;
         float percent = 0;
         float currentTime = 0;
@@ -131,6 +133,7 @@ public class Enemy : PoolableMono
             percent = currentTime / time;
             currentRate = Mathf.Lerp(1, -1, percent);
             _sr.material.SetFloat(_dissolve, currentRate);
+            _emo.material.SetFloat(_dissolve, currentRate);
 
             yield return null;
         }
