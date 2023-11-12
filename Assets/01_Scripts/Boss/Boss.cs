@@ -72,6 +72,14 @@ public class Boss : PoolableMono
         }
     }
 
+    private void Start()
+    {
+        var saveEnemy = EnemySpawner.Instance.saveEnemyList;
+
+        foreach (Enemy enemy in saveEnemy)
+            PoolManager.Instance.Push(enemy);
+    }
+
     private void Update()
     {
         if (enemyTypes.Count == 0) // 남은 타입이 없으면 다 없앴으니까 죽일거임
@@ -104,6 +112,7 @@ public class Boss : PoolableMono
 
     public void Die()
     {
+        GameManager.Instance.isTimeStop = false;
         Fence.bossDie();
         PoolManager.Instance.Push(this); // 죽으면 풀링 넣기
         FallExp();

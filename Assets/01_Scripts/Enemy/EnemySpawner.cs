@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner Instance;
+
     public List<GameObject> enemyList;
     public List<GameObject> bossList;
+
+    [HideInInspector] public List<Enemy> saveEnemyList;
+
+    public bool isSpawnLock = false;
 
     [SerializeField] private float range;
     [SerializeField] private float bSpawnTime;
@@ -18,13 +24,46 @@ public class EnemySpawner : MonoBehaviour
     private float maxx;
     private float maxy;
     private int curtime;
+    private int bosstime;
+    private int tenSec = 10;
+
+    int randEnemyType;
+
+    bool _bossSpawn = false;
 
     private Transform player;
+
+    //이거 일단 문제
+    Enemy e = null;
+    Boss b = null;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("Spawner is running! Check!");
+        }
+        Instance = this;
+    }
 
     private void Start()
     {
         StartCoroutine(Spawn());
-        StartCoroutine(SpawnBoss());
+    }
+
+
+    private void Level1Enemy() { e = PoolManager.Instance.Pop(enemyList[0].name) as Enemy; }
+
+    private void RandEnemy()
+    {
+        randEnemyType = Random.Range(0, enemyList.Count);
+
+        e = PoolManager.Instance.Pop(enemyList[randEnemyType].name) as Enemy;
+    }
+
+    private void Update()
+    {
+        curtime = (int)GameManager.Instance.CurrentPlayTime;      
     }
 
     IEnumerator Spawn()
@@ -32,36 +71,74 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
             player = GameManager.Instance.playerTrm;
+
             minx = player.transform.position.x - range;
             miny = player.transform.position.y - range;
             maxx = player.transform.position.x + range;
             maxy = player.transform.position.y + range;
 
             float time = Random.Range(2, 5);
-            //atOnceCount = Random.Range(1, 2);
 
-            //for (int i = 0; i < atOnceCount; i++)
-            //{
-            curtime = (int)GameManager.Instance.CurrentPlayTime / 10;
-            Enemy e;
-
-            switch (curtime)
+            if (curtime <= tenSec) Level1Enemy();
+            else if (curtime < tenSec * 2) RandEnemy();
+            else
             {
-                case 0:
-                    e = PoolManager.Instance.Pop(enemyList[0].name) as Enemy;
-                    break;
-                //case 1:
-                //    e = PoolManager.Instance.Pop(enemyList[1].name) as Enemy;
-                //    break;
-                //case 2://보스
-                    //break;
-                default:
-                    e = null;
-                    break;
+                //이거 이단 문제
+                if (!_bossSpawn)
+                {
+                    b = PoolManager.Instance.Pop("Boss") as Boss;
+                    bosstime = curtime + tenSec * 3;
+                    GameManager.Instance.isTimeStop = true;
+                    _bossSpawn = true;
+                }
+
+                if (!GameManager.Instance.isTimeStop)
+                {
+                    RandEnemy();
+
+
+                    if (curtime >= bosstime)
+                        _bossSpawn = false;
+                }
             }
 
+            //switch (curtime)
+            //{
+            //    case 0:
+            //        e = PoolManager.Instance.Pop(enemyList[0].name) as Enemy;
+            //        break;
+            //    case 1:
+            //        e = PoolManager.Instance.Pop(enemyList[1].name) as Enemy;
+            //        break;
+            //    case 2:
+            //        if (!_bossSpawn)
+            //        {
+            //            b = PoolManager.Instance.Pop("Boss") as Boss;
+            //            GameManager.Instance.isTimeStop = true;
+            //            _bossSpawn = true;
+            //        }
+            //        break;
+            //    case 5:
+            //        b = PoolManager.Instance.Pop("Boss") as Boss;
+            //        GameManager.Instance.isTimeStop = true;
+            //        break;
+            //    default:
+            //        randEnemyType = Random.Range(0, enemyList.Count);
+
+            //        e = PoolManager.Instance.Pop(enemyList[randEnemyType].name) as Enemy;
+            //        break;
+            //}
+
             Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
-            e.transform.position = pos;
+            Vector2 bossPos = new Vector2(player.position.x, maxy);
+            if (e != null)
+            {
+                saveEnemyList.Add(e);
+                e.transform.position = pos;
+            }
+
+            if (b != null)
+                b.transform.position = bossPos;
             //}
 
             yield return new WaitForSeconds(time);

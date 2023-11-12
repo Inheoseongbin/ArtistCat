@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-	[HideInInspector] public Camera mainCam;
+    [HideInInspector] public Camera mainCam;
     public Transform playerTrm;
 
     public PoolingListSO poolingListSO;
@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     public float CurrentPlayTime => currentPlayTime; // 나중에 일정 시간 지나면 보스 불러올 때 쓰는 함수
     private float endTime = 0f;
     public float EndTime => endTime;
+
+    public bool isTimeStop = false;
 
     private void Awake()
     {
@@ -48,10 +50,10 @@ public class GameManager : MonoBehaviour
 
         mainCam = Camera.main;
         playerTrm = GameObject.Find("Player").transform;
-        
+
         currentEnemyKills = 0;
         currentPlayTime = 0;
-        
+
         MakePool();
     }
 
@@ -64,7 +66,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        currentPlayTime += Time.deltaTime;
+        if (!isTimeStop)
+            currentPlayTime += Time.deltaTime;
     }
 
     public void AddEnemy()
