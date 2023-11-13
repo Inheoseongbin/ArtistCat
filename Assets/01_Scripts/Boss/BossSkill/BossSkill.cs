@@ -36,8 +36,9 @@ public class BossSkill : BossMain
         _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
     }
 
-    void Start()
+    public void Attack()
     {
+        StopAllCoroutines();
         StartCoroutine(ShootRoutine());
         StartCoroutine(DashRoutine());
     }
@@ -135,4 +136,5 @@ public class BossSkill : BossMain
 
         _rb.velocity = Vector2.zero;
     }
+
 }
