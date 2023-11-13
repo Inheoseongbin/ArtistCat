@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
 
     [Header("게임오버 UI")]
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TextMeshProUGUI gameOverTitleText;
     [SerializeField] private TextMeshProUGUI currentTimeText;
     [SerializeField] private TextMeshProUGUI bestTimeText;
     [SerializeField] private TextMeshProUGUI killEnemyText;
@@ -44,6 +45,10 @@ public class UIManager : MonoBehaviour
 
     private bool isSetting = false;
     public bool IsSetting => isSetting;
+
+    [Header("현재 그린거 UI")]
+    [SerializeField] private GameObject whatIDrawImage;
+    [SerializeField] private Sprite[] lineTypeSprite;
 
     private void Awake()
     {
@@ -75,6 +80,7 @@ public class UIManager : MonoBehaviour
     }
     private void Update()
     {
+        if (SceneManager.GetActiveScene().name == "Tutorial") return; // 튜토리얼일 경우 안 해도 됨
         if (GameManager.Instance.IsGameOver) return; // 게임오버일 경우 리턴
         if(Input.GetKeyDown(KeyCode.Escape)) // 설정 눌렀을 경우
         {
@@ -98,7 +104,7 @@ public class UIManager : MonoBehaviour
     {
         gameOverPanel.transform.DOScale(1, 0.8f).OnComplete(() => Time.timeScale = 0);
         gameOverPanel.SetActive(true);
-        
+
         float t = PlayerPrefs.GetFloat(bestScoreKey);
         float endTime = GameManager.Instance.EndTime;
 
@@ -108,6 +114,7 @@ public class UIManager : MonoBehaviour
             bestTime = endTime;
         }
 
+        //gameOverTitleText.text = GameManager.Instance.IsStageClear ? "승리" : "실패"; // 마지막 보스까지 처치했을 경우
         currentTimeText.text = $"{Mathf.FloorToInt(endTime / 60) % 60:00}:{endTime % 60:00}";
         bestTimeText.text = $"최고기록 {Mathf.FloorToInt(bestTime / 60) % 60:00}:{bestTime % 60:00}";
         killEnemyText.text = $"처치한 적 {GameManager.Instance.EnemyKill}마리";
@@ -132,7 +139,19 @@ public class UIManager : MonoBehaviour
     }
     public void GoBackToFirstSceneBtn()
     {
-        // 시작화면 버튼
+        print("버튼클릭!");
+        Time.timeScale = 1;
+
+        if (GameManager.Instance.IsGameOver)
+            gameOverPanel.transform.DOScale(0, 0.8f)
+                .OnComplete(() => SceneManager.LoadScene(0));
+        else
+            settingImage.transform.DOScale(0, 0.8f)
+                .OnComplete(() =>
+                {
+                    settingPanel.SetActive(false);
+                    SceneManager.LoadScene(0);
+                });
     }
 
     // Level UP
@@ -250,5 +269,33 @@ public class UIManager : MonoBehaviour
     {
         float effectVolume = effectSlider.value;
         SoundManager.Instance.SetEffectVolume(effectVolume);
+    }
+
+    // 뭐 그렸는지
+    public void CurrentImage(LineType attack)
+    {
+        Image image = whatIDrawImage.GetComponent<Image>();
+        image.enabled = true;
+        switch (attack)
+        {
+            case LineType.LENGTH:
+                image.sprite = lineTypeSprite[1];
+                break;
+            case LineType.WIDTH:
+                image.sprite = lineTypeSprite[2];
+                break;
+            case LineType.V:
+                image.sprite = lineTypeSprite[3];
+                break;
+            case LineType.REVERSEV:
+                image.sprite = lineTypeSprite[4];
+                break;
+            case LineType.THUNDER:
+                image.sprite = lineTypeSprite[5];
+                break;
+            default:
+                image.enabled = false;
+                break;
+        }
     }
 }

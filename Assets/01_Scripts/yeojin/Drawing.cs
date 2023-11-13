@@ -22,8 +22,13 @@ public class Drawing : MonoBehaviour
     #region 건든거 없음
     private void Update()
     {
-        if (UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting || 
-            GameManager.Instance.IsGameOver) return;
+        if (GameManager.Instance.IsGameOver) return;
+        if (UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting)
+        {
+            if (brush != null) PoolManager.Instance.Push(brush);
+            currentLineRenderer = null;
+            return;
+        }
         Draw();
     }
 
@@ -73,9 +78,8 @@ public class Drawing : MonoBehaviour
     }
     void AddPoint(Vector2 pointPos)
     {
-        currentLineRenderer.positionCount++;
-        int idx = currentLineRenderer.positionCount - 1;
-        currentLineRenderer.SetPosition(idx, pointPos);
+        currentLineRenderer.SetPosition(currentLineRenderer.positionCount++, pointPos);
+        //LineCheck();
     }   
     #endregion
 
@@ -103,6 +107,8 @@ public class Drawing : MonoBehaviour
         {
             b.PlayerDraw(currentType);
         }
+
+        UIManager.Instance.CurrentImage(currentType);
 
         //Debug.Log(currentType);
     }

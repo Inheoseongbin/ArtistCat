@@ -91,7 +91,6 @@ public class PlayerHealth : MonoBehaviour
         if (!isDie)
         {
             anim.SetDead();
-            print("�÷��̾���");
             isDie = true;
             GameManager.Instance.GameOver();
             UIManager.Instance.SetDeadUI();
