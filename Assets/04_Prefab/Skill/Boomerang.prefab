@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1512674354031536798}
   - component: {fileID: 1512674354031536799}
   - component: {fileID: 1512674354031536797}
+  - component: {fileID: -7342705572057884431}
   m_Layer: 0
   m_Name: Boomerang
   m_TagString: Untagged
@@ -100,3 +101,19 @@ MonoBehaviour:
   _radius: 2
   _rotateSpeed: 200
   degTheta: 0
+--- !u!58 &-7342705572057884431
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512674354031536785}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

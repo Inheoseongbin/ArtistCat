@@ -14,17 +14,17 @@ public class Rotater : MonoBehaviour
 
     private void Start()
     {
+        _center = transform.parent;
     }
-    public void Update()
+    public void FixedUpdate()
     {
         //_theta = degTheta * Mathf.Deg2Rad;
-        _center = transform.parent;
         // 중점 회전을 하기 위한 코드
         // 중점 회전시 각에 따른 좌표 (center.pos.x + radius * Cos(theta) , center.pos.y + radius * Sin(theta))
         //_theta += _rotateSpeed * Mathf.Deg2Rad * Time.deltaTime;
-        degTheta += _rotateSpeed * Time.deltaTime;
+        degTheta += _rotateSpeed * Time.fixedDeltaTime;
         transform.position =
-            new Vector3(_center.position.x + _radius * Mathf.Cos(degTheta*Mathf.Deg2Rad)
+            new Vector2(_center.position.x + _radius * Mathf.Cos(degTheta*Mathf.Deg2Rad)
             , _center.position.y + _radius * Mathf.Sin(degTheta * Mathf.Deg2Rad));
     }
 }
