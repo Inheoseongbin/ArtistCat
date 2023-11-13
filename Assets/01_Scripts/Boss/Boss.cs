@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -113,6 +114,20 @@ public class Boss : PoolableMono
             Destroy(typeList[0]);
             typeList.RemoveAt(0);
         }
+    }
+
+
+    public void DrawReduce(int id)
+    {
+        if (enemyTypes.Any()) // 여러개의 공격을 한번에 받아서 지울게 하나밖에 없을때 
+        {
+            enemyTypes.RemoveAt(id);
+            Destroy(typeList[id]);
+            typeList.RemoveAt(id);
+            StartCoroutine(Hit());
+        }
+        else
+            return;
     }
 
     public void Die()

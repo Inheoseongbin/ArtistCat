@@ -81,7 +81,8 @@ public class PoopSkill : PoolableMono
 		}
 		if (collision.CompareTag("Boss"))
 		{
-			// 보스 패턴 하나 없애는 거 추가 해야함
+			Boss b = collision.GetComponent<Boss>();
+			b.DrawReduce(0);
 			PoolManager.Instance.Push(this);
 		}
 	}
