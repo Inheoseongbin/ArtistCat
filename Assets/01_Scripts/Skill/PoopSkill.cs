@@ -58,16 +58,24 @@ public class PoopSkill : PoolableMono
 		}
 		else
 		{
-			float x = Random.Range(-5, 5);
-			float y = Random.Range(-5, 5);
-
-			if (dir == Vector3.zero)
+			Boss b  = FindAnyObjectByType<Boss>();
+			if (b != null)
 			{
-				x = Random.Range(-5, 5);
-				y = Random.Range(-5, 5);
+				dir = b.transform.position - transform.position;
+				dir.Normalize();
 			}
+			else
+			{
+				float x = Random.Range(-5, 5);
+				float y = Random.Range(-5, 5);
 
-			dir = new Vector3(x, y).normalized;
+				if (dir == Vector3.zero)
+				{
+					x = Random.Range(-5, 5);
+					y = Random.Range(-5, 5);
+				}
+				dir = new Vector3(x, y).normalized;
+			}
 		}
 	}
 

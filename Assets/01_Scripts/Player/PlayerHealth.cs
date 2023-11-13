@@ -27,31 +27,26 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        sr = GetComponent<SpriteRenderer>(); // ������ ������ �ϰ�
-        anim = GetComponent<AgentAnimator>(); // ������ Hurt animation ����ϴ°�
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<AgentAnimator>(); 
     }
 
     private void Start()
     {
-        currentHP = maxHP; // �ʱ� HP ����
+        currentHP = maxHP; 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Boss"))
+			Hurt(10);
         if (collision.CompareTag("Enemy"))
-		{
-            Hurt(10); 
-		}
-        else if (collision.CompareTag("Boss"))
-		{
             Hurt(10);
-
-		}
-        else if (collision.CompareTag("Bullet"))
-            Hurt(10);
+        if (collision.CompareTag("Bullet"))
+            Hurt(5);
     }
 
-    private void Hurt(int dmg)
+	private void Hurt(int dmg)
     {
         currentHP -= dmg;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);

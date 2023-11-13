@@ -33,6 +33,7 @@ public class Enemy : PoolableMono
 
     public override void Init()
     {
+        enemyTypes.Clear();
         _hitDecision.enabled = true;
         _isDead = false;
 
@@ -87,6 +88,8 @@ public class Enemy : PoolableMono
             {
                 DrawReduce(0);
             }
+            else
+                return;
         }
     }
 

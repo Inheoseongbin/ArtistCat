@@ -31,6 +31,8 @@ public class EnemySpawner : MonoBehaviour
 
     private Transform player;
 
+    private int curLevel;
+
     //이거 일단 문제
     Enemy e = null;
     Boss b = null;
@@ -48,7 +50,6 @@ public class EnemySpawner : MonoBehaviour
     {
         StartCoroutine(Spawn());
     }
-
 
 
     private void Update()
@@ -85,10 +86,10 @@ public class EnemySpawner : MonoBehaviour
             float time = Random.Range(2, 5);
             yield return new WaitForSeconds(time);
 
-            if (curtime <= 10) Level1Enemy();
-            else if (curtime < 20) RandEnemy();
-            else
-            {
+            /*//if (curtime <= 10) Level1Enemy();
+            //else if (curtime < 20) RandEnemy();
+
+
                 ////이거 이단 문제
                 //if (!_bossSpawn)
                 //{
@@ -99,52 +100,35 @@ public class EnemySpawner : MonoBehaviour
                 //    bosstime = curtime + 30;
                 //    _bossSpawn = true;
                 //    GameManager.Instance.isTimeStop = true;
-                //}
+                //}*/
 
+            if(curLevel < 2)
+			{
+                EnemySpawn(1);
+			}
+            else if(curLevel < 4)
+			{
+                EnemySpawn(3);
+			}
+            else if(curLevel >  6)
+			{
+                EnemySpawn(4);
+			}
+			else
+			{
                 if (!GameManager.Instance.isTimeStop)
                 {
                     RandEnemy();
                     _bossSpawn = false;
-                    //if (curtime >= bosstime)
-                    //{
-                    //}
                 }
             }
-
-            //switch (curtime)
-            //{
-            //    case 0:
-            //        e = PoolManager.Instance.Pop(enemyList[0].name) as Enemy;
-            //        break;
-            //    case 1:
-            //        e = PoolManager.Instance.Pop(enemyList[1].name) as Enemy;
-            //        break;
-            //    case 2:
-            //        if (!_bossSpawn)
-            //        {
-            //            b = PoolManager.Instance.Pop("Boss") as Boss;
-            //            GameManager.Instance.isTimeStop = true;
-            //            _bossSpawn = true;
-            //        }
-            //        break;
-            //    case 5:
-            //        b = PoolManager.Instance.Pop("Boss") as Boss;
-            //        GameManager.Instance.isTimeStop = true;
-            //        break;
-            //    default:
-            //        randEnemyType = Random.Range(0, enemyList.Count);
-
-            //        e = PoolManager.Instance.Pop(enemyList[randEnemyType].name) as Enemy;
-            //        break;
-            //}
-
-          
         }
     }
 
-    private void Level1Enemy()
-    {
-        e = PoolManager.Instance.Pop(enemyList[0].name) as Enemy;
+    private void EnemySpawn(int idx)
+	{
+        int r = Random.Range(0, idx);
+        e = PoolManager.Instance.Pop(enemyList[r].name) as Enemy;
 
         Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
         e.transform.position = pos;
@@ -153,10 +137,9 @@ public class EnemySpawner : MonoBehaviour
     private void RandEnemy()
     {
         randEnemyType = Random.Range(0, enemyList.Count);
-        Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
         e = PoolManager.Instance.Pop(enemyList[randEnemyType].name) as Enemy;
         saveEnemyList.Add(e);
-        e.transform.position = pos;
+        e.transform.position = RandomPos();
     }
 
     IEnumerator SpawnBoss()
@@ -168,5 +151,16 @@ public class EnemySpawner : MonoBehaviour
             Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
             e.transform.position = pos;
         }
+    }
+
+    Vector2 RandomPos()
+	{
+        Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
+        if(Vector3.Distance(transform.position, pos) < 3)
+		{
+            print("다시");
+            RandomPos();
+		}
+        return pos;
     }
 }

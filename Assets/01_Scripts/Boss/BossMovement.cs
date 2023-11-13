@@ -19,7 +19,6 @@ public class BossMovement : BossMain
         _bossValue._isSkill = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         OnMove();
