@@ -14,5 +14,13 @@ public class Brush : PoolableMono
     public override void Init()
     {
         lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, Vector3.zero);
+        lineRenderer.SetPosition(1, Vector3.zero);
+    }
+
+    private void Update()
+    {
+        if (transform.parent.childCount > 1)
+            PoolManager.Instance.Push(this);
     }
 }

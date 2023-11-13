@@ -50,10 +50,10 @@ public class Drawing : MonoBehaviour
             LineCheck();
             PoolManager.Instance.Push(brush);
         }
-        else
-        {
-            currentLineRenderer = null;
-        }
+        //else
+        //{
+        //    currentLineRenderer = null;
+        //}
     }
     private void CreateBrush()
     {
