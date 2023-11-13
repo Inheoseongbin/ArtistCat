@@ -112,8 +112,8 @@ public class Boss : PoolableMono
 
     public void Die()
     {
-        GameManager.Instance.isTimeStop = false;
         Fence.bossDie();
+        GameManager.Instance.isTimeStop = false;
         PoolManager.Instance.Push(this); // 죽으면 풀링 넣기
         FallExp();
     }
