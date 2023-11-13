@@ -6763,6 +6763,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMoveSound: {fileID: 8300000, guid: 475f4837af487ce4a9e68bb227455e4c, type: 3}
+  playerHurtSound: {fileID: 0}
+  playerDieSound: {fileID: 0}
+  playerSuccessAtkSound: {fileID: 0}
+  selectExpSound: {fileID: 0}
+  levelUpSound: {fileID: 0}
+  enemyHurtSound: {fileID: 0}
+  enemyDieSound: {fileID: 0}
+  bossSpawnSound: {fileID: 0}
+  bossDashSound: {fileID: 0}
+  bossShootingSound: {fileID: 0}
+  bossHurtSound: {fileID: 0}
+  bossDieSound: {fileID: 0}
+  buttonClickSound: {fileID: 0}
+  skillUIOnSound: {fileID: 0}
+  skillUIOffSound: {fileID: 0}
+  gameFailSound: {fileID: 0}
+  gameSuccessSound: {fileID: 0}
+  throwingPoopSound: {fileID: 0}
+  landFishThronSound: {fileID: 0}
+  rollAroundStringSound: {fileID: 0}
+  scratchEnemySound: {fileID: 0}
+  playerHealSound: {fileID: 0}
 --- !u!1 &1284234816
 GameObject:
   m_ObjectHideFlags: 0
@@ -7131,6 +7153,7 @@ MonoBehaviour:
   mainCam: {fileID: 178324536}
   playerTrm: {fileID: 0}
   poolingListSO: {fileID: 11400000, guid: 14b5c3b3d609ddf4f9fc9fb344d94613, type: 2}
+  isTimeStop: 0
 --- !u!1 &1346366774
 GameObject:
   m_ObjectHideFlags: 0
@@ -9819,12 +9842,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyList:
   - {fileID: 7548177575724573242, guid: 16a2348cf0f43a240b20362576d00735, type: 3}
-  - {fileID: 5249893713551284873, guid: ebe05d14096751d41970597d913c3e3a, type: 3}
+  - {fileID: 7548177575724573242, guid: 84fea681da7391e4895e1b5bf93ba9d7, type: 3}
   bossList: []
+  saveEnemyList: []
+  isSpawnLock: 0
   range: 20
   bSpawnTime: 100
   eSpawnTimeMax: 5
   eSpawnTimeMin: 5
+  bosstime: 20
+  _bossSpawn: 0
 --- !u!1 &1994942223
 GameObject:
   m_ObjectHideFlags: 0
