@@ -25,6 +25,7 @@ public class EnemySpawner : MonoBehaviour
 	private float maxy;
 	private int curtime;
 	[SerializeField] private int bosstime = 20;
+	[SerializeField] private int nextTime = 20;
 	public bool _bossSpawn = false;
 
 	int randEnemyType;
@@ -74,7 +75,7 @@ public class EnemySpawner : MonoBehaviour
 
 				b = PoolManager.Instance.Pop("Boss") as Boss;
 				b.transform.position = bossPos;
-				bosstime = curtime + 10;
+				bosstime = curtime + nextTime;
 				_bossSpawn = true;
 				GameManager.Instance.isTimeStop = true;
 			}
