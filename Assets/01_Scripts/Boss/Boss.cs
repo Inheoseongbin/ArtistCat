@@ -13,6 +13,7 @@ public class Boss : PoolableMono
     public GameObject exp;
 
     [SerializeField] private SpriteRenderer _sr;
+    [SerializeField] private int _dieCount;
 
     [Header("UI 설정")]
     public List<Sprite> sprites = new List<Sprite>();
@@ -23,26 +24,29 @@ public class Boss : PoolableMono
     private List<GameObject> typeList = new List<GameObject>();
     private Sprite sprite;
 
+    private readonly int _dissolve = Shader.PropertyToID("_Dissolve");
+    private readonly string _isDissolve = "_IsDissolve";
+    private readonly string _isHit = "_IsSolidColor";
+
     private int dieCount = 5;
+    private bool _isDead = false;
+
+    BossSkill bossSkill;
 
     public override void Init()
     {
-        _sr.material.SetInt("_IsSolidColor", 0);
+        _isDead = false;
+
+        dieCount = _dieCount;
+
+        //쉐이더 값 초기화
+        _sr.material.SetInt(_isHit, 0);
+        _sr.material.SetInt(_isDissolve, 0);
+
+        _sr.material.SetFloat(_dissolve, 1f);
 
         count = typeCount;
-        for (int i = 0; i < count; i++) // 이제 개수만큼 랜덤으로 애마다 공격 타입 받아주기
-        {
-            int r = Random.Range(1, (int)LineType.END);
-            enemyTypes.Add((LineType)r);
-
-            if (showType.TryGetValue((LineType)r, out sprite))
-            {
-                sprites.Add(sprite);
-                GameObject g = Instantiate(img, imageParent.transform);
-                g.GetComponent<Image>().sprite = sprite;
-                typeList.Add(g);
-            }
-        }
+        bossSkill.Attack();
     }
 
     private void ReCharging()
@@ -64,6 +68,7 @@ public class Boss : PoolableMono
 
     private void Awake()
     {
+        bossSkill = GetComponent<BossSkill>();
         _sr = GetComponentInChildren<SpriteRenderer>();
 
         for (int i = 0; i < sprites.Count; i++) // 처음에 딕셔너리에 타입이랑 그림 넣어
@@ -82,14 +87,14 @@ public class Boss : PoolableMono
 
     private void Update()
     {
-        if (enemyTypes.Count == 0) // 남은 타입이 없으면 다 없앴으니까 죽일거임
+        if (enemyTypes.Count == 0 && !_isDead) // 남은 타입이 없으면 다 없앴으니까 죽일거임
         {
             dieCount--;
             ReCharging();
             StartCoroutine(Hit());
         }
 
-        if (dieCount == 0)
+        if (dieCount == 0 && !_isDead)
             Die();
     }
 
@@ -112,10 +117,30 @@ public class Boss : PoolableMono
 
     public void Die()
     {
+        _isDead = true;
         Fence.bossDie();
         GameManager.Instance.isTimeStop = false;
-        PoolManager.Instance.Push(this); // 죽으면 풀링 넣기
+        StartCoroutine(DieDissolve(1));
         FallExp();
+    }
+
+    private IEnumerator DieDissolve(float time)
+    {
+        _sr.material.SetInt(_isDissolve, 1);
+        float currentRate;
+        float percent = 0;
+        float currentTime = 0;
+
+        while (percent < 1)
+        {
+            currentTime += Time.deltaTime;
+            percent = currentTime / time;
+            currentRate = Mathf.Lerp(1, -1, percent);
+            _sr.material.SetFloat(_dissolve, currentRate);
+
+            yield return null;
+        }
+        PoolManager.Instance.Push(this); // 죽으면 풀링 넣기
     }
 
     private void FallExp() // Exp 떨구기
