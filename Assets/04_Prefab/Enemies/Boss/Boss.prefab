@@ -380,7 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootCool: 10
-  _dashCool: 12
+  _dashCool: 7
   _bulletSpeed: 5
   _waitDashTime: 3
   _dashingTime: 1

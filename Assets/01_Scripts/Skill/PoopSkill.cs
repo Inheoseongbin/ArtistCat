@@ -77,6 +77,7 @@ public class PoopSkill : PoolableMono
 		{
 			Enemy e = collision.GetComponent<Enemy>();
 			e.DrawReduce(0);
+			PoolManager.Instance.Push(this);
 		}
 	}
 
