@@ -9767,6 +9767,8 @@ MonoBehaviour:
   bSpawnTime: 20
   eSpawnTimeMax: 2
   eSpawnTimeMin: 5
+  bosstime: 20
+  _bossSpawn: 0
 --- !u!1 &1994942223
 GameObject:
   m_ObjectHideFlags: 0
