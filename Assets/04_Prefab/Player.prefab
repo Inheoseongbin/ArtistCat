@@ -264,6 +264,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549221cf697d8d04ea5204405004c542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <OnGetHit>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
   healthBar: {fileID: 1347510647193807644}
 --- !u!114 &1347510646103717329
 MonoBehaviour:
@@ -618,7 +621,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 20}
+  m_Size: {x: 30, y: 30}
   m_EdgeRadius: 0
 --- !u!50 &322483220
 Rigidbody2D:
