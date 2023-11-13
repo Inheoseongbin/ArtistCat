@@ -10267,12 +10267,12 @@ MonoBehaviour:
   - {fileID: 7548177575724573242, guid: 25e7a20709530834faca61505fde75aa, type: 3}
   bossList: []
   saveEnemyList: []
-  isSpawnLock: 0
+  isSpawnLock: 1
   range: 10
-  bSpawnTime: 60
+  bSpawnTime: 10
   eSpawnTimeMax: 10
   eSpawnTimeMin: 5
-  bosstime: 10
+  bosstime: 5
   _bossSpawn: 0
 --- !u!1 &1994942223
 GameObject:

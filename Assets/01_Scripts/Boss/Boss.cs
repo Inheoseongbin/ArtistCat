@@ -36,6 +36,10 @@ public class Boss : PoolableMono
 
     public override void Init()
     {
+        DeleteEnemy();
+        CreateFence();
+
+        EnemySpawner.Instance.isSpawnLock = false;
         _isDead = false;
 
         dieCount = _dieCount;
@@ -48,6 +52,22 @@ public class Boss : PoolableMono
 
         count = typeCount;
         bossSkill.Attack();
+    }
+
+    private void CreateFence()
+	{
+        Fence _fence = PoolManager.Instance.Pop("Fence") as Fence;
+        _fence.transform.position = transform.position;
+    }
+
+    private void DeleteEnemy()
+	{
+        var saveEnemy = EnemySpawner.Instance.saveEnemyList;
+
+        foreach (Enemy enemy in saveEnemy)
+        {
+            PoolManager.Instance.Push(enemy);
+        }
     }
 
     private void ReCharging()
@@ -80,10 +100,7 @@ public class Boss : PoolableMono
 
     private void Start()
     {
-        var saveEnemy = EnemySpawner.Instance.saveEnemyList;
 
-        foreach (Enemy enemy in saveEnemy)
-            PoolManager.Instance.Push(enemy);
     }
 
     private void Update()
@@ -132,7 +149,11 @@ public class Boss : PoolableMono
 
     public void Die()
     {
+        EnemySpawner.Instance.isSpawnLock = true;
+        EnemySpawner.Instance._bossSpawn = false;
+
         _isDead = true;
+        print(Fence.bossDie);
         Fence.bossDie();
         GameManager.Instance.isTimeStop = false;
         StartCoroutine(DieDissolve(1));

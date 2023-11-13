@@ -20,7 +20,7 @@ public class BossSkill : BossMain
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private GameObject _dashImage;
 
-    protected bool _isCharging = false;
+    protected bool _isAiming = false;
 
     private float _stunCool = 2f;
     private float dTime;
@@ -36,7 +36,13 @@ public class BossSkill : BossMain
         _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
     }
 
-    public void Attack()
+	private void Update()
+	{
+		if(_isAiming)
+            DashAiming();
+	}
+
+	public void Attack()
     {
         StopAllCoroutines();
         StartCoroutine(ShootRoutine());
@@ -54,6 +60,10 @@ public class BossSkill : BossMain
 
             yield return new WaitForSeconds(_waitDashTime);
 
+            _isAiming = false;
+
+            yield return new WaitForSeconds(0.5f);
+
             Dashing();
 
             yield return new WaitForSeconds(_dashingTime);
@@ -65,7 +75,13 @@ public class BossSkill : BossMain
     private void ReadyDash()
     {
         _bossValue._isDash = true;
+        _isAiming = true;
 
+        
+    }
+
+    private void DashAiming()
+	{
         viewDir = _bossValue._playerTr.position - transform.position;
 
         float angle = Mathf.Atan2(viewDir.y, viewDir.x) * Mathf.Rad2Deg;
@@ -77,7 +93,6 @@ public class BossSkill : BossMain
     private void Dashing()
     {
         _dashImage.SetActive(false);
-        _isCharging = true;
 
         _rb.velocity = viewDir.normalized * _bossValue._DashSpeed;
     }
@@ -89,6 +104,7 @@ public class BossSkill : BossMain
         int angle = 360 / angleCount;
         while (true)
         {
+            yield return new WaitForSeconds(_shootCool - _stunCool);
             _bossValue._isSkill = true;
 
             for (int i = 0; i < angleCount; i++)
@@ -100,8 +116,6 @@ public class BossSkill : BossMain
 
             //다시 움직임
             _bossValue._isSkill = false;
-
-            yield return new WaitForSeconds(_shootCool - _stunCool);
         }
     }
 
