@@ -6,10 +6,13 @@ public class BossMovement : BossMain
 {
     [SerializeField] private float _distance;
 
+    private SpriteRenderer _sr;
     //private Fence _fence;
+
 
     void Start()
     {
+        _sr = GetComponentInChildren<SpriteRenderer>();
         Fence _fence = PoolManager.Instance.Pop("Fence") as Fence;
         _fence.transform.position = transform.position;
         _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
@@ -32,5 +35,10 @@ public class BossMovement : BossMain
             _rb.velocity = Vector2.zero;
             transform.position = Vector2.MoveTowards(transform.position, _bossValue._playerTr.position, _bossValue._speed * Time.deltaTime);
         }
+
+        if (_bossValue._playerTr.position.x < transform.position.x)
+            _sr.flipX = true;
+        else
+            _sr.flipX = false;
     }
 }
