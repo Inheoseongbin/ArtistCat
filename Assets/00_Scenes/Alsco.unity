@@ -10267,7 +10267,7 @@ MonoBehaviour:
   - {fileID: 7548177575724573242, guid: 25e7a20709530834faca61505fde75aa, type: 3}
   bossList: []
   saveEnemyList: []
-  isSpawnLock: 0
+  isSpawnLock: 1
   range: 10
   bSpawnTime: 60
   eSpawnTimeMax: 10

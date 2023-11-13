@@ -36,6 +36,9 @@ public class Boss : PoolableMono
 
     public override void Init()
     {
+        print("wdncvdnw");
+        EnemySpawner.Instance.isSpawnLock = false;
+
         _isDead = false;
 
         dieCount = _dieCount;
@@ -83,7 +86,9 @@ public class Boss : PoolableMono
         var saveEnemy = EnemySpawner.Instance.saveEnemyList;
 
         foreach (Enemy enemy in saveEnemy)
+		{
             PoolManager.Instance.Push(enemy);
+		}
     }
 
     private void Update()
@@ -132,6 +137,8 @@ public class Boss : PoolableMono
 
     public void Die()
     {
+        EnemySpawner.Instance.isSpawnLock = true;
+
         _isDead = true;
         Fence.bossDie();
         GameManager.Instance.isTimeStop = false;
