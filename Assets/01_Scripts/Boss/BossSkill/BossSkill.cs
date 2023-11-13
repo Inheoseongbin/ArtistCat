@@ -124,14 +124,14 @@ public class BossSkill : BossMain
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            print("efrgtjuki");
-            Knockback(collision.gameObject, viewDir);
+            if (_bossValue._isDash)
+                Knockback(collision.gameObject, viewDir);
         }
     }
 
     private void Knockback(GameObject colObj, Vector2 knockDir)
     {
-        colObj.gameObject.GetComponent<Rigidbody2D>().AddForce( knockDir * _knockPower);
+        colObj.gameObject.GetComponent<Rigidbody2D>().AddForce(knockDir * _knockPower);
 
         _rb.velocity = Vector2.zero;
     }
