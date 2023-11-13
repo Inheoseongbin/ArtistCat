@@ -37,7 +37,7 @@ public class RePosition : MonoBehaviour
             case "Ground":
                 if (diffX > diffY)
                 {
-                    transform.Translate(Vector3.right * dirX * 60);
+                    transform.Translate(Vector3.right * dirX * 40);
                 }
                 else if (diffX < diffY)
                 {
