@@ -8,10 +8,13 @@ public class Experience : PoolableMono
 {
 	public int expNum;
 	private bool isMagnet = false;
+	private bool isSelected = false;
+	public bool IsSelected => isSelected;
 		
     public override void Init()
 	{
 		isMagnet = false;
+		isSelected = false;
 	}
 
 	private void Update()
@@ -26,6 +29,7 @@ public class Experience : PoolableMono
 		{
 			Level.Instance.AddExperience(expNum);
 			PoolManager.Instance.Push(this);
+			isSelected = true;
 		}
 
 		if(collision.CompareTag("Magnet"))
