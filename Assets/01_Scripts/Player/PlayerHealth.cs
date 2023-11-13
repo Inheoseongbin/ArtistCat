@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
     private AgentAnimator anim;
     private SpriteRenderer sr;
+    [field: SerializeField] public UnityEvent OnGetHit { get; set; }
 
     // HP
     private int maxHP = 100;
@@ -55,6 +57,7 @@ public class PlayerHealth : MonoBehaviour
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
         StartCoroutine(Hit());
+        OnGetHit?.Invoke();
 
         if (currentHP <= 0)
         {
