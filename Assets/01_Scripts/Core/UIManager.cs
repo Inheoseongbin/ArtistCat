@@ -76,7 +76,6 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         if (GameManager.Instance.IsGameOver) return; // 게임오버일 경우 리턴
-        
         if(Input.GetKeyDown(KeyCode.Escape)) // 설정 눌렀을 경우
         {
             OnSetting();
