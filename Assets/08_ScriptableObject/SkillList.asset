@@ -19,15 +19,15 @@ MonoBehaviour:
     introduce: "\uD604\uC7AC \uCCB4\uB825 \uD68C\uBCF5"
     upgradeLevel: 0
   - ID: 1
-    image: {fileID: 21300000, guid: 34d4b0e604d974a4b85a3130a2cf9737, type: 3}
+    image: {fileID: 21300000, guid: 2c3f131704b396f48b40efdc55badc8d, type: 3}
     name: "\uC18D\uB3C4 \uC99D\uAC00"
     introduce: "\uD50C\uB808\uC774\uC5B4 \uC18D\uB3C4 \uC99D\uAC00"
     upgradeLevel: 0
   - ID: 2
-    image: {fileID: 21300000, guid: 7af52f18e6a5c67499a186622260a4bc, type: 3}
+    image: {fileID: 21300000, guid: 6e3511ebd6d004949b2a001cfd5c5d90, type: 3}
     name: "\uC790\uC11D \uBC94\uC704 \uC99D\uAC00"
     introduce: "\uC790\uC11D \uBC94\uC704 \uC99D\uAC00"
-    upgradeLevel: 0
+    upgradeLevel: 1
   - ID: 3
     image: {fileID: 21300000, guid: 5de90bf8588b6624abe853c29c5816c3, type: 3}
     name: "\uD138\uC2E4 \uC18C\uD658"
@@ -37,14 +37,14 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 7c918a364f6a4a94089f548fa1ed86ca, type: 3}
     name: "\uAC00\uC2DC"
     introduce: "\uAC00\uC2DC \uC18C\uD658"
-    upgradeLevel: 0
+    upgradeLevel: 1
   - ID: 5
     image: {fileID: 21300000, guid: 1dde4d8fb0722eb42b29ef35c12310f4, type: 3}
     name: "\uB625"
     introduce: "\uB625 \uB358\uC9C0\uAE30"
     upgradeLevel: 0
   - ID: 6
-    image: {fileID: 21300000, guid: 3cde362fd5adb06468ddf664a8570fed, type: 3}
+    image: {fileID: 21300000, guid: 245aafeab904e584babed30faab69583, type: 3}
     name: "\uBC1C\uD1B1"
     introduce: "\uD560\uD034\uAE30"
     upgradeLevel: 0
