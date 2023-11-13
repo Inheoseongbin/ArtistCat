@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTypes: 
-  typeCount: 5
+  typeCount: 4
   exp: {fileID: 4293267311527429346, guid: 809d70116559fc6498bdbf5a05133d3d, type: 3}
   sprites:
   - {fileID: 21300000, guid: 45ee66b869ba74d4790d69f6600da53a, type: 3}

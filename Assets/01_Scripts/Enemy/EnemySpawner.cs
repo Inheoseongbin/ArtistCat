@@ -63,6 +63,7 @@ public class EnemySpawner : MonoBehaviour
 
         //print(curtime);
         curtime = (int)GameManager.Instance.CurrentPlayTime;
+        curLevel = Level.Instance.level;
 
         if (curtime >= bosstime)
         {
@@ -83,34 +84,34 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            float time = Random.Range(2, 5);
-            yield return new WaitForSeconds(time);
-
             /*//if (curtime <= 10) Level1Enemy();
             //else if (curtime < 20) RandEnemy();
+            ////이거 이단 문제
+            //if (!_bossSpawn)
+            //{
+            //    Vector2 bossPos = new Vector2(player.position.x, maxy);
+            //    b = PoolManager.Instance.Pop("Boss") as Boss;
+            //    b.transform.position = bossPos;
+            //    bosstime = curtime + 30;
+            //    _bossSpawn = true;
+            //    GameManager.Instance.isTimeStop = true;
+            //}*/
 
-
-                ////이거 이단 문제
-                //if (!_bossSpawn)
-                //{
-                //    Vector2 bossPos = new Vector2(player.position.x, maxy);
-
-                //    b = PoolManager.Instance.Pop("Boss") as Boss;
-                //    b.transform.position = bossPos;
-                //    bosstime = curtime + 30;
-                //    _bossSpawn = true;
-                //    GameManager.Instance.isTimeStop = true;
-                //}*/
-
-            if(curLevel < 2)
+            float time = Random.Range(1, 3);
+            yield return new WaitForSeconds(time);
+            if (curLevel < 2)
 			{
                 EnemySpawn(1);
 			}
             else if(curLevel < 4)
 			{
-                EnemySpawn(3);
+                EnemySpawn(2);
 			}
             else if(curLevel >  6)
+			{
+                EnemySpawn(3);
+			}
+            else if(curLevel > 8)
 			{
                 EnemySpawn(4);
 			}
@@ -128,10 +129,10 @@ public class EnemySpawner : MonoBehaviour
     private void EnemySpawn(int idx)
 	{
         int r = Random.Range(0, idx);
+        print(r);
         e = PoolManager.Instance.Pop(enemyList[r].name) as Enemy;
 
-        Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
-        e.transform.position = pos;
+        e.transform.position = RandomPos();
     }
 
     private void RandEnemy()
