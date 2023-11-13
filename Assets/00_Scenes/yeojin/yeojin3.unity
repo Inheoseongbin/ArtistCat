@@ -7110,6 +7110,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMoveSound: {fileID: 0}
+  playerHurtSound: {fileID: 0}
+  playerDieSound: {fileID: 0}
+  playerSuccessAtkSound: {fileID: 0}
+  selectExpSound: {fileID: 0}
+  levelUpSound: {fileID: 0}
+  enemyHurtSound: {fileID: 0}
+  enemyDieSound: {fileID: 0}
+  bossSpawnSound: {fileID: 0}
+  bossDashSound: {fileID: 0}
+  bossShootingSound: {fileID: 0}
+  bossHurtSound: {fileID: 0}
+  bossDieSound: {fileID: 0}
+  buttonClickSound: {fileID: 0}
+  skillUIOnSound: {fileID: 0}
+  skillUIOffSound: {fileID: 0}
+  gameFailSound: {fileID: 0}
+  gameSuccessSound: {fileID: 0}
+  throwingPoopSound: {fileID: 0}
+  landFishThronSound: {fileID: 0}
+  rollAroundStringSound: {fileID: 0}
+  scratchEnemySound: {fileID: 0}
+  playerHealSound: {fileID: 0}
 --- !u!1 &1284234816
 GameObject:
   m_ObjectHideFlags: 0

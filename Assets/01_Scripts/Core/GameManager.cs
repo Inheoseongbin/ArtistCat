@@ -6,10 +6,10 @@ public enum LineType
 {
     NONE = 0,
     WIDTH = 1,
-    LENGTH,
-    V,
-    REVERSEV,
-    THUNDER,
+    LENGTH = 2,
+    V = 3,
+    REVERSEV = 4,
+    THUNDER = 5,
     END
 }
 public struct SkillInclude

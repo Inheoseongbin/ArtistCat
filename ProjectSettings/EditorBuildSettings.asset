@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Undead Survivor/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/00_Scenes/yeojin/StartScene.unity
+    guid: f855bbeabaa3e1341ab28395c0e4e7d6
+  - enabled: 1
+    path: Assets/00_Scenes/yeojin/Tutorial.unity
+    guid: 48c163f605159f947b3bcae19ada4f1c
+  - enabled: 1
+    path: Assets/00_Scenes/Alsco.unity
+    guid: 9c9b8e0f1eec6df40879e2c028d19ca4
   m_configObjects: {}
