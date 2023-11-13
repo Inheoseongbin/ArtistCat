@@ -10269,10 +10269,10 @@ MonoBehaviour:
   saveEnemyList: []
   isSpawnLock: 1
   range: 10
-  bSpawnTime: 60
+  bSpawnTime: 10
   eSpawnTimeMax: 10
   eSpawnTimeMin: 5
-  bosstime: 10
+  bosstime: 5
   _bossSpawn: 0
 --- !u!1 &1994942223
 GameObject:

@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
 	private float maxy;
 	private int curtime;
 	[SerializeField] private int bosstime = 20;
-	[SerializeField] bool _bossSpawn = false;
+	public bool _bossSpawn = false;
 
 	int randEnemyType;
 
@@ -60,7 +60,7 @@ public class EnemySpawner : MonoBehaviour
 		miny = player.transform.position.y - range;
 		maxx = player.transform.position.x + range;
 		maxy = player.transform.position.y + range;
-
+		print(curtime);
 		//print(curtime);
 		curtime = (int)GameManager.Instance.CurrentPlayTime;
 		curLevel = Level.Instance.level;
@@ -69,6 +69,7 @@ public class EnemySpawner : MonoBehaviour
 		{
 			if (!_bossSpawn)
 			{
+				print("Wdefbgnhm");
 				Vector2 bossPos = new Vector2(player.position.x, maxy);
 
 				b = PoolManager.Instance.Pop("Boss") as Boss;
@@ -123,7 +124,6 @@ public class EnemySpawner : MonoBehaviour
 					if (!GameManager.Instance.isTimeStop)
 					{
 						RandEnemy();
-						_bossSpawn = false;
 					}
 				}
 			}
@@ -166,7 +166,6 @@ public class EnemySpawner : MonoBehaviour
 		Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
 		if (Vector3.Distance(transform.position, pos) < 3)
 		{
-			print("´Ù½Ã");
 			RandomPos();
 		}
 		return pos;

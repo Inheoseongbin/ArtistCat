@@ -13,8 +13,7 @@ public class BossMovement : BossMain
     void Start()
     {
         _sr = GetComponentInChildren<SpriteRenderer>();
-        Fence _fence = PoolManager.Instance.Pop("Fence") as Fence;
-        _fence.transform.position = transform.position;
+
         _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
         _bossValue._isSkill = false;
     }
