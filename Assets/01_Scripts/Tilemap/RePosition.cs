@@ -41,7 +41,7 @@ public class RePosition : MonoBehaviour
                 }
                 else if (diffX < diffY)
                 {
-                    transform.Translate(Vector3.up * dirY * 60);
+                    transform.Translate(Vector3.up * dirY * 40);
                 }
                 break;
                 //에너미 재배치 할 때 쓸까 말까
