@@ -36,13 +36,13 @@ public class BossSkill : BossMain
         _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
     }
 
-	private void Update()
-	{
-		if(_isAiming)
+    private void Update()
+    {
+        if (_isAiming)
             DashAiming();
-	}
+    }
 
-	public void Attack()
+    public void Attack()
     {
         StopAllCoroutines();
         StartCoroutine(ShootRoutine());
@@ -77,17 +77,19 @@ public class BossSkill : BossMain
         _bossValue._isDash = true;
         _isAiming = true;
 
-        
+
     }
 
     private void DashAiming()
-	{
+    {
         viewDir = _bossValue._playerTr.position - transform.position;
 
         float angle = Mathf.Atan2(viewDir.y, viewDir.x) * Mathf.Rad2Deg;
 
         _dashImage.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
-        _dashImage.SetActive(true);
+
+        if (!EnemySpawner.Instance.isBossDead)
+            _dashImage.SetActive(true);
     }
 
     private void Dashing()
