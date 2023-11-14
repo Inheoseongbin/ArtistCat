@@ -37,7 +37,6 @@ public class Boss : PoolableMono
     public override void Init()
     {
         DeleteEnemy();
-        CreateFence();
 
         EnemySpawner.Instance.isSpawnLock = false;
         _isDead = false;
@@ -54,11 +53,6 @@ public class Boss : PoolableMono
         bossSkill.Attack();
     }
 
-    private void CreateFence()
-	{
-        Fence _fence = PoolManager.Instance.Pop("Fence") as Fence;
-        _fence.transform.position = transform.position;
-    }
 
     private void DeleteEnemy()
 	{
