@@ -137,11 +137,11 @@ public class UIManager : MonoBehaviour
                     settingPanel.SetActive(false);
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 });
+
     }
     public void GoBackToFirstSceneBtn()
     {
         PlayBTNClicked();
-        print("버튼클릭!");
         Time.timeScale = 1;
 
         if (GameManager.Instance.IsGameOver)

@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.UI;
+
 public class StartSceneManager : MonoBehaviour
 {
-    // 0¿Ã ∏ﬁ¿Œ æ¿
+    [SerializeField] private SceneTransform fadeImage;
+    private bool isFirstClick = false;
+
     public void LoadGameScene()
     {
-        SceneManager.LoadScene(2);
+        if (isFirstClick) return;
+        fadeImage.FadeIn(2);
     }
     public void LoadTutorialScene()
     {
-        SceneManager.LoadScene(1); // 1¿Ã ∆©≈‰∏ÆæÛ æ¿
+        if (isFirstClick) return;
+        fadeImage.FadeIn(1);
     }
 }
