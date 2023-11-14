@@ -38,6 +38,9 @@ public class GameManager : MonoBehaviour
     private float endTime = 0f;
     public float EndTime => endTime;
 
+    private bool isStageClear = false;
+    public bool IsStageClear => isStageClear;
+
     public bool isTimeStop = false;
 
     private void Awake()
@@ -79,5 +82,10 @@ public class GameManager : MonoBehaviour
     {
         endTime = currentPlayTime;
         isGameOver = true;
+    }
+
+    public void BossClear() // 마지막 보스 클리어했을 때 이거 호출
+    {
+        isStageClear = true;
     }
 }
