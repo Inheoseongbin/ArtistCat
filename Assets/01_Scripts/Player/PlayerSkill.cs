@@ -8,6 +8,7 @@ public class PlayerSkill : MonoBehaviour
 	private int fishLevel = 0;
 	private int poopLevel = 0;
 	private int scratchLevel = 0;
+	private int boomerangLevel = 0;
 
 	public void String(int level)
 	{
@@ -72,5 +73,11 @@ public class PlayerSkill : MonoBehaviour
 			s.transform.position = transform.position;
 			yield return new WaitForSeconds(10 / scratchLevel);
 		}
+	}
+
+	public void Boomerang(int level)
+    {
+		boomerangLevel = level;
+
 	}
 }

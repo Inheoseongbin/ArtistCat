@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
     [field: SerializeField] public UnityEvent OnGetHit { get; set; }
 
     // HP
-    private int maxHP = 100;
+    private int maxHP = 200;
     private int currentHP = 0;
     public int PlayerHP
     {
@@ -38,14 +38,29 @@ public class PlayerHealth : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.CompareTag("Boss"))
-			Hurt(10);
         if (collision.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<Enemy>();
+            int enemyLevel = collision.gameObject.GetComponent<Enemy>().typeCount; // 레벨 별로 데미지 다르게 해주기
+            switch (enemyLevel)
+            {
+                case 1:
+                    Hurt(2);
+                    break;
+                case 2: // 
+                    Hurt(5);
+                    break;
+                case 4: //
+                    Hurt(9);
+                    break;
+                case 5: // 
+                    Hurt(12);
+                    break;
+            }
         }
-        if (collision.CompareTag("Bullet"))
+       else if (collision.CompareTag("Bullet"))
             Hurt(5);
+        else if (collision.CompareTag("Boss"))
+            Hurt(10);
     }
 
 	private void Hurt(int dmg)
@@ -78,7 +93,6 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHP += heal;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
-
         float val = 1.0f / (float)maxHP; // 0.01
         healthBar.GaugeUI(val * currentHP);
     }

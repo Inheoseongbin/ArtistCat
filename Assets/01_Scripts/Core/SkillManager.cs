@@ -70,10 +70,10 @@ public class SkillManager : MonoBehaviour
                 Heal healParticle = PoolManager.Instance.Pop("HealParticle") as Heal;
                 healParticle.transform.position = GameManager.Instance.playerTrm.position;
                 break;
-            case 1: // 자석 범위 증가
+            case 1: // speed
                 player.OnSpeedUp(1f);
                 break;
-            case 2: // 체력 회복
+            case 2: // 마그넷
                 player.OnMagnetUpgrade(1);
                 break;
             case 3: // 털실 호출
@@ -87,6 +87,9 @@ public class SkillManager : MonoBehaviour
                 break;
             case 6: // 스크래치
                 player.OnScratchOn(skillSO.list[id].upgradeLevel);
+                break;
+            case 7: // 부메랑
+                player.OnBoomerangOn(skillSO.list[id].upgradeLevel);
                 break;
             default:
                 break;
