@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class PlayerSkill : MonoBehaviour
 {
+	private Boomerang boomerang;
+
 	private int stringLevel = 0;
 	private int fishLevel = 0;
 	private int poopLevel = 0;
 	private int scratchLevel = 0;
 	private int boomerangLevel = 0;
 
-	public void String(int level)
+    private void Awake()
+    {
+        boomerang = FindObjectOfType<Boomerang>();
+    }
+
+    public void String(int level)
 	{
 		stringLevel = level;
 		StartCoroutine(StringTime());
@@ -78,6 +85,6 @@ public class PlayerSkill : MonoBehaviour
 	public void Boomerang(int level)
     {
 		boomerangLevel = level;
-
+		boomerang.LevelUp();
 	}
 }
