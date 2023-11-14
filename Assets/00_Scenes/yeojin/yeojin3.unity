@@ -6404,6 +6404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d9ebdc07caf0b48a62670ea3bd0297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 1
 --- !u!1 &1126545126
 GameObject:
   m_ObjectHideFlags: 0
@@ -8378,6 +8379,7 @@ MonoBehaviour:
   - {fileID: 617049712}
   - {fileID: 926898226}
   gameOverPanel: {fileID: 420908076}
+  gameOverTitleText: {fileID: 0}
   currentTimeText: {fileID: 1833299759}
   bestTimeText: {fileID: 1018443305}
   killEnemyText: {fileID: 573199608}
@@ -8386,6 +8388,8 @@ MonoBehaviour:
   settingImage: {fileID: 477258028}
   bgmSlider: {fileID: 1928298585}
   effectSlider: {fileID: 1172958216}
+  whatIDrawImage: {fileID: 0}
+  lineTypeSprite: []
 --- !u!4 &1524549631
 Transform:
   m_ObjectHideFlags: 0
@@ -10198,6 +10202,9 @@ MonoBehaviour:
   bSpawnTime: 100
   eSpawnTimeMax: 4
   eSpawnTimeMin: 2
+  bosstime: 20
+  nextTime: 20
+  _bossSpawn: 0
 --- !u!1 &1994942223
 GameObject:
   m_ObjectHideFlags: 0
