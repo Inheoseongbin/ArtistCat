@@ -9,11 +9,26 @@ public class Player : MonoBehaviour
 	private PlayerSkill playerSkill;
 	[SerializeField] private CircleCollider2D magnetCollider;
 
+	public int combo;
+	private Popup comboPop;
+
 	private void Awake() 
 	{
 		playerHealth = GetComponent<PlayerHealth>();
 		playerMove = GetComponent<PlayerMove>();
 		playerSkill = GetComponent<PlayerSkill>();
+		comboPop = FindObjectOfType<Popup>();
+	}
+
+	public void ComboCheck()
+	{
+		if(combo > 1)
+		{
+			OnHeal(combo * 2);
+			comboPop.ComboTxt(combo);
+			comboPop.StartCoroutine(comboPop.Pop());
+			combo = 0;
+		}
 	}
 
 	public void OnHeal(int value) // 스킬 힐

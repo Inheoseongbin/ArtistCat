@@ -13,10 +13,13 @@ public class Drawing : MonoBehaviour
     private Vector2 lastPos;
     private float _limitValue = 1.5f;
 
-    private void Start()
+    private Player player;
+
+	private void Start()
     {
         mainCam = GameManager.Instance.mainCam;
         cam = mainCam.transform;
+        player = FindObjectOfType<Player>();
     }
 
     #region 건든거 없음
@@ -107,6 +110,8 @@ public class Drawing : MonoBehaviour
         {
             b.PlayerDraw(currentType);
         }
+
+        player.ComboCheck();
 
         UIManager.Instance.CurrentImage(currentType);
 
