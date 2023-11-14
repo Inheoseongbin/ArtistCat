@@ -19,5 +19,11 @@ public class Thorn : PoolableMono
 			e.DrawReduce(0);
 			PoolManager.Instance.Push(this);
 		}
+		if (collision.CompareTag("Boss"))
+		{
+			Boss b = collision.GetComponent<Boss>();
+			b.DrawReduce(0);
+			PoolManager.Instance.Push(this);
+		}
 	}
 }

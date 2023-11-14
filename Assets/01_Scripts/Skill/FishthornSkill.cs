@@ -30,16 +30,16 @@ public class FishthornSkill : PoolableMono
 		PoolManager.Instance.Push(this);
 	}
 
-	void OnTriggerEnter2D(Collider2D col)
-	{ 
-		if (col.CompareTag("Enemy"))
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Enemy"))
 		{
-			Enemy e = col.GetComponent<Enemy>();
+			Enemy e = collision.GetComponent<Enemy>();
 			e.DrawReduce(0);
 		}
-		if (col.CompareTag("Boss"))
+		if (collision.CompareTag("Boss"))
 		{
-			Boss b = col.GetComponent<Boss>();
+			Boss b = collision.GetComponent<Boss>();
 			b.DrawReduce(0);
 		}
 	}
