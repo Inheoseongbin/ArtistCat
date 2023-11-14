@@ -81,7 +81,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         if (SceneManager.GetActiveScene().name == "Tutorial") return; // 튜토리얼일 경우 안 해도 됨
-        if (GameManager.Instance.IsGameOver) return; // 게임오버일 경우 리턴
+        if (GameManager.Instance.IsGameOver || isSkillChooseOn) return; // 게임오버일 경우 / 스킬 뽑고 있을 경우 리턴
         if(Input.GetKeyDown(KeyCode.Escape)) // 설정 눌렀을 경우
         {
             OnSetting();
@@ -123,6 +123,7 @@ public class UIManager : MonoBehaviour
     // 버튼 (다시시작&처음으로)
     public void RestartSceneBtn()
     {
+        PlayBTNClicked();
         // 재시작 눌렀으면 enemy 모두 삭제 시키고
         Time.timeScale = 1;
 
@@ -139,6 +140,7 @@ public class UIManager : MonoBehaviour
     }
     public void GoBackToFirstSceneBtn()
     {
+        PlayBTNClicked();
         print("버튼클릭!");
         Time.timeScale = 1;
 
@@ -176,6 +178,8 @@ public class UIManager : MonoBehaviour
     }
     public void SkillRandomChoose() // 레벨업시 이거 호출
     {
+        SoundManager.Instance.PlayLevelUp();
+
         isSkillChooseOn = true;
         includeSkillPanel.SetActive(true);
         includeSkillPanel.transform.localPosition = new Vector3(0, 1000, 0);
@@ -269,6 +273,10 @@ public class UIManager : MonoBehaviour
     {
         float effectVolume = effectSlider.value;
         SoundManager.Instance.SetEffectVolume(effectVolume);
+    }
+    public void PlayBTNClicked()
+    {
+        SoundManager.Instance.PlayBTNClick();
     }
 
     // 뭐 그렸는지

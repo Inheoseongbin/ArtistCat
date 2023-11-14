@@ -28,6 +28,8 @@ public class Experience : PoolableMono
 		if(collision.CompareTag("Player"))
 		{
 			Level.Instance.AddExperience(expNum);
+			SoundManager.Instance.PlaySelectExp();
+
 			PoolManager.Instance.Push(this);
 			isSelected = true;
 		}

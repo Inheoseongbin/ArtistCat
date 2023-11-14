@@ -64,6 +64,8 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         cam.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(bgmKey);
+        cam.GetComponent<AudioSource>().loop = true;
+
         audioSource.volume = PlayerPrefs.GetFloat(effectKey);
     }
 

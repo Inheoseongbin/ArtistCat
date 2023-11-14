@@ -10,12 +10,6 @@ public class FadeInOutSR : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
     }
 
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A)) FadeIn();
-        if (Input.GetKeyDown(KeyCode.S)) FadeOut();
-    }
     public void FadeIn()
     {
         sr.DOFade(1, 1.5f);

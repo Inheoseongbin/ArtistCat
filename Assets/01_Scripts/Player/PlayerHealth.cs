@@ -41,7 +41,9 @@ public class PlayerHealth : MonoBehaviour
 		if (collision.CompareTag("Boss"))
 			Hurt(10);
         if (collision.CompareTag("Enemy"))
-            Hurt(10);
+        {
+            collision.gameObject.GetComponent<Enemy>();
+        }
         if (collision.CompareTag("Bullet"))
             Hurt(5);
     }
