@@ -22,18 +22,18 @@ public class Drawing : MonoBehaviour
     #region 건든거 없음
     private void Update()
     {
-        if (GameManager.Instance.IsGameOver || UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting)
-        {
-            if (brush != null) PoolManager.Instance.Push(brush);
-            currentLineRenderer = null;
-            return;
-        }
         Draw();
     }
 
     void Draw()
     {
-        if (Input.GetMouseButtonDown(0))
+		if (GameManager.Instance.IsGameOver || UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting)
+		{
+			if (brush != null) PoolManager.Instance.Push(brush);
+			currentLineRenderer = null;
+			return;
+		}
+		if (Input.GetMouseButtonDown(0))
         {
             CreateBrush();
         }
@@ -44,7 +44,6 @@ public class Drawing : MonoBehaviour
             Vector2 camRelative = cam.InverseTransformPoint(mousePos);
             if (camRelative != lastPos && camRelative != null)
             {
-                print("");
                 AddPoint(camRelative);
                 lastPos = camRelative;
             }

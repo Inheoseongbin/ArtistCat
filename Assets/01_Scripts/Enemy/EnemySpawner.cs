@@ -18,7 +18,6 @@ public class EnemySpawner : MonoBehaviour
 	[SerializeField] private int eSpawnTimeMax;
 	[SerializeField] private int eSpawnTimeMin;
 
-	private int atOnceCount;
 	private float minx;
 	private float miny;
 	private float maxx;
@@ -132,27 +131,7 @@ public class EnemySpawner : MonoBehaviour
 		e.transform.position = RandomPos();
 	}
 
-	private void RandEnemy()
-	{
-		randEnemyType = Random.Range(0, enemyList.Count);
-		e = PoolManager.Instance.Pop(enemyList[randEnemyType].name) as Enemy;
-
-		saveEnemyList.Add(e);
-		e.transform.position = RandomPos();
-	}
-
-	IEnumerator SpawnBoss()
-	{
-		while (true)
-		{
-			yield return new WaitForSeconds(bSpawnTime);
-			Boss e = PoolManager.Instance.Pop("Boss") as Boss;
-			Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
-			e.transform.position = pos;
-		}
-	}
-
-	Vector2 RandomPos()
+	private Vector2 RandomPos()
 	{
 		Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
 		if (Vector3.Distance(player.transform.position, pos) < 2)
@@ -161,5 +140,14 @@ public class EnemySpawner : MonoBehaviour
 			RandomPos();
 		}
 		return pos;
+	}
+
+	private void RandEnemy()
+	{
+		randEnemyType = Random.Range(0, enemyList.Count);
+		e = PoolManager.Instance.Pop(enemyList[randEnemyType].name) as Enemy;
+
+		saveEnemyList.Add(e);
+		e.transform.position = RandomPos();
 	}
 }
