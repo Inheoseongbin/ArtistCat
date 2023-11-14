@@ -27,4 +27,18 @@ public class Rotater : MonoBehaviour
             new Vector2(_center.position.x + _radius * Mathf.Cos(degTheta*Mathf.Deg2Rad)
             , _center.position.y + _radius * Mathf.Sin(degTheta * Mathf.Deg2Rad));
     }
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+        if (collision.CompareTag("Enemy"))
+        {
+            Enemy e = collision.GetComponent<Enemy>();
+            e.DrawReduce(0);
+        }
+        if (collision.CompareTag("Boss"))
+        {
+            Boss b = collision.GetComponent<Boss>();
+            b.DrawReduce(0);
+        }
+    }
 }

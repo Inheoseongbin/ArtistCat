@@ -125,6 +125,8 @@ public class Boss : PoolableMono
             Destroy(typeList[0]);
             typeList.RemoveAt(0);
         }
+        else
+            return;
     }
 
 

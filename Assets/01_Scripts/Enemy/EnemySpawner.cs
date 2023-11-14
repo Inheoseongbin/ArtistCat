@@ -61,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
 		miny = player.transform.position.y - range;
 		maxx = player.transform.position.x + range;
 		maxy = player.transform.position.y + range;
-		//print(curtime);
+
 		curtime = (int)GameManager.Instance.CurrentPlayTime;
 		curLevel = Level.Instance.level;
 
@@ -69,7 +69,6 @@ public class EnemySpawner : MonoBehaviour
 		{
 			if (!_bossSpawn)
 			{
-				print("Wdefbgnhm");
 				Vector2 bossPos = new Vector2(player.position.x, maxy);
 
 				b = PoolManager.Instance.Pop("Boss") as Boss;
@@ -92,20 +91,6 @@ public class EnemySpawner : MonoBehaviour
 	{
 		while (true)
 		{
-			/*//if (curtime <= 10) Level1Enemy();
-            //else if (curtime < 20) RandEnemy();
-            ////이거 이단 문제
-            //if (!_bossSpawn)
-            //{
-            //    Vector2 bossPos = new Vector2(player.position.x, maxy);
-            //    b = PoolManager.Instance.Pop("Boss") as Boss;
-            //    b.transform.position = bossPos;
-            //    bosstime = curtime + 30;
-            //    _bossSpawn = true;
-            //    GameManager.Instance.isTimeStop = true;
-            //}*/
-
-
 			float time = Random.Range(1, 3);
 			yield return new WaitForSeconds(time);
 			if (isSpawnLock)
@@ -141,7 +126,6 @@ public class EnemySpawner : MonoBehaviour
 	private void EnemySpawn(int idx)
 	{
 		int r = Random.Range(0, idx);
-		print(r);
 		e = PoolManager.Instance.Pop(enemyList[r].name) as Enemy;
 
 		saveEnemyList.Add(e);
@@ -171,8 +155,9 @@ public class EnemySpawner : MonoBehaviour
 	Vector2 RandomPos()
 	{
 		Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
-		if (Vector3.Distance(transform.position, pos) < 3)
+		if (Vector3.Distance(player.transform.position, pos) < 2)
 		{
+			print("re");
 			RandomPos();
 		}
 		return pos;
