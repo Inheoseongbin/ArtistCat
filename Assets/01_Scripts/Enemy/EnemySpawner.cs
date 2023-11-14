@@ -61,7 +61,6 @@ public class EnemySpawner : MonoBehaviour
 		miny = player.transform.position.y - range;
 		maxx = player.transform.position.x + range;
 		maxy = player.transform.position.y + range;
-		print(curtime);
 		//print(curtime);
 		curtime = (int)GameManager.Instance.CurrentPlayTime;
 		curLevel = Level.Instance.level;
@@ -75,14 +74,21 @@ public class EnemySpawner : MonoBehaviour
 
 				b = PoolManager.Instance.Pop("Boss") as Boss;
 				b.transform.position = bossPos;
-				bosstime = curtime + nextTime;
+				CreateFence();
+                bosstime = curtime + nextTime;
 				_bossSpawn = true;
 				GameManager.Instance.isTimeStop = true;
 			}
 		}
 	}
 
-	IEnumerator Spawn()
+    private void CreateFence()
+    {
+        Fence _fence = PoolManager.Instance.Pop("Fence") as Fence;
+        _fence.transform.position = player.position;
+    }
+
+    IEnumerator Spawn()
 	{
 		while (true)
 		{
