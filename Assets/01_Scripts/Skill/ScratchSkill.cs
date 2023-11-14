@@ -90,5 +90,10 @@ public class ScratchSkill : PoolableMono
 			Enemy e = collision.GetComponent<Enemy>();
 			e.DrawReduce(0);
 		}
+		if (collision.CompareTag("Boss"))
+		{
+			Boss b = collision.GetComponent<Boss>();
+			b.DrawReduce(0);
+		}
 	}
 }

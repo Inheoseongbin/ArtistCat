@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Level : MonoBehaviour
 {
     public static Level Instance;
-    private int level = 1;
+    public int level = 1;
     private int experience = 0;
 
     int TO_LEVEL_UP
