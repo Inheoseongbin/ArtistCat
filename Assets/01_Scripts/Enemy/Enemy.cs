@@ -10,7 +10,7 @@ public class Enemy : PoolableMono
     [Header("적 설정")]
     public List<LineType> enemyTypes;
     public int typeCount;
-    private int count;
+    public int count;
     public GameObject exp;
 
     [Header("UI 설정")]
@@ -37,6 +37,11 @@ public class Enemy : PoolableMono
         _hitDecision.enabled = true;
         _isDead = false;
 
+        foreach (Transform child in imageParent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         //쉐이더 값 초기화
         _sr.material.SetInt(_isHit, 0);
         _sr.material.SetInt(_isDissolve, 0);
@@ -46,6 +51,7 @@ public class Enemy : PoolableMono
         _emo.material.SetFloat(_dissolve, 1f);
 
         count = typeCount;
+        print($"{gameObject.name} : {count}");
         for (int i = 0; i < count; i++) // 이제 개수만큼 랜덤으로 애마다 공격 타입 받아주기
         {
             int r = Random.Range(1, (int)LineType.END);
