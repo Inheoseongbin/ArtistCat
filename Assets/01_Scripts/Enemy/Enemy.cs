@@ -37,6 +37,11 @@ public class Enemy : PoolableMono
         _hitDecision.enabled = true;
         _isDead = false;
 
+        foreach (Transform child in imageParent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         //쉐이더 값 초기화
         _sr.material.SetInt(_isHit, 0);
         _sr.material.SetInt(_isDissolve, 0);
