@@ -58,16 +58,24 @@ public class PoopSkill : PoolableMono
 		}
 		else
 		{
-			float x = Random.Range(-5, 5);
-			float y = Random.Range(-5, 5);
-
-			if (dir == Vector3.zero)
+			Boss b  = FindAnyObjectByType<Boss>();
+			if (b != null)
 			{
-				x = Random.Range(-5, 5);
-				y = Random.Range(-5, 5);
+				dir = b.transform.position - transform.position;
+				dir.Normalize();
 			}
+			else
+			{
+				float x = Random.Range(-5, 5);
+				float y = Random.Range(-5, 5);
 
-			dir = new Vector3(x, y).normalized;
+				if (dir == Vector3.zero)
+				{
+					x = Random.Range(-5, 5);
+					y = Random.Range(-5, 5);
+				}
+				dir = new Vector3(x, y).normalized;
+			}
 		}
 	}
 
@@ -81,7 +89,8 @@ public class PoopSkill : PoolableMono
 		}
 		if (collision.CompareTag("Boss"))
 		{
-			// 보스 패턴 하나 없애는 거 추가 해야함
+			Boss b = collision.GetComponent<Boss>();
+			b.DrawReduce(0);
 			PoolManager.Instance.Push(this);
 		}
 	}

@@ -13,13 +13,13 @@ public class ChargingDash : BossSkill
         float sizeY = _dashingTime * 1000;
         while (true)
         {
-            if(_isCharging)
+            if(_isAiming)
             {
                 Vector2 lerpSize = Vector2.Lerp(new Vector2(300, 0), new Vector2(300, sizeY), _waitDashTime);
                 transform.GetComponent<RectTransform>().sizeDelta = lerpSize;
 
                 if(lerpSize.y  >= sizeY)
-                    _isCharging = false;
+                    _isAiming = false;
             }
         }
     }

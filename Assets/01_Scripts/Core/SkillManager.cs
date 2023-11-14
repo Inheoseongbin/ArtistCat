@@ -67,6 +67,8 @@ public class SkillManager : MonoBehaviour
         {
             case 0: // 힐
                 player.OnHeal(30);
+                Heal healParticle = PoolManager.Instance.Pop("HealParticle") as Heal;
+                healParticle.transform.position = GameManager.Instance.playerTrm.position;
                 break;
             case 1: // 자석 범위 증가
                 player.OnSpeedUp(1f);

@@ -37,5 +37,10 @@ public class FishthornSkill : PoolableMono
 			Enemy e = col.GetComponent<Enemy>();
 			e.DrawReduce(0);
 		}
+		if (col.CompareTag("Boss"))
+		{
+			Boss b = col.GetComponent<Boss>();
+			b.DrawReduce(0);
+		}
 	}
 }
