@@ -9,6 +9,11 @@ public class Heal : PoolableMono
         Invoke(nameof(HealParticle), 1);
     }
 
+    private void Update()
+    {
+        transform.position = GameManager.Instance.playerTrm.transform.position;
+    }
+
     void HealParticle()
     {
         PoolManager.Instance.Push(this);
