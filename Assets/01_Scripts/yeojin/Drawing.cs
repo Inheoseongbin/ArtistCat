@@ -42,22 +42,22 @@ public class Drawing : MonoBehaviour
             cam = mainCam.transform;
             Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
             Vector2 camRelative = cam.InverseTransformPoint(mousePos);
-            if (camRelative != lastPos)
+            if (camRelative != lastPos && camRelative != null)
             {
+                print("");
                 AddPoint(camRelative);
                 lastPos = camRelative;
             }
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            //Check and Erase Line
             LineCheck();
             PoolManager.Instance.Push(brush);
         }
-        //else
-        //{
-        //    currentLineRenderer = null;
-        //}
+        else
+        {
+            currentLineRenderer = null;
+        }
     }
     private void CreateBrush()
     {
@@ -75,11 +75,13 @@ public class Drawing : MonoBehaviour
         currentLineRenderer.SetPosition(0, camRelative);
         currentLineRenderer.SetPosition(1, camRelative);
     }
+
     void AddPoint(Vector2 pointPos)
     {
         currentLineRenderer.SetPosition(currentLineRenderer.positionCount++, pointPos);
         //LineCheck();
-    }   
+    }
+    
     #endregion
 
     private void LineCheck()
