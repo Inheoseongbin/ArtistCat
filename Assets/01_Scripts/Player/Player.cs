@@ -50,4 +50,9 @@ public class Player : MonoBehaviour
     {
 		playerSkill.Scratch(level);
 	}
+
+	public void OnBoomerangOn(int level)
+    {
+		playerSkill.Boomerang(level);
+    }
 }
