@@ -51,7 +51,7 @@ public class BossSkill : BossMain
 
     IEnumerator DashRoutine()
     {
-        dTime = _dashCool - _waitDashTime - _dashingTime;
+        dTime = EnemySpawner.Instance.bossTypes._dashCool - _waitDashTime - _dashingTime;
         while (true)
         {
             yield return new WaitForSeconds(dTime);
@@ -106,7 +106,7 @@ public class BossSkill : BossMain
         int angle = 360 / angleCount;
         while (true)
         {
-            yield return new WaitForSeconds(_shootCool - _stunCool);
+            yield return new WaitForSeconds(EnemySpawner.Instance.bossTypes._shootCool - _stunCool);
             _bossValue._isSkill = true;
 
             for (int i = 0; i < angleCount; i++)
@@ -134,7 +134,7 @@ public class BossSkill : BossMain
         Bullet bullet = PoolManager.Instance.Pop("Bullet") as Bullet;
         bullet.transform.position = transform.position;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.velocity = direction * _bulletSpeed;
+        rb.velocity = direction * EnemySpawner.Instance.bossTypes._bulletSpeed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

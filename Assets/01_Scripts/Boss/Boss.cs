@@ -10,6 +10,7 @@ public class Boss : PoolableMono
     [Header("적 설정")]
     public List<LineType> enemyTypes;
     public int typeCount;
+    private BossType type;
     private int count;
     public GameObject exp;
 
@@ -37,25 +38,33 @@ public class Boss : PoolableMono
 
     public override void Init()
     {
+        type = EnemySpawner.Instance.bossTypes;
+
         imageParent.SetActive(true);
 
         DeleteEnemy();
+        RenderControl();
 
         EnemySpawner.Instance.isSpawnLock = false;
         EnemySpawner.Instance.isBossDead = false;
 
         dieCount = _dieCount;
 
+        count = typeCount;
+        bossSkill.Attack();
+    }
+
+    private void RenderControl()
+    {
+        //적 컬러
+        _sr.color = type._BossColor;
+
         //쉐이더 값 초기화
         _sr.material.SetInt(_isHit, 0);
         _sr.material.SetInt(_isDissolve, 0);
 
         _sr.material.SetFloat(_dissolve, 1f);
-
-        count = typeCount;
-        bossSkill.Attack();
     }
-
 
     private void DeleteEnemy()
 	{

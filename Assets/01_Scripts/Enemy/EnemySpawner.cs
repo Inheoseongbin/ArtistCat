@@ -7,94 +7,110 @@ using TMPro;
 
 public class EnemySpawner : MonoBehaviour
 {
-	public static EnemySpawner Instance;
+    public static EnemySpawner Instance;
 
-	public List<GameObject> enemyList;
-	public List<GameObject> bossList;
+    [SerializeField] private BossType[] saveBossTypes;
 
-	[HideInInspector] public List<Enemy> saveEnemyList;
+    public List<GameObject> enemyList;
+    public List<GameObject> bossList;
 
-	public bool isSpawnLock = true;
-	public bool isBossDead = false;
+    [HideInInspector] public List<Enemy> saveEnemyList;
 
-	[SerializeField] private float range;
-	[SerializeField] private float bSpawnTime;
-	[SerializeField] private int eSpawnTimeMax;
-	[SerializeField] private int eSpawnTimeMin;
+    public bool isSpawnLock = true;
+    public bool isBossDead = false;
 
-	private int atOnceCount;
-	private float minx;
-	private float miny;
-	private float maxx;
-	private float maxy;
-	private int curtime;
+    public BossType bossTypes;
 
-	[SerializeField] private int bosstime = 20;
-	[SerializeField] private int nextTime = 20;
-	[SerializeField] private float warningTime = 2;
+    [SerializeField] private float range;
+    [SerializeField] private float bSpawnTime;
+    [SerializeField] private int eSpawnTimeMax;
+    [SerializeField] private int eSpawnTimeMin;
 
-	[SerializeField] private TextMeshProUGUI warningText;
+    private int atOnceCount;
+    private float minx;
+    private float miny;
+    private float maxx;
+    private float maxy;
+    private int curtime;
 
-	public bool bossSpawn = false;
+    [SerializeField] private int bosstime = 20;
+    [SerializeField] private int nextTime = 20;
+    [SerializeField] private float warningTime = 2;
 
-	private Transform player;
+    [SerializeField] private TextMeshProUGUI warningText;
 
-	private int randEnemyType;
-	private int curLevel;
-	private bool isTweenkle= false;
+    public bool bossSpawn = false;
 
-	//이거 일단 문제
-	Enemy e = null;
-	Boss b = null;
+    private Transform player;
 
-	private void Awake()
-	{
-		if (Instance != null)
-		{
-			Debug.LogError("Spawner is running! Check!");
-		}
-		Instance = this;
-	}
+    private int randEnemyType;
+    private int curLevel;
 
-	private void Start()
-	{
-		StartCoroutine(Spawn());
-	}
+    private bool isTweenkle = false;
 
+    private int bossTypeCount = 0;
 
-	private void Update()
-	{
-		player = GameManager.Instance.playerTrm;
+    //이거 일단 문제
+    Enemy e = null;
+    Boss b = null;
 
-		minx = player.transform.position.x - range;
-		miny = player.transform.position.y - range;
-		maxx = player.transform.position.x + range;
-		maxy = player.transform.position.y + range;
-
-		curtime = (int)GameManager.Instance.CurrentPlayTime;
-		curLevel = Level.Instance.level;
-
-		if(curtime == bosstime - 2 && !isTweenkle)
+    private void Awake()
+    {
+        if (Instance != null)
         {
-			WarningText();
-			isTweenkle = true;
-		}
+            Debug.LogError("Spawner is running! Check!");
+        }
+        Instance = this;
+    }
 
-		if (curtime >= bosstime)
-		{
-			if (!bossSpawn)
-			{
-				Vector2 bossPos = new Vector2(player.position.x, maxy);
+    private void Start()
+    {
+        bossTypes = saveBossTypes[0];
 
-				b = PoolManager.Instance.Pop("Boss") as Boss;
-				b.transform.position = bossPos;
-				CreateFence();
+        StartCoroutine(Spawn());
+    }
+
+
+    private void Update()
+    {
+        player = GameManager.Instance.playerTrm;
+
+        minx = player.transform.position.x - range;
+        miny = player.transform.position.y - range;
+        maxx = player.transform.position.x + range;
+        maxy = player.transform.position.y + range;
+
+        curtime = (int)GameManager.Instance.CurrentPlayTime;
+        curLevel = Level.Instance.level;
+
+        if (curtime == bosstime - 2 && !isTweenkle)
+        {
+            WarningText();
+            isTweenkle = true;
+        }
+
+        BossSpawn();
+    }
+
+    private void BossSpawn()
+    {
+        if (curtime >= bosstime)
+        {
+            if (!bossSpawn)
+            {
+                bossTypes = saveBossTypes[bossTypeCount++];
+
+                Vector2 bossPos = new Vector2(player.position.x, maxy);
+
+                b = PoolManager.Instance.Pop("Boss") as Boss;
+                b.transform.position = bossPos;
+                CreateFence();
                 bosstime = curtime + nextTime;
-				bossSpawn = true;
-				GameManager.Instance.isTimeStop = true;
-			}
-		}
-	}
+                bossSpawn = true;
+                GameManager.Instance.isTimeStop = true;
+            }
+        }
+    }
 
     private void CreateFence()
     {
@@ -102,72 +118,72 @@ public class EnemySpawner : MonoBehaviour
         _fence.transform.position = player.position;
     }
 
-	private void EnemySpawn(int idx)
-	{
-		int r = Random.Range(0, idx);
-		e = PoolManager.Instance.Pop(enemyList[r].name) as Enemy;
-
-		saveEnemyList.Add(e);
-		e.transform.position = RandomPos();
-	}
-
-	private void RandEnemy()
-	{
-		randEnemyType = Random.Range(0, enemyList.Count);
-		e = PoolManager.Instance.Pop(enemyList[randEnemyType].name) as Enemy;
-
-		saveEnemyList.Add(e);
-		e.transform.position = RandomPos();
-	}
-
-	private void WarningText()
+    private void EnemySpawn(int idx)
     {
-		warningText.DOFade(1, 0.5f).SetLoops(6, LoopType.Yoyo);
-	}
+        int r = Random.Range(0, idx);
+        e = PoolManager.Instance.Pop(enemyList[r].name) as Enemy;
+
+        saveEnemyList.Add(e);
+        e.transform.position = RandomPos();
+    }
+
+    private void RandEnemy()
+    {
+        randEnemyType = Random.Range(0, enemyList.Count);
+        e = PoolManager.Instance.Pop(enemyList[randEnemyType].name) as Enemy;
+
+        saveEnemyList.Add(e);
+        e.transform.position = RandomPos();
+    }
+
+    private void WarningText()
+    {
+        warningText.DOFade(1, 0.5f).SetLoops(6, LoopType.Yoyo);
+    }
 
     IEnumerator Spawn()
-	{
-		while (true)
-		{
-			float time = Random.Range(1, 3);
-			yield return new WaitForSeconds(time);
-			if (isSpawnLock)
-			{
-				if (curLevel < 2)
-				{
-					EnemySpawn(1);
-				}
-				else if (curLevel < 4)
-				{
-					EnemySpawn(2);
-				}
-				else if (curLevel > 6)
-				{
-					EnemySpawn(3);
-				}
-				else if (curLevel > 8)
-				{
-					EnemySpawn(4);
-				}
-				else
-				{
-					if (!GameManager.Instance.isTimeStop)
-					{
-						RandEnemy();
-					}
-				}
-			}
-			yield return null;
-		}
-	}
+    {
+        while (true)
+        {
+            float time = Random.Range(1, 3);
+            yield return new WaitForSeconds(time);
+            if (isSpawnLock)
+            {
+                if (curLevel < 2)
+                {
+                    EnemySpawn(1);
+                }
+                else if (curLevel < 4)
+                {
+                    EnemySpawn(2);
+                }
+                else if (curLevel > 6)
+                {
+                    EnemySpawn(3);
+                }
+                else if (curLevel > 8)
+                {
+                    EnemySpawn(4);
+                }
+                else
+                {
+                    if (!GameManager.Instance.isTimeStop)
+                    {
+                        RandEnemy();
+                    }
+                }
+            }
+            yield return null;
+        }
+    }
 
-	Vector2 RandomPos()
-	{
-		Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
-		if (Vector3.Distance(player.transform.position, pos) < 2)
-		{
-			RandomPos();
-		}
-		return pos;
-	}
+    Vector2 RandomPos()
+    {
+        Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
+        if (Vector3.Distance(player.transform.position, pos) < 2)
+        {
+            RandomPos();
+        }
+        return pos;
+    }
 }
