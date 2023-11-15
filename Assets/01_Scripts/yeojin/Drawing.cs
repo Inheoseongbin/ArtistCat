@@ -15,11 +15,12 @@ public class Drawing : MonoBehaviour
 
     private Player player;
 
-	private void Start()
+    private void Start()
     {
         mainCam = GameManager.Instance.mainCam;
         cam = mainCam.transform;
         player = FindObjectOfType<Player>();
+        brush = FindObjectOfType<Brush>();
     }
 
     #region 건든거 없음
@@ -30,17 +31,16 @@ public class Drawing : MonoBehaviour
 
     void Draw()
     {
-		if (GameManager.Instance.IsGameOver || UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting)
-		{
-			if (brush != null) PoolManager.Instance.Push(brush);
-			currentLineRenderer = null;
-			return;
-		}
-		if (Input.GetMouseButtonDown(0))
+        if (GameManager.Instance.IsGameOver || UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting)
+        {
+            if (brush != null) PoolManager.Instance.Push(brush);
+            return;
+        }
+        else if (Input.GetMouseButtonDown(0))
         {
             CreateBrush();
         }
-        if (Input.GetMouseButton(0))
+        else if (Input.GetMouseButton(0))
         {
             cam = mainCam.transform;
             Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -55,10 +55,6 @@ public class Drawing : MonoBehaviour
         {
             LineCheck();
             PoolManager.Instance.Push(brush);
-        }
-        else
-        {
-            currentLineRenderer = null;
         }
     }
     private void CreateBrush()
@@ -84,7 +80,7 @@ public class Drawing : MonoBehaviour
         currentLineRenderer.SetPosition(currentLineRenderer.positionCount++, pointPos);
         //LineCheck();
     }
-    
+
     #endregion
 
     private void LineCheck()
@@ -101,10 +97,10 @@ public class Drawing : MonoBehaviour
         ThunderCheck(positions); // 번개판별
 
         Enemy[] enemies = Object.FindObjectsOfType<Enemy>();
-        foreach(Enemy e in enemies)
-		{
+        foreach (Enemy e in enemies)
+        {
             e.PlayerDraw(currentType);
-		}
+        }
 
         Boss[] bosses = Object.FindObjectsOfType<Boss>();
         foreach (Boss b in bosses)
