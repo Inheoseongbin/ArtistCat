@@ -65,6 +65,7 @@ public class Drawing : MonoBehaviour
     {
         cam = mainCam.transform;
         brush = PoolManager.Instance.Pop("Brush") as Brush;
+        brush.gameObject.SetActive(true);
         brush.transform.parent = mainCam.transform; // 카메라 자식으로 두고
         Vector3 pos = mainCam.transform.localPosition; // 카메라를 따라가게 만들어
         pos.z = 0;
