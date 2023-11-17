@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
 	{
 		if(combo > 1)
 		{
-			OnHeal(combo * 2);
+			OnHeal(combo);
 			comboPop.ComboTxt(combo);
 			comboPop.StartCoroutine(comboPop.Pop());
 			combo = 0;
