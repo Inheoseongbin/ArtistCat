@@ -12,6 +12,8 @@ public class PlayerMove : MonoBehaviour
     private AgentAnimator anim;
     private PlayerHealth playerHealth;
 
+    [SerializeField] private ParticleSystem _walkDust;
+
     public bool isFilp = false;
 
     private void Awake()
@@ -46,17 +48,20 @@ public class PlayerMove : MonoBehaviour
         if (movement.magnitude > 0)
         {
             anim.SetMove(true);
-            if(h > 0)
-			{
-                isFilp = true; 
+            if (h > 0)
+            {
+                isFilp = true;
                 sr.flipX = true;
-			}
-            else if(h < 0)
-			{
+            }
+            else if (h < 0)
+            {
                 isFilp = false;
                 sr.flipX = false;
-			}
+            }
             //sr.flipX = h > 0 ? true : false;
+
+            if (!_walkDust.isPlaying)
+                _walkDust.Play();
         }
         else anim.SetMove(false);
     }
