@@ -62,7 +62,7 @@ public class PlayerSkill : MonoBehaviour
 			PoopSkill p = PoolManager.Instance.Pop("Ddong") as PoopSkill;
 			p.transform.position = transform.position;
 			p.StartCoroutine(p.Poop());
-			yield return new WaitForSeconds(10 / poopLevel);
+			yield return new WaitForSeconds(15 / poopLevel);
 		}
 	}
 
@@ -78,7 +78,7 @@ public class PlayerSkill : MonoBehaviour
 		{
 			ScratchSkill s = PoolManager.Instance.Pop("Scratch") as ScratchSkill;
 			s.transform.position = transform.position;
-			yield return new WaitForSeconds(10 / scratchLevel);
+			yield return new WaitForSeconds(15 / scratchLevel);
 		}
 	}
 

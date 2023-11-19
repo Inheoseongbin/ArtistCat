@@ -27,22 +27,30 @@ public class BossSkill : BossMain
 
     private Vector3 viewDir = Vector3.zero;
 
+    private List<Bullet> saveBulletList = new List<Bullet>();
+    private List<float> BulletAngleList = new List<float>();
+    private Bullet bullet = null;
+
+    int angleCount = 12;
+    int defaultAngle;
     protected override void Awake()
     {
         base.Awake();
+
+        defaultAngle = 360 / angleCount;
 
         _bossValue._isDash = false;
 
         _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
     }
 
-	private void Update()
-	{
-		if(_isAiming)
+    private void Update()
+    {
+        if (_isAiming)
             DashAiming();
-	}
+    }
 
-	public void Attack()
+    public void Attack()
     {
         StopAllCoroutines();
         StartCoroutine(ShootRoutine());
@@ -51,7 +59,7 @@ public class BossSkill : BossMain
 
     IEnumerator DashRoutine()
     {
-        dTime = _dashCool - _waitDashTime - _dashingTime;
+        dTime = EnemySpawner.Instance.bossTypes._dashCool - _waitDashTime - _dashingTime;
         while (true)
         {
             yield return new WaitForSeconds(dTime);
@@ -76,18 +84,18 @@ public class BossSkill : BossMain
     {
         _bossValue._isDash = true;
         _isAiming = true;
-
-        
     }
 
     private void DashAiming()
-	{
+    {
         viewDir = _bossValue._playerTr.position - transform.position;
 
         float angle = Mathf.Atan2(viewDir.y, viewDir.x) * Mathf.Rad2Deg;
 
         _dashImage.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
-        _dashImage.SetActive(true);
+
+        if (!EnemySpawner.Instance.isBossDead)
+            _dashImage.SetActive(true);
     }
 
     private void Dashing()
@@ -100,17 +108,21 @@ public class BossSkill : BossMain
 
     IEnumerator ShootRoutine()
     {
-        int angleCount = 12;
-        int angle = 360 / angleCount;
         while (true)
         {
-            yield return new WaitForSeconds(_shootCool - _stunCool);
+            yield return new WaitForSeconds(EnemySpawner.Instance.bossTypes._shootCool - _stunCool);
+
             _bossValue._isSkill = true;
+            saveBulletList.Clear();
 
             for (int i = 0; i < angleCount; i++)
             {
-                ShootBullet(angle * i);
+                ShootBullet(defaultAngle * i, transform.position);
+                BulletAngleList.Add(defaultAngle * i);
             }
+            print(BulletAngleList.Count);
+            if (EnemySpawner.Instance.bossTypes.Count == 3)
+                StartCoroutine(LastBossShoot());
 
             yield return new WaitForSeconds(_stunCool);
 
@@ -119,7 +131,13 @@ public class BossSkill : BossMain
         }
     }
 
-    void ShootBullet(float angle)
+    void ShootBullet(float angle, Vector2 pos)
+    {
+        Shoot(angle, pos);
+        saveBulletList.Add(bullet);
+    }
+
+    private void Shoot(float angle, Vector2 pos)
     {
         // 총알을 발사할 각도를 라디안으로 변환
         float radianAngle = angle * Mathf.Deg2Rad;
@@ -128,11 +146,28 @@ public class BossSkill : BossMain
         Vector2 direction = new Vector2(Mathf.Cos(radianAngle), Mathf.Sin(radianAngle));
 
         // 총알 생성 및 설정
-        //GameObject bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
-        Bullet bullet = PoolManager.Instance.Pop("Bullet") as Bullet;
-        bullet.transform.position = transform.position;
+        bullet = PoolManager.Instance.Pop("Bullet") as Bullet;
+        bullet.transform.position = pos;
+
+
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.velocity = direction * _bulletSpeed;
+        rb.velocity = direction * EnemySpawner.Instance.bossTypes._bulletSpeed;
+    }
+
+    IEnumerator LastBossShoot()
+    {
+        yield return new WaitForSeconds(1);
+        foreach (var b in saveBulletList)
+        {
+            //Bullet bullet = b;
+            b.BulletPool();
+            for (int i = 0; i < 12; i++)
+            {
+                if (i % 2 == 0)
+                    Shoot(BulletAngleList[i], b.transform.position);
+            }
+        }
+        BulletAngleList.Clear();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -150,5 +185,4 @@ public class BossSkill : BossMain
 
         _rb.velocity = Vector2.zero;
     }
-
 }
