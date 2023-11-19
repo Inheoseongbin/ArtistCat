@@ -45,6 +45,7 @@ public class BossMovement : BossMain
         if(collision.gameObject.CompareTag("Player"))
         {
             isStop = true;
+            _animator.SetTrigger("attack");
         }
     }
 
