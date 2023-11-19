@@ -13,36 +13,39 @@ public class Drawing : MonoBehaviour
     private Vector2 lastPos;
     private float _limitValue = 1.5f;
 
+    private Player player;
+
     private void Start()
     {
         mainCam = GameManager.Instance.mainCam;
         cam = mainCam.transform;
+        player = FindObjectOfType<Player>();
+        brush = FindObjectOfType<Brush>();
     }
 
     #region 건든거 없음
     private void Update()
     {
-        if (GameManager.Instance.IsGameOver || UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting)
-        {
-            if (brush != null) PoolManager.Instance.Push(brush);
-            currentLineRenderer = null;
-            return;
-        }
         Draw();
     }
 
     void Draw()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (GameManager.Instance.IsGameOver || UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting)
+        {
+            if (brush != null) PoolManager.Instance.Push(brush);
+            return;
+        }
+        else if (Input.GetMouseButtonDown(0))
         {
             CreateBrush();
         }
-        if (Input.GetMouseButton(0))
+        else if (Input.GetMouseButton(0))
         {
             cam = mainCam.transform;
             Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
             Vector2 camRelative = cam.InverseTransformPoint(mousePos);
-            if (camRelative != lastPos)
+            if (camRelative != lastPos && camRelative != null)
             {
                 AddPoint(camRelative);
                 lastPos = camRelative;
@@ -50,19 +53,15 @@ public class Drawing : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            //Check and Erase Line
             LineCheck();
             PoolManager.Instance.Push(brush);
         }
-        //else
-        //{
-        //    currentLineRenderer = null;
-        //}
     }
     private void CreateBrush()
     {
         cam = mainCam.transform;
         brush = PoolManager.Instance.Pop("Brush") as Brush;
+        brush.gameObject.SetActive(true);
         brush.transform.parent = mainCam.transform; // 카메라 자식으로 두고
         Vector3 pos = mainCam.transform.localPosition; // 카메라를 따라가게 만들어
         pos.z = 0;
@@ -75,11 +74,13 @@ public class Drawing : MonoBehaviour
         currentLineRenderer.SetPosition(0, camRelative);
         currentLineRenderer.SetPosition(1, camRelative);
     }
+
     void AddPoint(Vector2 pointPos)
     {
         currentLineRenderer.SetPosition(currentLineRenderer.positionCount++, pointPos);
         //LineCheck();
-    }   
+    }
+
     #endregion
 
     private void LineCheck()
@@ -96,16 +97,18 @@ public class Drawing : MonoBehaviour
         ThunderCheck(positions); // 번개판별
 
         Enemy[] enemies = Object.FindObjectsOfType<Enemy>();
-        foreach(Enemy e in enemies)
-		{
+        foreach (Enemy e in enemies)
+        {
             e.PlayerDraw(currentType);
-		}
+        }
 
         Boss[] bosses = Object.FindObjectsOfType<Boss>();
         foreach (Boss b in bosses)
         {
             b.PlayerDraw(currentType);
         }
+
+        player.ComboCheck();
 
         UIManager.Instance.CurrentImage(currentType);
 

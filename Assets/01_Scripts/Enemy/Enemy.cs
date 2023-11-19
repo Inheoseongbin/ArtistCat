@@ -31,6 +31,8 @@ public class Enemy : PoolableMono
     public bool _isDead = false;
     private CapsuleCollider2D _hitDecision;
 
+    private Player player;
+
     public override void Init()
     {
         enemyTypes.Clear();
@@ -70,6 +72,7 @@ public class Enemy : PoolableMono
     {
         _sr = GetComponentInChildren<SpriteRenderer>();
         _hitDecision = GetComponent<CapsuleCollider2D>();
+        player = FindObjectOfType<Player>();
 
         for (int i = 0; i < sprites.Count; i++) // 처음에 딕셔너리에 타입이랑 그림 넣어
         {
@@ -102,6 +105,7 @@ public class Enemy : PoolableMono
     {
         if (enemyTypes.Count > 0) // 여러개의 공격을 한번에 받아서 지울게 하나밖에 없을때 
         {
+            player.combo++;
             enemyTypes.RemoveAt(id);
             Destroy(typeList[id]);
             typeList.RemoveAt(id);

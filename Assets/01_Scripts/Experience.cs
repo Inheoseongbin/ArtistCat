@@ -14,10 +14,6 @@ public class Experience : PoolableMono
 
     private Transform targetPos;
 
-    private void Awake()
-    {
-    }
-
     public override void Init()
     {
         isAddExp = false;
