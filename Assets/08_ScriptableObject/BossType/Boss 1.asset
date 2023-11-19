@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66af59228ecf87547b2b85850d3efddd, type: 3}
   m_Name: Boss 1
   m_EditorClassIdentifier: 
-  Count: 3
+  Count: 1
   _shootCool: 10
   _dashCool: 7
   _bulletSpeed: 5
