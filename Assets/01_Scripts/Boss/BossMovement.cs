@@ -7,8 +7,8 @@ public class BossMovement : BossMain
     [SerializeField] private float _distance;
 
     private SpriteRenderer _sr;
-    //private Fence _fence;
 
+    private bool isStop = false;
 
     void Start()
     {
@@ -26,9 +26,9 @@ public class BossMovement : BossMain
 
     public void OnMove()
     {
-        float dis = Vector2.Distance(transform.position, _bossValue._playerTr.position);
+        //float dis = Vector2.Distance(transform.position, _bossValue._playerTr.position);
 
-        if (dis > _distance && !_bossValue._isSkill && !_bossValue._isDash)
+        if (!isStop && !_bossValue._isSkill && !_bossValue._isDash)
         {
             _rb.velocity = Vector2.zero;
             transform.position = Vector2.MoveTowards(transform.position, _bossValue._playerTr.position, _bossValue._speed * Time.deltaTime);
@@ -38,5 +38,22 @@ public class BossMovement : BossMain
             _sr.flipX = true;
         else
             _sr.flipX = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            isStop = true;
+            _animator.SetTrigger("attack");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            isStop = false;
+        }
     }
 }

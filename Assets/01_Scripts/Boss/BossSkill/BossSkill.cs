@@ -21,6 +21,7 @@ public class BossSkill : BossMain
     [SerializeField] private GameObject _dashImage;
 
     protected bool _isAiming = false;
+    protected bool _isKnock = false;
 
     private float _stunCool = 2f;
     private float dTime;
@@ -44,10 +45,16 @@ public class BossSkill : BossMain
         _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_isAiming)
             DashAiming();
+
+        if(_isKnock)
+        {
+            _bossValue._playerTr.gameObject.GetComponent<Rigidbody2D>().AddForce(viewDir * _knockPower, ForceMode2D.Impulse);
+            _isKnock = false;
+        }
     }
 
     public void Attack()
@@ -115,6 +122,8 @@ public class BossSkill : BossMain
             _bossValue._isSkill = true;
             saveBulletList.Clear();
 
+            _animator.SetTrigger("attack");
+
             for (int i = 0; i < angleCount; i++)
             {
                 ShootBullet(defaultAngle * i, transform.position);
@@ -181,8 +190,9 @@ public class BossSkill : BossMain
 
     private void Knockback(GameObject colObj, Vector2 knockDir)
     {
-        colObj.gameObject.GetComponent<Rigidbody2D>().AddForce(knockDir * _knockPower);
-
+        _isKnock = true;
+     //   colObj.gameObject.GetComponent<Rigidbody2D>().AddForce(knockDir * _knockPower, ForceMode2D.Impulse);
+        
         _rb.velocity = Vector2.zero;
     }
 }
