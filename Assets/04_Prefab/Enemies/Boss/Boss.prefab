@@ -437,7 +437,7 @@ MonoBehaviour:
   _shootCool: 10
   _dashCool: 7
   _bulletSpeed: 5
-  _waitDashTime: 3
+  _waitDashTime: 1
   _dashingTime: 1
   _knockPower: 1000
   _bulletPrefab: {fileID: 8070207097058054530, guid: 940f213a1c021114cb1487b55400f97a, type: 3}
