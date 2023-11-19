@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO/Boss/Type")]
 public class BossType : ScriptableObject
 {
+    public int Count;
+
     [Header("ÄğÅ¸ÀÓ")]
     public float _shootCool;
     public float _dashCool;
