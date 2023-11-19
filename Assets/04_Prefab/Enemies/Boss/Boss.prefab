@@ -439,7 +439,7 @@ MonoBehaviour:
   _bulletSpeed: 5
   _waitDashTime: 1
   _dashingTime: 1
-  _knockPower: 1000
+  _knockPower: 10
   _bulletPrefab: {fileID: 8070207097058054530, guid: 940f213a1c021114cb1487b55400f97a, type: 3}
   _dashImage: {fileID: 8973787235497301203}
 --- !u!114 &-5139868615271989546

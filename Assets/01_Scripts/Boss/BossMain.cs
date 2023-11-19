@@ -13,6 +13,6 @@ public abstract class BossMain : MonoBehaviour
     {
         _bossValue = transform.GetComponent<BossValue>();
         _rb = transform.GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
+        _animator = transform.GetComponentInChildren<Animator>();
     }
 }
