@@ -34,16 +34,16 @@ public class RePosition : MonoBehaviour
         if (transform.tag == "Ground")
         {
             //Debug.LogError()
-            if (diffX > diffY)
+            if (diffX >= diffY)
             {
                 transform.Translate(Vector3.right * dirX * 40);
             }
-            else if (diffX < diffY)
+            else if (diffX <= diffY)
             {
                 transform.Translate(Vector3.up * dirY * 40);
             }
-            Debug.Log(Vector2.Distance(playerPos, transform.position));
-
+            Debug.Log($"{transform.gameObject.name} : {Vector2.Distance(playerPos, transform.position)}");
+            
         }
     }
 }
