@@ -7,17 +7,24 @@ using UnityEngine.UI;
 
 public class StartSceneManager : MonoBehaviour
 {
-    [SerializeField] private SceneTransform fadeImage;
+    [SerializeField] private SpriteRenderer fadeImg;
     private bool isFirstClick = false;
+
+    private void Start()
+    {
+        fadeImg.gameObject.SetActive(true);
+        fadeImg.DOFade(0, 0.8f);
+    }
 
     public void LoadGameScene()
     {
         if (isFirstClick) return;
-        fadeImage.FadeIn(2);
+        fadeImg.DOFade(1, 0.8f).OnComplete(() => SceneManager.LoadScene(2));
+        
     }
     public void LoadTutorialScene()
     {
         if (isFirstClick) return;
-        fadeImage.FadeIn(1);
+        fadeImg.DOFade(1, 0.8f).OnComplete(() => SceneManager.LoadScene(1));
     }
 }

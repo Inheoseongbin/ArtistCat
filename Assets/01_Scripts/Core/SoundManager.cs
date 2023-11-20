@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     private string bgmKey = "BGMVolume";
     private string effectKey = "EffectVolume";
 
+    // 싹다 임의로 해둔 거 (삭제알아서)
     [Header("Player")]
     [SerializeField] private AudioClip playerMoveSound;
     [SerializeField] private AudioClip playerHurtSound;
@@ -19,7 +20,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip playerSuccessAtkSound;
 
     [Header("Level")]
-    [SerializeField] private AudioClip selectExpSound;
+    [SerializeField] private AudioClip collectExpSound;
     [SerializeField] private AudioClip levelUpSound;
 
     [Header("Enemy")]
@@ -39,6 +40,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip skillUIOffSound;
     [SerializeField] private AudioClip gameFailSound;
     [SerializeField] private AudioClip gameSuccessSound;
+    [SerializeField] private AudioClip comboSound;
 
     [Header("Skill")]
     [SerializeField] private AudioClip throwingPoopSound;
@@ -87,28 +89,24 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(playerMoveSound);
     }
-
     public void PlayPlayerHurt()
     {
         audioSource.PlayOneShot(playerHurtSound);
     }
-
     public void PlayPlayerDie()
     {
         audioSource.PlayOneShot(playerDieSound);
     }
-
     public void PlayPlayerSuccessAtk()
     {
         audioSource.PlayOneShot(playerSuccessAtkSound);
     }
 
-    // 레벨
-    public void PlaySelectExp()
+    // 레벨   
+    public void PlayCollectExp()
     {
-        audioSource.PlayOneShot(selectExpSound);
+        audioSource.PlayOneShot(collectExpSound);
     }
-
     public void PlayLevelUp()
     {
         audioSource.PlayOneShot(levelUpSound);
@@ -119,7 +117,6 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(enemyHurtSound);
     }
-
     public void PlayEnemyDie()
     {
         audioSource.PlayOneShot(enemyDieSound);
@@ -130,22 +127,18 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(bossSpawnSound);
     }
-
     public void PlayBossDashAtk()
     {
         audioSource.PlayOneShot(bossDashSound);
     }
-
     public void PlayBossShootAtk()
     {
         audioSource.PlayOneShot(bossShootingSound);
     }
-
     public void PlayBossHurt()
     {
         audioSource.PlayOneShot(bossHurtSound);
     }
-
     public void PlayBossDie()
     {
         audioSource.PlayOneShot(bossDieSound);
@@ -156,25 +149,25 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(buttonClickSound);
     }
-
     public void PlaySkillChooseOn() // 스킬 UI 내려올 때
     {
         audioSource.PlayOneShot(skillUIOnSound);
     }
-
     public void PlaySkillChooseOff() // 스킬 정했을 때
     {
         audioSource.PlayOneShot(skillUIOffSound);
     }
-
     public void PlayGameFail()
     {
         audioSource.PlayOneShot(gameFailSound);
     }
-
     public void PlayGameSuccess()
     {
         audioSource.PlayOneShot(gameSuccessSound);
+    }
+    public void PlayCombo()
+    {
+        audioSource.PlayOneShot(comboSound);
     }
 
     // 스킬
