@@ -129,7 +129,6 @@ public class BossSkill : BossMain
                 ShootBullet(defaultAngle * i, transform.position);
                 BulletAngleList.Add(defaultAngle * i);
             }
-            print(BulletAngleList.Count);
             if (EnemySpawner.Instance.bossTypes.Count == 3)
                 StartCoroutine(LastBossShoot());
 
