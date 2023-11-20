@@ -98,13 +98,11 @@ public class Enemy : PoolableMono
     {
         if (enemyTypes.Count > 0 || !_isDead)
         {
-            if (enemyTypes[0] == attack && !_isDead) // 딕셔너리 타입이랑 첫번째꺼의 타입이 같으면 하나 지울거얌
+            if (enemyTypes[0] == attack && !_isDead && enemyTypes.Count != 0) // 딕셔너리 타입이랑 첫번째꺼의 타입이 같으면 하나 지울거얌
             {
                 DrawReduce(0);
                 SoundManager.Instance.PlayEnemyHurt();
             }
-            else
-                return;
         }
     }
 

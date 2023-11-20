@@ -36,6 +36,11 @@ public class PlayerHealth : MonoBehaviour
         currentHP = maxHP; 
     }
 
+	private void Update()
+	{
+		currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+	}
+
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
         if (collision.CompareTag("Enemy"))
@@ -50,17 +55,17 @@ public class PlayerHealth : MonoBehaviour
                     Hurt(5);
                     break;
                 case 4: //
-                    Hurt(9);
+                    Hurt(7);
                     break;
                 case 5: // 
-                    Hurt(12);
+                    Hurt(10);
                     break;
             }
         }
        else if (collision.CompareTag("Bullet"))
-            Hurt(5);
-        else if (collision.CompareTag("Boss"))
-            Hurt(10);
+            Hurt(3);
+       else if (collision.CompareTag("Boss"))
+            Hurt(7);
     }
 
 	public void Hurt(int dmg)
