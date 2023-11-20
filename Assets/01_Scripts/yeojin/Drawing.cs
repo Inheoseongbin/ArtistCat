@@ -10,6 +10,7 @@ public class Drawing : MonoBehaviour
     private LineType currentType;
     private Brush brush;
     private LineRenderer currentLineRenderer;
+    private LineRenderer backLineRenderer;
     private Vector2 lastPos;
     private float _limitValue = 1.5f;
 
@@ -67,17 +68,21 @@ public class Drawing : MonoBehaviour
         pos.z = 0;
         brush.transform.position = pos;
         currentLineRenderer = brush.GetComponent<LineRenderer>();
+        backLineRenderer = GameObject.Find("BackBrush").GetComponent<LineRenderer>();
 
         Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition); // 마우스 포지션 가져와서
         Vector2 camRelative = cam.InverseTransformPoint(mousePos); // inverse
 
         currentLineRenderer.SetPosition(0, camRelative);
         currentLineRenderer.SetPosition(1, camRelative);
+        backLineRenderer.SetPosition(0, camRelative);
+        backLineRenderer.SetPosition(1, camRelative);
     }
 
     void AddPoint(Vector2 pointPos)
     {
         currentLineRenderer.SetPosition(currentLineRenderer.positionCount++, pointPos);
+        backLineRenderer.SetPosition(backLineRenderer.positionCount++, pointPos);
         //LineCheck();
     }
 
