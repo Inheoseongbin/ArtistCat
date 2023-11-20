@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class RePosition : MonoBehaviour
 {
     Collider2D coll;
-
+    public int number;
     private void Awake()
     {
         coll = GetComponent<Collider2D>();
@@ -19,21 +22,17 @@ public class RePosition : MonoBehaviour
         if (!collision.CompareTag("Area"))
             return;
 
-        //Player의 거리 확인. 어디에 재배치를 할까?
-        Vector3 playerPos = GameManager.Instance.playerTrm.transform.position;
+        // 플레이어 위치에 따른 움직임 방향 계산
+        Vector3 playerPos = GameManager.Instance.playerTrm.position;
         Vector3 myPos = transform.position;
         float diffX = Mathf.Abs(playerPos.x - myPos.x);
         float diffY = Mathf.Abs(playerPos.y - myPos.y);
 
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-        Vector3 movement = new Vector3(h, v, 0);
-        float dirX = movement.x < 0 ? -1 : 1;
-        float dirY = movement.y < 0 ? -1 : 1;
+        float dirX = playerPos.x < myPos.x ? -1 : 1;
+        float dirY = playerPos.y < myPos.y ? -1 : 1;
 
-        if (transform.tag == "Ground")
+        if (transform.CompareTag("Ground"))
         {
-            //Debug.LogError()
             if (diffX >= diffY)
             {
                 transform.Translate(Vector3.right * dirX * 40);
@@ -42,8 +41,8 @@ public class RePosition : MonoBehaviour
             {
                 transform.Translate(Vector3.up * dirY * 40);
             }
-            Debug.Log($"{transform.gameObject.name} : {Vector2.Distance(playerPos, transform.position)}");
-            
+            //Debug.Log($"{transform.gameObject.name} : {Vector2.Distance(playerPos, transform.position)}");
         }
     }
+
 }

@@ -54,6 +54,7 @@ public class Drawing : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
+            BackBrush.eraseBBrush();
             LineCheck();
             PoolManager.Instance.Push(brush);
         }
