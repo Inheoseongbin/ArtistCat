@@ -10,11 +10,14 @@ public class TutorialManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI infoText;
     [SerializeField] private GameObject infoImage;
+    [SerializeField] private SpriteRenderer fadeImg;
 
     private void Start()
     {
+        fadeImg.gameObject.SetActive(true);
+
         infoText.text = "";
-        StartCoroutine(TutorialStart());
+        fadeImg.DOFade(0, 0.8f).OnComplete(() => StartCoroutine(TutorialStart()));
     }
 
     private IEnumerator TutorialStart()
@@ -47,8 +50,8 @@ public class TutorialManager : MonoBehaviour
             enemys[i] = e2;
 
             float randSign = (Random.Range(0, 2) == 1) ? -1 : 1; // 무작위 부호 결정
-            float randX = Random.Range(5, 16) * randSign;
-            float randY = Random.Range(3, 10) * randSign;
+            float randX = Random.Range(5, 10) * randSign;
+            float randY = Random.Range(3, 6) * randSign;
             e2.transform.position = new Vector3(playerTrm.position.x + randX, playerTrm.position.y + randY, 0);
             e2.GetComponent<EnemyMovement>().enabled = true;
         }
@@ -81,7 +84,7 @@ public class TutorialManager : MonoBehaviour
 
     private void LoadMainScene()
     {
-        SceneManager.LoadScene(0);
+        fadeImg.DOFade(1, 0.8f).OnComplete(() => SceneManager.LoadScene(0));
     }
 
     public void SkipBTNClick()

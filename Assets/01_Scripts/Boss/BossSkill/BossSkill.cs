@@ -110,6 +110,7 @@ public class BossSkill : BossMain
         _dashImage.SetActive(false);
 
         _rb.velocity = viewDir.normalized * _bossValue._DashSpeed;
+        SoundManager.Instance.PlayBossDashAtk();
     }
     #endregion
 
@@ -129,7 +130,6 @@ public class BossSkill : BossMain
                 ShootBullet(defaultAngle * i, transform.position);
                 BulletAngleList.Add(defaultAngle * i);
             }
-            print(BulletAngleList.Count);
             if (EnemySpawner.Instance.bossTypes.Count == 3)
                 StartCoroutine(LastBossShoot());
 
@@ -143,6 +143,7 @@ public class BossSkill : BossMain
     void ShootBullet(float angle, Vector2 pos)
     {
         Shoot(angle, pos);
+        SoundManager.Instance.PlayBossShootAtk();
         saveBulletList.Add(bullet);
     }
 

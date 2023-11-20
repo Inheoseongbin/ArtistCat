@@ -109,10 +109,7 @@ public class Drawing : MonoBehaviour
         }
 
         player.ComboCheck();
-
         UIManager.Instance.CurrentImage(currentType);
-
-        //Debug.Log(currentType);
     }
 
     private void WidthHeightCheck(Vector3[] positions)
