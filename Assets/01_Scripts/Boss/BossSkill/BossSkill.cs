@@ -99,7 +99,8 @@ public class BossSkill : BossMain
             yield return new WaitForSeconds(_dashingTime);
 
             _bossValue._isDash = false;
-            _isJumpStart = true;
+            if (EnemySpawner.Instance.bossTypes.Count == 3)
+                _isJumpStart = true;
         }
     }
     #region 대쉬 요소
