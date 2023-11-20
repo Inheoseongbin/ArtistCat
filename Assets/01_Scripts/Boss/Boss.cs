@@ -10,6 +10,7 @@ public class Boss : PoolableMono
     [Header("적 설정")]
     public List<LineType> enemyTypes;
     public int typeCount;
+    private BossType type;
     private int count;
     public GameObject exp;
 
@@ -29,30 +30,41 @@ public class Boss : PoolableMono
     private readonly string _isDissolve = "_IsDissolve";
     private readonly string _isHit = "_IsSolidColor";
 
+    [SerializeField] private GameObject _dashImage;
+
     private int dieCount = 5;
-    private bool _isDead = false;
 
     BossSkill bossSkill;
 
     public override void Init()
     {
+        type = EnemySpawner.Instance.bossTypes;
+
+        imageParent.SetActive(true);
+
         DeleteEnemy();
+        RenderControl();
 
         EnemySpawner.Instance.isSpawnLock = false;
-        _isDead = false;
+        EnemySpawner.Instance.isBossDead = false;
 
         dieCount = _dieCount;
+
+        count = typeCount;
+        bossSkill.Attack();
+    }
+
+    private void RenderControl()
+    {
+        //적 컬러
+        _sr.color = type._BossColor;
 
         //쉐이더 값 초기화
         _sr.material.SetInt(_isHit, 0);
         _sr.material.SetInt(_isDissolve, 0);
 
         _sr.material.SetFloat(_dissolve, 1f);
-
-        count = typeCount;
-        bossSkill.Attack();
     }
-
 
     private void DeleteEnemy()
 	{
@@ -99,14 +111,14 @@ public class Boss : PoolableMono
 
     private void Update()
     {
-        if (enemyTypes.Count == 0 && !_isDead) // 남은 타입이 없으면 다 없앴으니까 죽일거임
+        if (enemyTypes.Count == 0 && !EnemySpawner.Instance.isBossDead) // 남은 타입이 없으면 다 없앴으니까 죽일거임
         {
             dieCount--;
             ReCharging();
             StartCoroutine(Hit());
         }
 
-        if (dieCount == 0 && !_isDead)
+        if (dieCount == 0 && !EnemySpawner.Instance.isBossDead)
             Die();
     }
 
@@ -145,15 +157,22 @@ public class Boss : PoolableMono
 
     public void Die()
     {
-        EnemySpawner.Instance.isSpawnLock = true;
-        EnemySpawner.Instance._bossSpawn = false;
+        ObjectActive();
 
-        _isDead = true;
-        print(Fence.bossDie);
+        EnemySpawner.Instance.isSpawnLock = true;
+        EnemySpawner.Instance.bossSpawn = false;
+
+        EnemySpawner.Instance.isBossDead = true;
         Fence.bossDie();
         GameManager.Instance.isTimeStop = false;
         StartCoroutine(DieDissolve(1));
         FallExp();
+    }
+
+    private void ObjectActive()
+    {
+        imageParent.SetActive(false);
+        _dashImage.SetActive(false);
     }
 
     private IEnumerator DieDissolve(float time)

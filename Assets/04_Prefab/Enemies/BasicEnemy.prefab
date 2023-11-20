@@ -340,6 +340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTypes: 
   typeCount: 1
+  count: 0
   exp: {fileID: 4293267311527429346, guid: a717e2ba08808bd458e743249809f651, type: 3}
   sprites:
   - {fileID: 21300000, guid: 45ee66b869ba74d4790d69f6600da53a, type: 3}
@@ -365,8 +366,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.5
   range: 1
-  _sr: {fileID: 7548177576095823584}
-  _emo: {fileID: 7548177575480685266}
 --- !u!70 &-3821345997978343136
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

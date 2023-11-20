@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class PlayerSkill : MonoBehaviour
 {
+	private Boomerang boomerang;
+
 	private int stringLevel = 0;
 	private int fishLevel = 0;
 	private int poopLevel = 0;
 	private int scratchLevel = 0;
 	private int boomerangLevel = 0;
 
-	public void String(int level)
+    private void Awake()
+    {
+        boomerang = FindObjectOfType<Boomerang>();
+    }
+
+    public void String(int level)
 	{
 		stringLevel = level;
 		StartCoroutine(StringTime());
@@ -55,7 +62,7 @@ public class PlayerSkill : MonoBehaviour
 			PoopSkill p = PoolManager.Instance.Pop("Ddong") as PoopSkill;
 			p.transform.position = transform.position;
 			p.StartCoroutine(p.Poop());
-			yield return new WaitForSeconds(10 / poopLevel);
+			yield return new WaitForSeconds(15 / poopLevel);
 		}
 	}
 
@@ -71,13 +78,13 @@ public class PlayerSkill : MonoBehaviour
 		{
 			ScratchSkill s = PoolManager.Instance.Pop("Scratch") as ScratchSkill;
 			s.transform.position = transform.position;
-			yield return new WaitForSeconds(10 / scratchLevel);
+			yield return new WaitForSeconds(15 / scratchLevel);
 		}
 	}
 
 	public void Boomerang(int level)
     {
 		boomerangLevel = level;
-
+		boomerang.LevelUp();
 	}
 }

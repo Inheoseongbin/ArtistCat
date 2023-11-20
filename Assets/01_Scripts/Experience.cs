@@ -6,37 +6,50 @@ using UnityEngine;
 
 public class Experience : PoolableMono
 {
-	public int expNum;
-	private bool isMagnet = false;
-	private bool isSelected = false;
-	public bool IsSelected => isSelected;
-		
+    public int expNum;
+    private bool isMagnet = false;
+    private bool isSelected = false;
+    private bool isAddExp = false;
+    public bool IsSelected => isSelected;
+
+    private Transform targetPos;
+
     public override void Init()
-	{
-		isMagnet = false;
-		isSelected = false;
-	}
+    {
+        isAddExp = false;
+        isMagnet = false;
+        isSelected = false;
+    }
 
-	private void Update()
-	{
-		if(isMagnet)
-			transform.position = Vector2.MoveTowards(transform.position, GameManager.Instance.playerTrm.position, 0.05f);
-	}
+    private void Update()
+    {
+        targetPos = GameObject.Find("ExpTarget").transform;
 
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if(collision.CompareTag("Player"))
-		{
-			Level.Instance.AddExperience(expNum);
-			SoundManager.Instance.PlaySelectExp();
+        if (isAddExp)
+        {
+            if(Vector3.Distance(transform.position, targetPos.position) <= .5f)
+                PoolManager.Instance.Push(this);
 
-			PoolManager.Instance.Push(this);
-			isSelected = true;
-		}
+            transform.position = Vector3.Lerp(transform.position, targetPos.position, 15 * Time.deltaTime);
+        }
+        
+        else if (isMagnet)
+            transform.position = Vector2.MoveTowards(transform.position, GameManager.Instance.playerTrm.position, 0.05f);
+    }
 
-		if(collision.CompareTag("Magnet"))
-		{
-			isMagnet = true;
-		}
-	}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && !isAddExp)
+        {
+            Level.Instance.AddExperience(expNum);
+            SoundManager.Instance.PlaySelectExp();
+            isAddExp = true;
+            isSelected = true;
+        }
+
+        if (collision.CompareTag("Magnet"))
+        {
+            isMagnet = true;
+        }
+    }
 }
