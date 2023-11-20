@@ -21,8 +21,13 @@ public class BackBrush : MonoBehaviour
 
     public void ResetBrush()
     {
-        currentLineRenderer.positionCount = 2;
-        //currentLineRenderer.SetPosition(0, Vector3.zero);
-        //currentLineRenderer.SetPosition(1, Vector3.zero);
+        if (currentLineRenderer != null)    
+            currentLineRenderer.positionCount = 2;
+    }
+
+    private void OnDisable()
+    {
+        if (currentLineRenderer != null)
+            currentLineRenderer.positionCount = 2;
     }
 }

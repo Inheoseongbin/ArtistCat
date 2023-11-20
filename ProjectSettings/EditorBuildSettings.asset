@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/00_Scenes/yeojin/Tutorial.unity
     guid: 48c163f605159f947b3bcae19ada4f1c
   - enabled: 1
-    path: Assets/00_Scenes/seongbin/MinChae 2.unity
-    guid: c3e83903c046d3448961182b15b07623
+    path: Assets/00_Scenes/seongbin/MinChae 3.unity
+    guid: e1480ad17bfcd5e4388a107da1058f4e
   - enabled: 0
     path: Assets/00_Scenes/MinChae.unity
     guid: 1919b2b48fb365d45873c323b3fd4e61
