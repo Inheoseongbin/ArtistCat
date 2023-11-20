@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
+using UnityEngine.Rendering.Universal;
 
 public class Enemy : PoolableMono
 {
@@ -23,6 +24,7 @@ public class Enemy : PoolableMono
     private Sprite sprite;
 
     private SpriteRenderer _sr;
+    private Light2D light2D;
     [SerializeField] private SpriteRenderer _emo;
     private readonly int _dissolve = Shader.PropertyToID("_Dissolve");
     private readonly string _isDissolve = "_IsDissolve";
@@ -37,6 +39,7 @@ public class Enemy : PoolableMono
     {
         enemyTypes.Clear();
         _hitDecision.enabled = true;
+        light2D.enabled = true;
         _isDead = false;
 
         foreach (Transform child in imageParent.transform)
@@ -72,6 +75,7 @@ public class Enemy : PoolableMono
     {
         _sr = GetComponentInChildren<SpriteRenderer>();
         _hitDecision = GetComponent<CapsuleCollider2D>();
+        light2D = GetComponentInChildren<Light2D>();
         player = FindObjectOfType<Player>();
 
         for (int i = 0; i < sprites.Count; i++) // Ã³À½¿¡ µñ¼Å³Ê¸®¿¡ Å¸ÀÔÀÌ¶û ±×¸² ³Ö¾î
@@ -127,9 +131,10 @@ public class Enemy : PoolableMono
     public void Die()
     {
         SoundManager.Instance.PlayEnemyDie();
-        _isDead = true;
-        _hitDecision.enabled = false;
         StartCoroutine(DieDissolve(1));
+        _isDead = true;
+        light2D.enabled = false;
+        _hitDecision.enabled = false;
         FallExp();
     }
 
