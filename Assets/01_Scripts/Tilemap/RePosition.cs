@@ -31,27 +31,19 @@ public class RePosition : MonoBehaviour
         float dirX = movement.x < 0 ? -1 : 1;
         float dirY = movement.y < 0 ? -1 : 1;
 
-        //맵, 몬스터
-        switch (transform.tag)
+        if (transform.tag == "Ground")
         {
-            case "Ground":
-                if (diffX > diffY)
-                {
-                    transform.Translate(Vector3.right * dirX * 40);
-                }
-                else if (diffX < diffY)
-                {
-                    transform.Translate(Vector3.up * dirY * 40);
-                }
-                break;
-                //에너미 재배치 할 때 쓸까 말까
-            //case "Enemy":
-            //    //몬스터 재배치
-            //    if (coll.enabled)
-            //    {
-            //        transform.Translate(playerDir * 20 + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0));
-            //    }
-            //    break;
+            //Debug.LogError()
+            if (diffX >= diffY)
+            {
+                transform.Translate(Vector3.right * dirX * 40);
+            }
+            else if (diffX <= diffY)
+            {
+                transform.Translate(Vector3.up * dirY * 40);
+            }
+            Debug.Log($"{transform.gameObject.name} : {Vector2.Distance(playerPos, transform.position)}");
+            
         }
     }
 }
