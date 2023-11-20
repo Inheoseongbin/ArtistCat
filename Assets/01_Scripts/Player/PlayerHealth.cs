@@ -63,7 +63,7 @@ public class PlayerHealth : MonoBehaviour
             Hurt(10);
     }
 
-	private void Hurt(int dmg)
+	public void Hurt(int dmg)
     {
         SoundManager.Instance.PlayPlayerHurt();
 

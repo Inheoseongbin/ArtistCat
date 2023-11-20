@@ -15,7 +15,9 @@ public class BossMovement : BossMain
         _sr = GetComponentInChildren<SpriteRenderer>();
 
         _bossValue._playerTr = GameObject.Find("Player").GetComponent<Transform>();
-        _bossValue._isSkill = false;
+
+        _bossValue._isShoot = false;
+        _bossValue._isDownAttack = false;
     }
 
     void Update()
@@ -38,10 +40,12 @@ public class BossMovement : BossMain
                 _bossValue._isJump = false;
 
         }
-        else if (!isStop && !_bossValue._isSkill && !_bossValue._isDash)
+        else if (!isStop && !_bossValue._isShoot && !_bossValue._isDash && !_bossValue._isDownAttack)
         {
+
             _rb.velocity = Vector2.zero;
             transform.position = Vector2.MoveTowards(transform.position, _bossValue._playerTr.position, _bossValue._speed * Time.deltaTime);
+
         }
 
         if (_bossValue._playerTr.position.x < transform.position.x)

@@ -10,9 +10,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    [Header("보스 체력바")]
-    public BossHp _bossHp;
-
     [Header("레벨업 UI")]
     [SerializeField] private ExperienceBar expBar;
     [SerializeField] private TextMeshProUGUI levelText;
