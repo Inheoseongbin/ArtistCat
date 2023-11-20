@@ -41,9 +41,7 @@ public class RePosition : MonoBehaviour
             else if (diffX <= diffY)
             {
                 transform.Translate(Vector3.up * dirY * 40);
-            }
-            Debug.Log($"{transform.gameObject.name} : {Vector2.Distance(playerPos, transform.position)}");
-            
+            }            
         }
     }
 }
