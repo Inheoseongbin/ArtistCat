@@ -17,13 +17,17 @@ public class Thorn : PoolableMono
 		{
 			Enemy e = collision.GetComponent<Enemy>();
 			e.DrawReduce(0);
-			PoolManager.Instance.Push(this);
+			ThornParticle thornParticle = PoolManager.Instance.Pop("ThornParticle") as ThornParticle;
+			thornParticle.transform.position = transform.position;
+            PoolManager.Instance.Push(this);
 		}
 		if (collision.CompareTag("Boss"))
 		{
 			Boss b = collision.GetComponent<Boss>();
 			b.DrawReduce(0);
-			PoolManager.Instance.Push(this);
+            ThornParticle thornParticle = PoolManager.Instance.Pop("ThornParticle") as ThornParticle;
+            thornParticle.transform.position = transform.position;
+            PoolManager.Instance.Push(this);
 		}
 	}
 }
