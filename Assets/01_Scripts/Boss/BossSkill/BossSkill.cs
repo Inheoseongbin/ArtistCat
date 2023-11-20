@@ -18,10 +18,11 @@ public class BossSkill : BossMain
 
     [Header("오브젝트")]
     [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private GameObject _downAttackImg;
     [SerializeField] private GameObject _dashImage;
 
     protected bool _isAiming = false;
-    protected bool _isKnock = false;
+    private bool _isKnock = false;
 
     private float _stunCool = 2f;
     private float dTime;
@@ -31,7 +32,7 @@ public class BossSkill : BossMain
     private List<Bullet> saveBulletList = new List<Bullet>();
     private List<float> BulletAngleList = new List<float>();
     private Bullet bullet = null;
-
+    Vector3 upPos;
     int angleCount = 12;
     int defaultAngle;
     protected override void Awake()
@@ -47,10 +48,12 @@ public class BossSkill : BossMain
 
     private void FixedUpdate()
     {
+        //대쉬 이미지 에이밍
         if (_isAiming)
             DashAiming();
 
-        if(_isKnock)
+        //넉백 되었을 때 플레이어 밀려남
+        if (_isKnock)
         {
             _bossValue._playerTr.gameObject.GetComponent<Rigidbody2D>().AddForce(viewDir * _knockPower, ForceMode2D.Impulse);
             _isKnock = false;
@@ -62,6 +65,9 @@ public class BossSkill : BossMain
         StopAllCoroutines();
         StartCoroutine(ShootRoutine());
         StartCoroutine(DashRoutine());
+
+        //if (EnemySpawner.Instance.bossTypes.Count == 3)
+        //    StartCoroutine(JumpRoutine());
     }
 
     IEnumerator DashRoutine()
@@ -113,7 +119,6 @@ public class BossSkill : BossMain
         SoundManager.Instance.PlayBossDashAtk();
     }
     #endregion
-
     IEnumerator ShootRoutine()
     {
         while (true)
@@ -136,6 +141,49 @@ public class BossSkill : BossMain
             yield return new WaitForSeconds(_stunCool);
 
             //다시 움직임
+            _bossValue._isSkill = false;
+        }
+    }
+
+    IEnumerator LastBossShoot()
+    {
+        yield return new WaitForSeconds(1);
+        foreach (var b in saveBulletList)
+        {
+            //Bullet bullet = b;
+            b.BulletPool();
+            for (int i = 0; i < 12; i++)
+            {
+                if (i % 2 == 0)
+                    Shoot(BulletAngleList[i], b.transform.position);
+            }
+        }
+        BulletAngleList.Clear();
+    }
+
+    IEnumerator JumpRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+            _bossValue._isSkill = true;
+            _bossValue.saveTr = transform.position;
+            _bossValue.saveTr.y = transform.position.y + 5;
+            _bossValue._isJump = true; 
+
+            yield return new WaitWhile(() => _bossValue._isJump);
+
+            _downAttackImg.SetActive(true);
+            _bossValue.saveTr.y -= 5;
+            _downAttackImg.transform.position = _bossValue.saveTr;
+
+            yield return new WaitForSeconds(1f);
+
+            _downAttackImg.SetActive(false);
+
+            _bossValue._isJump = true;
+
+            yield return new WaitWhile(() => _bossValue._isJump);
             _bossValue._isSkill = false;
         }
     }
@@ -164,21 +212,6 @@ public class BossSkill : BossMain
         rb.velocity = direction * EnemySpawner.Instance.bossTypes._bulletSpeed;
     }
 
-    IEnumerator LastBossShoot()
-    {
-        yield return new WaitForSeconds(1);
-        foreach (var b in saveBulletList)
-        {
-            //Bullet bullet = b;
-            b.BulletPool();
-            for (int i = 0; i < 12; i++)
-            {
-                if (i % 2 == 0)
-                    Shoot(BulletAngleList[i], b.transform.position);
-            }
-        }
-        BulletAngleList.Clear();
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -192,8 +225,8 @@ public class BossSkill : BossMain
     private void Knockback(GameObject colObj, Vector2 knockDir)
     {
         _isKnock = true;
-     //   colObj.gameObject.GetComponent<Rigidbody2D>().AddForce(knockDir * _knockPower, ForceMode2D.Impulse);
-        
+        //   colObj.gameObject.GetComponent<Rigidbody2D>().AddForce(knockDir * _knockPower, ForceMode2D.Impulse);
+
         _rb.velocity = Vector2.zero;
     }
 }

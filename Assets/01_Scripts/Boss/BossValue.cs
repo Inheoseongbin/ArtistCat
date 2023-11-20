@@ -9,7 +9,9 @@ public class BossValue : MonoBehaviour
 
     public bool _isSkill;
     public bool _isDash;
+    public bool _isJump;
 
     public Vector2 myDir;
+    public Vector3 saveTr;
     public Transform _playerTr;
 }
