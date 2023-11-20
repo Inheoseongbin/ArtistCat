@@ -53,6 +53,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject whatIDrawImage;
     [SerializeField] private Sprite[] lineTypeSprite;
 
+    [Header("씬 변경")]
+    [SerializeField] private SpriteRenderer fadeImg;
+
     private void Awake()
     {
         if(Instance != null)
@@ -66,6 +69,7 @@ public class UIManager : MonoBehaviour
         isSkillChooseOn = false;
         isSetting = false;
 
+        fadeImg.gameObject.SetActive(true);
         settingPanel.SetActive(false);
         gameOverPanel.SetActive(false);
         includeSkillPanel.SetActive(false);
@@ -80,6 +84,8 @@ public class UIManager : MonoBehaviour
         bestTime = PlayerPrefs.GetFloat(bestScoreKey, float.MinValue);
         bgmSlider.value = PlayerPrefs.GetFloat(bgmKey);
         effectSlider.value = PlayerPrefs.GetFloat(effectKey);
+
+        fadeImg.DOFade(0, 0.8f);
     }
     private void Update()
     {
@@ -88,6 +94,7 @@ public class UIManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)) // 설정 눌렀을 경우
         {
             OnSetting();
+            
         }
 
         timeText.text = $"{Mathf.FloorToInt(GameManager.Instance.CurrentPlayTime / 60) % 60:00}" +
@@ -130,6 +137,8 @@ public class UIManager : MonoBehaviour
         // 재시작 눌렀으면 enemy 모두 삭제 시키고
         Time.timeScale = 1;
 
+        fadeImg.DOFade(1, 0.8f);
+
         if (GameManager.Instance.IsGameOver)
             gameOverPanel.transform.DOScale(0, 0.8f)
                 .OnComplete(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
@@ -140,12 +149,14 @@ public class UIManager : MonoBehaviour
                     settingPanel.SetActive(false);
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 });
+
     }
     public void GoBackToFirstSceneBtn()
     {
         PlayBTNClicked();
-        print("버튼클릭!");
         Time.timeScale = 1;
+
+        fadeImg.DOFade(1, 0.8f);
 
         if (GameManager.Instance.IsGameOver)
             gameOverPanel.transform.DOScale(0, 0.8f)

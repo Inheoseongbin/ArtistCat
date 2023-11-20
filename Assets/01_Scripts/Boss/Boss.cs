@@ -138,6 +138,7 @@ public class Boss : PoolableMono
     {
         if (enemyTypes[0] == attack) // 딕셔너리 타입이랑 첫번째꺼의 타입이 같으면 하나 지울거얌
         {
+            SoundManager.Instance.PlayBossHurt();
             enemyTypes.RemoveAt(0);
             Destroy(typeList[0]);
             typeList.RemoveAt(0);
@@ -165,6 +166,8 @@ public class Boss : PoolableMono
         ObjectActive();
 
         BossHpBar.ShowUiBar();
+        SoundManager.Instance.PlayBossDie();
+
         EnemySpawner.Instance.isSpawnLock = true;
         EnemySpawner.Instance.bossSpawn = false;
 

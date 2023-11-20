@@ -8,6 +8,8 @@ TagManager:
   - Magnet
   - Bullet
   - Boss
+  - Area
+  - Ground
   layers:
   - Default
   - TransparentFX

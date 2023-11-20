@@ -17,6 +17,7 @@ public class Popup : MonoBehaviour
 	public IEnumerator Pop()
 	{
 		comboParticle.Play();
+		SoundManager.Instance.PlayCombo();
 		transform.DOLocalMoveY(-490, 1);
 		yield return new WaitForSeconds(1.5f);
 		transform.DOLocalMoveY(-660, 1);

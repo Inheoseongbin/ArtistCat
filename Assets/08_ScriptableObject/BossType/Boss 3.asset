@@ -15,5 +15,5 @@ MonoBehaviour:
   Count: 3
   _shootCool: 8
   _dashCool: 4
-  _bulletSpeed: 3
+  _bulletSpeed: 10
   _BossColor: {r: 1, g: 0.20188677, b: 0.20188677, a: 1}
