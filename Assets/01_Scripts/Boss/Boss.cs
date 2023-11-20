@@ -33,11 +33,14 @@ public class Boss : PoolableMono
     [SerializeField] private GameObject _dashImage;
 
     private int dieCount = 5;
+    private int maxCount;
 
     BossSkill bossSkill;
 
     public override void Init()
     {
+        BossHpBar.ShowUiBar();
+
         type = EnemySpawner.Instance.bossTypes;
 
         imageParent.SetActive(true);
@@ -104,8 +107,15 @@ public class Boss : PoolableMono
         }
     }
 
+    private void Start()
+    {
+        maxCount = dieCount * typeCount;
+    }
+
     private void Update()
     {
+        UIManager.Instance._bossHp.UpdateExpBar(dieCount * typeCount, maxCount - typeCount);
+
         if (enemyTypes.Count == 0 && !EnemySpawner.Instance.isBossDead) // 남은 타입이 없으면 다 없앴으니까 죽일거임
         {
             dieCount--;
@@ -155,6 +165,7 @@ public class Boss : PoolableMono
     {
         ObjectActive();
 
+        BossHpBar.ShowUiBar();
         SoundManager.Instance.PlayBossDie();
 
         EnemySpawner.Instance.isSpawnLock = true;
