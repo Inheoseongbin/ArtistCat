@@ -10,6 +10,7 @@ public class ExplainRenderer : MonoBehaviour
     public class ExplainDataProperty
     {
         public Sprite sprite;
+		[TextArea]
         public string descriptions;
     }
 
