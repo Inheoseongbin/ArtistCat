@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyShooter : MonoBehaviour
 {
+    public float waitTime = 5f;
     private void Start()
     {
         StartCoroutine(Shoot());
@@ -16,7 +17,7 @@ public class EnemyShooter : MonoBehaviour
         {
             EnemyBullet eb = PoolManager.Instance.Pop("EnemyBullet") as EnemyBullet;
             eb.transform.position = transform.position;
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(waitTime);
         }
     }
 }
