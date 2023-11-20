@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   list:
   - ID: 0
-    image: {fileID: 249172811, guid: d6ac077d1d634af41a0ba726c7531daf, type: 3}
+    image: {fileID: 21300000, guid: b3a09323148c2814d954ad13dada8f35, type: 3}
     name: "\uCCB4\uB825 \uD68C\uBCF5"
     introduce: "\uD604\uC7AC \uCCB4\uB825 \uD68C\uBCF5"
     upgradeLevel: 0
@@ -53,4 +53,4 @@ MonoBehaviour:
     name: "\uC7A5\uB09C\uAC10\uACF5"
     introduce: "\uD50C\uB808\uC774\uC5B4 \uC8FC\uBCC0\uC744 \uB3C4\uB294\n\uC7A5\uB09C\uAC10
       \uACF5 \uC0DD\uC131"
-    upgradeLevel: 1
+    upgradeLevel: 0

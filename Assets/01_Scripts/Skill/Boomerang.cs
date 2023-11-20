@@ -19,10 +19,10 @@ public class Boomerang : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && level < 6)//6개로 제한하는게 좋은것 같습니다.
+        /*if (Input.GetKeyDown(KeyCode.Space) && level < 6)//6개로 제한하는게 좋은것 같습니다.
         {
             LevelUp();
-        }
+        }*/
         if (isVisible)
         {
             for (int i = 0; i < _rotaterList.Count; i++)

@@ -75,9 +75,9 @@ public class EnemySpawner : MonoBehaviour
     {
         player = GameManager.Instance.playerTrm;
 
-        minx = player.transform.position.x - range;
+        minx = player.transform.position.x - range - 5;
         miny = player.transform.position.y - range;
-        maxx = player.transform.position.x + range;
+        maxx = player.transform.position.x + range + 5;
         maxy = player.transform.position.y + range;
 
         curtime = (int)GameManager.Instance.CurrentPlayTime;
@@ -180,7 +180,7 @@ public class EnemySpawner : MonoBehaviour
     Vector2 RandomPos()
     {
         Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
-        if (Vector3.Distance(player.transform.position, pos) < 2)
+        if (Vector3.Distance(player.transform.position, pos) < 15)
         {
             RandomPos();
         }

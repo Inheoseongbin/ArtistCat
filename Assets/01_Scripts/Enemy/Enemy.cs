@@ -25,6 +25,7 @@ public class Enemy : PoolableMono
 
     private SpriteRenderer _sr;
     private Light2D light2D;
+
     [SerializeField] private SpriteRenderer _emo;
     private readonly int _dissolve = Shader.PropertyToID("_Dissolve");
     private readonly string _isDissolve = "_IsDissolve";
@@ -40,6 +41,7 @@ public class Enemy : PoolableMono
         enemyTypes.Clear();
         _hitDecision.enabled = true;
         light2D.enabled = true;
+        imageParent.SetActive(true);
         _isDead = false;
 
         foreach (Transform child in imageParent.transform)
@@ -134,6 +136,7 @@ public class Enemy : PoolableMono
         StartCoroutine(DieDissolve(1));
         _isDead = true;
         light2D.enabled = false;
+        imageParent.SetActive(false);
         _hitDecision.enabled = false;
         FallExp();
     }
