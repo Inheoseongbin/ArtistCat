@@ -42,7 +42,7 @@ public class Experience : PoolableMono
         if (collision.CompareTag("Player") && !isAddExp)
         {
             Level.Instance.AddExperience(expNum);
-            SoundManager.Instance.PlaySelectExp();
+            SoundManager.Instance.PlayCollectExp();
             isAddExp = true;
             isSelected = true;
         }

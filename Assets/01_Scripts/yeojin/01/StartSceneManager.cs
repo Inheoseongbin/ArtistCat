@@ -3,15 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.UI;
+
 public class StartSceneManager : MonoBehaviour
 {
-    // 0ÀÌ ¸ŞÀÎ ¾À
+    [SerializeField] private SpriteRenderer fadeImg;
+    private bool isFirstClick = false;
+
+    private void Start()
+    {
+        fadeImg.gameObject.SetActive(true);
+        fadeImg.DOFade(0, 0.8f);
+    }
+
     public void LoadGameScene()
     {
-        SceneManager.LoadScene(2);
+        if (isFirstClick) return;
+        fadeImg.DOFade(1, 0.8f).OnComplete(() => SceneManager.LoadScene(2));
+        
     }
     public void LoadTutorialScene()
     {
-        SceneManager.LoadScene(1); // 1ÀÌ Æ©Åä¸®¾ó ¾À
+        if (isFirstClick) return;
+        fadeImg.DOFade(1, 0.8f).OnComplete(() => SceneManager.LoadScene(1));
     }
 }

@@ -95,6 +95,7 @@ public class Enemy : PoolableMono
             if (enemyTypes[0] == attack && !_isDead) // 딕셔너리 타입이랑 첫번째꺼의 타입이 같으면 하나 지울거얌
             {
                 DrawReduce(0);
+                SoundManager.Instance.PlayEnemyHurt();
             }
             else
                 return;
@@ -125,6 +126,7 @@ public class Enemy : PoolableMono
 
     public void Die()
     {
+        SoundManager.Instance.PlayEnemyDie();
         _isDead = true;
         _hitDecision.enabled = false;
         StartCoroutine(DieDissolve(1));

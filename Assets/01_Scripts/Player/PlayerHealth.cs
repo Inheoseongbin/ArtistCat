@@ -65,6 +65,8 @@ public class PlayerHealth : MonoBehaviour
 
 	private void Hurt(int dmg)
     {
+        SoundManager.Instance.PlayPlayerHurt();
+
         currentHP -= dmg;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
@@ -91,6 +93,8 @@ public class PlayerHealth : MonoBehaviour
 
     public void AddHP(int heal)
     {
+        SoundManager.Instance.PlayPlayerHeal();
+
         currentHP += heal;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
         float val = 1.0f / (float)maxHP; // 0.01
@@ -101,6 +105,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (!isDie)
         {
+            SoundManager.Instance.PlayPlayerDie();
             anim.SetDead();
             isDie = true;
             GameManager.Instance.GameOver();

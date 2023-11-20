@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         mainCam = Camera.main;
-        playerTrm = GameObject.Find("Player").transform;
+        if(GameObject.Find("Player") != null) playerTrm = GameObject.Find("Player").transform;
 
         currentEnemyKills = 0;
         currentPlayTime = 0;
@@ -63,7 +63,6 @@ public class GameManager : MonoBehaviour
     private void MakePool()
     {
         PoolManager.Instance = new PoolManager(transform);
-
         poolingListSO.list.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
     }
 
