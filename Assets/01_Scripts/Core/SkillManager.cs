@@ -75,6 +75,8 @@ public class SkillManager : MonoBehaviour
                 break;
             case 2: // 마그넷
                 player.OnMagnetUpgrade(1);
+                MagnetParticle mParticle = PoolManager.Instance.Pop("MagnetParticle") as MagnetParticle;
+                mParticle.transform.position = GameManager.Instance.playerTrm.position;
                 break;
             case 3: // 털실 호출
                 player.OnYarnSpawn(skillSO.list[id].upgradeLevel);
