@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ public class Boss : PoolableMono
     public int typeCount;
     private BossType type;
     private int count;
-    public GameObject exp;
+    public GameObject[] exp;
 
     [SerializeField] private SpriteRenderer _sr;
     [SerializeField] private int _dieCount;
@@ -21,6 +22,8 @@ public class Boss : PoolableMono
     public List<Sprite> sprites = new List<Sprite>();
     public GameObject imageParent;
     public GameObject img;
+
+    [SerializeField] private GameObject BossHpCount;
 
     private Dictionary<LineType, Sprite> showType = new Dictionary<LineType, Sprite>();
     private List<GameObject> typeList = new List<GameObject>();
@@ -33,14 +36,13 @@ public class Boss : PoolableMono
     [SerializeField] private GameObject _dashImage;
 
     private int dieCount = 5;
-    private int maxCount;
+
+    private GameObject saveTypeCount;
 
     BossSkill bossSkill;
 
     public override void Init()
     {
-        BossHpBar.ShowUiBar();
-
         type = EnemySpawner.Instance.bossTypes;
 
         imageParent.SetActive(true);
@@ -94,6 +96,8 @@ public class Boss : PoolableMono
                 typeList.Add(g);
             }
         }
+        saveTypeCount = Instantiate(BossHpCount, imageParent.transform);
+        saveTypeCount.GetComponent<TextMeshPro>().text = $"x{dieCount}";
     }
 
     private void Awake()
@@ -107,17 +111,11 @@ public class Boss : PoolableMono
         }
     }
 
-    private void Start()
-    {
-        maxCount = dieCount * typeCount;
-    }
-
     private void Update()
     {
-        UIManager.Instance._bossHp.UpdateExpBar(dieCount * typeCount, maxCount - typeCount);
-
         if (enemyTypes.Count == 0 && !EnemySpawner.Instance.isBossDead) // 남은 타입이 없으면 다 없앴으니까 죽일거임
         {
+            Destroy(saveTypeCount);
             dieCount--;
             ReCharging();
             StartCoroutine(Hit());
@@ -165,7 +163,6 @@ public class Boss : PoolableMono
     {
         ObjectActive();
 
-        BossHpBar.ShowUiBar();
         SoundManager.Instance.PlayBossDie();
 
         EnemySpawner.Instance.isSpawnLock = true;
@@ -209,7 +206,7 @@ public class Boss : PoolableMono
 
         for (int i = 0; i < randNum; i++)
         {
-            Experience r = PoolManager.Instance.Pop(exp.name) as Experience;
+            Experience r = PoolManager.Instance.Pop(exp[EnemySpawner.Instance.bossTypes.Count - 1].name) as Experience;
             r.transform.position = transform.position;
 
             Vector3 offset = Random.insideUnitCircle;

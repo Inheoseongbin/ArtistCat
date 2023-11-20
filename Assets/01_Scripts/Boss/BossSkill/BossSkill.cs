@@ -16,12 +16,19 @@ public class BossSkill : BossMain
     [SerializeField] protected float _dashingTime;
     [SerializeField] protected float _knockPower;
 
+    [Header("점프 공격")]
+    [SerializeField] private float _waitDownAttack;
+
     [Header("오브젝트")]
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private GameObject _downAttackImg;
     [SerializeField] private GameObject _dashImage;
 
+    public bool _isAtt = false;
+
     protected bool _isAiming = false;
+
+    private bool _isJumpStart = false;
     private bool _isKnock = false;
 
     private float _stunCool = 2f;
@@ -31,10 +38,12 @@ public class BossSkill : BossMain
 
     private List<Bullet> saveBulletList = new List<Bullet>();
     private List<float> BulletAngleList = new List<float>();
+
     private Bullet bullet = null;
-    Vector3 upPos;
+
     int angleCount = 12;
     int defaultAngle;
+
     protected override void Awake()
     {
         base.Awake();
@@ -66,8 +75,8 @@ public class BossSkill : BossMain
         StartCoroutine(ShootRoutine());
         StartCoroutine(DashRoutine());
 
-        //if (EnemySpawner.Instance.bossTypes.Count == 3)
-        //    StartCoroutine(JumpRoutine());
+        if (EnemySpawner.Instance.bossTypes.Count == 3)
+            StartCoroutine(JumpRoutine());
     }
 
     IEnumerator DashRoutine()
@@ -90,6 +99,7 @@ public class BossSkill : BossMain
             yield return new WaitForSeconds(_dashingTime);
 
             _bossValue._isDash = false;
+            _isJumpStart = true;
         }
     }
     #region 대쉬 요소
@@ -125,7 +135,7 @@ public class BossSkill : BossMain
         {
             yield return new WaitForSeconds(EnemySpawner.Instance.bossTypes._shootCool - _stunCool);
 
-            _bossValue._isSkill = true;
+            _bossValue._isShoot = true;
             saveBulletList.Clear();
 
             _animator.SetTrigger("attack");
@@ -141,7 +151,7 @@ public class BossSkill : BossMain
             yield return new WaitForSeconds(_stunCool);
 
             //다시 움직임
-            _bossValue._isSkill = false;
+            _bossValue._isShoot = false;
         }
     }
 
@@ -165,11 +175,13 @@ public class BossSkill : BossMain
     {
         while (true)
         {
-            yield return new WaitForSeconds(5f);
-            _bossValue._isSkill = true;
+            yield return new WaitWhile(() => !_isJumpStart);
+            yield return new WaitForSeconds(1f);
+
+            _bossValue._isDownAttack = true;
             _bossValue.saveTr = transform.position;
             _bossValue.saveTr.y = transform.position.y + 5;
-            _bossValue._isJump = true; 
+            _bossValue._isJump = true;
 
             yield return new WaitWhile(() => _bossValue._isJump);
 
@@ -177,14 +189,19 @@ public class BossSkill : BossMain
             _bossValue.saveTr.y -= 5;
             _downAttackImg.transform.position = _bossValue.saveTr;
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(_waitDownAttack);
 
             _downAttackImg.SetActive(false);
 
             _bossValue._isJump = true;
 
             yield return new WaitWhile(() => _bossValue._isJump);
-            _bossValue._isSkill = false;
+
+            if (_isAtt)
+                _bossValue._playerTr.gameObject.GetComponent<PlayerHealth>().Hurt(15);
+
+            _bossValue._isDownAttack = false;
+            _isJumpStart = false;
         }
     }
 

@@ -12,7 +12,9 @@ public class Player : MonoBehaviour
 	public int combo;
 	private Popup comboPop;
 
-	private void Awake() 
+    bool _isSpeed = false;
+
+    private void Awake() 
 	{
 		playerHealth = GetComponent<PlayerHealth>();
 		playerMove = GetComponent<PlayerMove>();
@@ -39,7 +41,12 @@ public class Player : MonoBehaviour
 	public void OnSpeedUp(float value) // 스킬 스피트 증가
 	{
 		playerMove.AddSpeed(value);
-	}
+        if (!_isSpeed)
+        {
+            _isSpeed = true;
+			GetComponentInChildren<TrailRenderer>().enabled = true;
+		}
+    }
 
 	public void OnMagnetUpgrade(float value) // 스킬 자석 업글
 	{
