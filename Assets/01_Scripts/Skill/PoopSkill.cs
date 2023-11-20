@@ -46,9 +46,8 @@ public class PoopSkill : PoolableMono
 		Init();
 	}
 
-	private void Update()
+	private void OnEnable()
 	{
-		transform.position += dir * speed * Time.deltaTime;
 
 		Enemy e = FindAnyObjectByType<Enemy>();
 		if (e != null)
@@ -58,25 +57,50 @@ public class PoopSkill : PoolableMono
 		}
 		else
 		{
-			Boss b  = FindAnyObjectByType<Boss>();
-			if (b != null)
-			{
-				dir = b.transform.position - transform.position;
-				dir.Normalize();
-			}
-			else
-			{
-				float x = Random.Range(-5, 5);
-				float y = Random.Range(-5, 5);
+			float x = Random.Range(-5, 5);
+			float y = Random.Range(-5, 5);
 
-				if (dir == Vector3.zero)
-				{
-					x = Random.Range(-5, 5);
-					y = Random.Range(-5, 5);
-				}
-				dir = new Vector3(x, y).normalized;
+			if (dir == Vector3.zero)
+			{
+				x = Random.Range(-5, 5);
+				y = Random.Range(-5, 5);
 			}
+
+			dir = new Vector3(x, y).normalized;
 		}
+	}
+
+	private void Update()
+	{
+		transform.position += dir * speed * Time.deltaTime;
+
+		//Enemy e = FindAnyObjectByType<Enemy>();
+		//if (e != null)
+		//{
+		//	dir = e.transform.position - transform.position;
+		//	dir.Normalize();
+		//}
+		//else
+		//{
+		//	Boss b  = FindAnyObjectByType<Boss>();
+		//	if (b != null)
+		//	{
+		//		dir = b.transform.position - transform.position;
+		//		dir.Normalize();
+		//	}
+		//	else
+		//	{
+		//		float x = Random.Range(-5, 5);
+		//		float y = Random.Range(-5, 5);
+		//
+		//		if (dir == Vector3.zero)
+		//		{
+		//			x = Random.Range(-5, 5);
+		//			y = Random.Range(-5, 5);
+		//		}
+		//		dir = new Vector3(x, y).normalized;
+		//	}
+		//}
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)

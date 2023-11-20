@@ -8,20 +8,20 @@ public class BossHpBar : MonoBehaviour
 {
     public static Action ShowUiBar;
 
-    [SerializeField] private Slider _expBar;
-    [SerializeField] private Slider _bossHpBar;
+    [SerializeField] private GameObject _expBar;
+    [SerializeField] private GameObject _bossHpBar;
 
     private bool _isBarActive = false;
 
-    private void Awake()
-    {
+	private void Start()
+	{
         ShowUiBar += UiBar;
     }
 
     private void UiBar()
     {
-        _expBar.gameObject.SetActive(_isBarActive);
-        _isBarActive = !_isBarActive;
-        _bossHpBar.gameObject.SetActive(_isBarActive);
+        //_isBarActive = !_isBarActive;
+        _expBar.SetActive(!_expBar.activeSelf);
+        _bossHpBar.SetActive(!_bossHpBar);
     }
 }

@@ -21,6 +21,6 @@ public class Brush : PoolableMono
     private void Update()
     {
         if (transform.parent.childCount > 1)
-            PoolManager.Instance.Push(this);
+            Destroy(gameObject);
     }
 }
