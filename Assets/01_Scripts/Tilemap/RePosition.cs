@@ -42,7 +42,7 @@ public class RePosition : MonoBehaviour
             {
                 transform.Translate(Vector3.up * dirY * 40);
             }
-            Debug.Log($"{transform.gameObject.name} : {Vector2.Distance(playerPos, transform.position)}");
+            //Debug.Log($"{transform.gameObject.name} : {Vector2.Distance(playerPos, transform.position)}");
             
         }
     }
