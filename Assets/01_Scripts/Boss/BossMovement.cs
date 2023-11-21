@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossMovement : BossMain
 {
     [SerializeField] private float _distance;
+    [SerializeField] private CapsuleCollider2D _crashCol;
 
     private SpriteRenderer _sr;
 
@@ -34,7 +35,7 @@ public class BossMovement : BossMain
         if (_bossValue._isJump)
         {
 
-            transform.position = Vector2.Lerp(transform.position, _bossValue.saveTr, 10f * Time.deltaTime);
+            transform.position = Vector2.Lerp(transform.position, _bossValue.saveTr, 8f * Time.deltaTime);
 
             if (transform.position == _bossValue.saveTr)
                 _bossValue._isJump = false;
@@ -47,6 +48,11 @@ public class BossMovement : BossMain
             transform.position = Vector2.MoveTowards(transform.position, _bossValue._playerTr.position, _bossValue._speed * Time.deltaTime);
 
         }
+
+        if(_bossValue._isDownAttack)
+            _crashCol.enabled = false;
+        else
+        _crashCol.enabled = true;
 
         if (_bossValue._playerTr.position.x < transform.position.x)
             _sr.flipX = true;
