@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class Boss : PoolableMono
@@ -16,6 +17,7 @@ public class Boss : PoolableMono
     public GameObject[] exp;
 
     [SerializeField] private SpriteRenderer _sr;
+	[SerializeField] private Animator ani;
     [SerializeField] private int _dieCount;
 
     [Header("UI 설정")]
@@ -41,8 +43,14 @@ public class Boss : PoolableMono
 
     BossSkill bossSkill;
 
+    private Light2D _light;
+    private CapsuleCollider2D _hitAble;
+
     public override void Init()
     {
+        _hitAble.enabled = true;
+        _light.enabled = true;
+
         dieCount = _dieCount;
 
         if (saveTypeCount != null)
@@ -67,6 +75,7 @@ public class Boss : PoolableMono
     {
         //적 컬러
         _sr.color = type._BossColor;
+        ani.runtimeAnimatorController = type.animator;
 
         //쉐이더 값 초기화
         _sr.material.SetInt(_isHit, 0);
@@ -106,8 +115,11 @@ public class Boss : PoolableMono
 
     private void Awake()
     {
+        _hitAble = GetComponent<CapsuleCollider2D>();
+        _light = GetComponentInChildren<Light2D>();
         bossSkill = GetComponent<BossSkill>();
         _sr = GetComponentInChildren<SpriteRenderer>();
+        ani = GetComponentInChildren<Animator>();
 
         for (int i = 0; i < sprites.Count; i++) // 처음에 딕셔너리에 타입이랑 그림 넣어
         {
@@ -169,6 +181,9 @@ public class Boss : PoolableMono
         {
             UIManager.Instance.EndingScene();
         }
+
+        _hitAble.enabled = false;
+        _light.enabled = false;
 
         ObjectActive();
 

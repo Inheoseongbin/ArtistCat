@@ -109,6 +109,7 @@ public class EnemySpawner : MonoBehaviour
                 CreateFence();
                 bosstime = curtime + nextTime;
                 bossSpawn = true;
+                isTweenkle = false;
                 GameManager.Instance.isTimeStop = true;
             }
         }
@@ -140,7 +141,15 @@ public class EnemySpawner : MonoBehaviour
 
     private void WarningText()
     {
+        TMPTextTyping(1f);
+        warningText.rectTransform.DOShakePosition(3, 30);
         warningText.DOFade(1, 0.5f).SetLoops(6, LoopType.Yoyo);
+    }
+
+    private void TMPTextTyping(float time) // 타이핑 해주는 거
+    {
+        warningText.maxVisibleCharacters = 0;
+        DOTween.To(x => warningText.maxVisibleCharacters = (int)x, 0f, warningText.text.Length, time);
     }
 
     IEnumerator Spawn()
@@ -181,7 +190,7 @@ public class EnemySpawner : MonoBehaviour
 
     Vector2 RandomPos()
     {
-        Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
+        Vector2 pos = new Vector2(Random.Range(miny, maxy), Random.Range(minx, maxx));
         if (Vector3.Distance(player.transform.position, pos) < 15)
         {
             RandomPos();

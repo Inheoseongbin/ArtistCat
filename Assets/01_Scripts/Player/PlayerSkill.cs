@@ -70,6 +70,9 @@ public class PlayerSkill : MonoBehaviour
 	{
 		scratchLevel = level;
 		StartCoroutine(ScratchTime());
+		ScratchSkill s = FindObjectOfType<ScratchSkill>();
+		if(s != null)
+			s.Upgrade();
 	}
 
 	IEnumerator ScratchTime()
@@ -78,7 +81,7 @@ public class PlayerSkill : MonoBehaviour
 		{
 			ScratchSkill s = PoolManager.Instance.Pop("Scratch") as ScratchSkill;
 			s.transform.position = transform.position;
-			yield return new WaitForSeconds(15 / scratchLevel);
+			yield return new WaitForSeconds(7);
 		}
 	}
 

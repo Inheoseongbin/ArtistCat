@@ -6,18 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/00_Scenes/woohyeok/StartScene.unity
+    path: Assets/00_Scenes/StartScene.unity
     guid: f855bbeabaa3e1341ab28395c0e4e7d6
   - enabled: 1
     path: Assets/00_Scenes/yeojin/Tutorial.unity
     guid: 48c163f605159f947b3bcae19ada4f1c
-  - enabled: 1
+  - enabled: 0
     path: Assets/00_Scenes/LMC.unity
     guid: 4d32fd55ea1915744b608e4d57ade8e5
   - enabled: 1
+    path: Assets/00_Scenes/LMC 1.unity
+    guid: 9e5688c179cce5342929643a502fd88b
+  - enabled: 1
     path: Assets/00_Scenes/GameClear.unity
     guid: 8854b58db5faccd49a430414260b4d8b
-  - enabled: 0
-    path: Assets/00_Scenes/MinChae.unity
-    guid: 1919b2b48fb365d45873c323b3fd4e61
   m_configObjects: {}

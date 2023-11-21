@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class RePosition : MonoBehaviour
 {
@@ -15,8 +10,6 @@ public class RePosition : MonoBehaviour
     }
 
 
-    //맵이랑 에리아랑 충돌을 마치면 
-    //이 스크립트는 맵임
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Area"))
@@ -41,8 +34,6 @@ public class RePosition : MonoBehaviour
             {
                 transform.Translate(Vector3.up * dirY * 40);
             }
-            //Debug.Log($"{transform.gameObject.name} : {Vector2.Distance(playerPos, transform.position)}");
         }
     }
-
 }

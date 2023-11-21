@@ -53,6 +53,8 @@ public class UIManager : MonoBehaviour
     [Header("씬 변경")]
     [SerializeField] private SpriteRenderer fadeImg;
 
+	[SerializeField] private GameObject brush;
+
     private void Awake()
     {
         if (Instance != null)
@@ -82,8 +84,16 @@ public class UIManager : MonoBehaviour
         bgmSlider.value = PlayerPrefs.GetFloat(bgmKey);
         effectSlider.value = PlayerPrefs.GetFloat(effectKey);
 
-        fadeImg.DOFade(0, 0.8f);
+        fadeImg.DOFade(0, 2);
+        StartCoroutine(StartDelay(0.8f));
     }
+
+    IEnumerator StartDelay(float time)
+	{
+        yield return new WaitForSeconds(time);
+        brush.SetActive(true);
+	}
+
     private void Update()
     {
         if (SceneManager.GetActiveScene().name == "Tutorial") return; // 튜토리얼일 경우 안 해도 됨
@@ -102,6 +112,7 @@ public class UIManager : MonoBehaviour
     public void OnSetting()
     {
         isSetting = !isSetting;
+        brush.SetActive(!isSetting);
         settingPanel.SetActive(isSetting);
         Time.timeScale = isSetting ? 0 : 1;
     }
@@ -148,6 +159,7 @@ public class UIManager : MonoBehaviour
                 });
 
     }
+
     public void GoBackToFirstSceneBtn()
     {
         PlayBTNClicked();
@@ -166,11 +178,13 @@ public class UIManager : MonoBehaviour
                     SceneManager.LoadScene(0);
                 });
     }
+
     public void EndingScene()
     {
+        fadeImg.enabled = true;
         Time.timeScale = 1;
 
-        fadeImg.DOFade(1, 0.8f).OnComplete(() =>
+        fadeImg.DOFade(1, 2f).OnComplete(() =>
         {
             SceneManager.LoadScene(3);
         });
@@ -192,11 +206,10 @@ public class UIManager : MonoBehaviour
     // 아래는 다 스킬
     private IEnumerator SequentialSkillRandomChoose()
     {
-        print("기다리는중");
         yield return new WaitUntil(() => !isSkillChooseOn);
-        print("기다림끝!");
         SkillRandomChoose();
     }
+
     public void SkillRandomChoose() // 레벨업시 이거 호출
     {
         SoundManager.Instance.PlayLevelUp();
@@ -209,6 +222,7 @@ public class UIManager : MonoBehaviour
 
         SkillManager.Instance.SkillRandomChoose();
     }
+
     private void CheckUpgradeBox(int idx, Transform panel)
     {
         for (int i = 0; i < 5; i++)
@@ -235,6 +249,7 @@ public class UIManager : MonoBehaviour
         check.SetActive(true);
         check.GetComponent<Animator>().enabled = true;
     }
+
     public void RandomSkill(int iPanelID, int idx, int iPanel)
     {
         panelID[iPanel] = iPanelID;
@@ -270,6 +285,7 @@ public class UIManager : MonoBehaviour
         skillIntrouce.text = includeData.info;
         skillImage.sprite = includeData.image;
     }
+
     public void ChooseButtonClick(int pIdx) // 골랐을 때
     {
         Time.timeScale = 1;
@@ -327,4 +343,9 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
+
+    public void QuitGame()
+	{
+        Application.Quit();
+	}
 }

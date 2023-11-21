@@ -16,4 +16,5 @@ MonoBehaviour:
   _shootCool: 8
   _dashCool: 4
   _bulletSpeed: 10
-  _BossColor: {r: 1, g: 0.20188677, b: 0.20188677, a: 1}
+  _BossColor: {r: 1, g: 1, b: 1, a: 1}
+  animator: {fileID: 9100000, guid: 219d1db1b1898ba45bbf42f58c599d9d, type: 2}
