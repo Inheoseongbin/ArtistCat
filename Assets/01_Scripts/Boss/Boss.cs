@@ -37,12 +37,17 @@ public class Boss : PoolableMono
 
     private int dieCount = 5;
 
-    private GameObject saveTypeCount;
+    private GameObject saveTypeCount = null;
 
     BossSkill bossSkill;
 
     public override void Init()
     {
+        dieCount = _dieCount;
+
+        if (saveTypeCount != null)
+            saveTypeCount.GetComponent<TextMeshPro>().text = $"x{dieCount}";
+
         type = EnemySpawner.Instance.bossTypes;
 
         imageParent.SetActive(true);
@@ -53,7 +58,6 @@ public class Boss : PoolableMono
         EnemySpawner.Instance.isSpawnLock = false;
         EnemySpawner.Instance.isBossDead = false;
 
-        dieCount = _dieCount;
 
         count = typeCount;
         bossSkill.Attack();
@@ -72,7 +76,7 @@ public class Boss : PoolableMono
     }
 
     private void DeleteEnemy()
-	{
+    {
         var saveEnemy = EnemySpawner.Instance.saveEnemyList;
 
         foreach (Enemy enemy in saveEnemy)

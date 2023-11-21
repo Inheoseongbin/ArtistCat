@@ -63,7 +63,6 @@ public class BossSkill : BossMain
 
     private void FixedUpdate()
     {
-        print(_isAtt);
         //대쉬 이미지 에이밍
         if (_isAiming)
             DashAiming();
