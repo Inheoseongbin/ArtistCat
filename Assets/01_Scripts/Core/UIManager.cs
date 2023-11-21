@@ -148,6 +148,7 @@ public class UIManager : MonoBehaviour
                 });
 
     }
+
     public void GoBackToFirstSceneBtn()
     {
         PlayBTNClicked();
@@ -166,6 +167,7 @@ public class UIManager : MonoBehaviour
                     SceneManager.LoadScene(0);
                 });
     }
+
     public void EndingScene()
     {
         fadeImg.enabled = true;
@@ -193,11 +195,10 @@ public class UIManager : MonoBehaviour
     // 아래는 다 스킬
     private IEnumerator SequentialSkillRandomChoose()
     {
-        print("기다리는중");
         yield return new WaitUntil(() => !isSkillChooseOn);
-        print("기다림끝!");
         SkillRandomChoose();
     }
+
     public void SkillRandomChoose() // 레벨업시 이거 호출
     {
         SoundManager.Instance.PlayLevelUp();
@@ -210,6 +211,7 @@ public class UIManager : MonoBehaviour
 
         SkillManager.Instance.SkillRandomChoose();
     }
+
     private void CheckUpgradeBox(int idx, Transform panel)
     {
         for (int i = 0; i < 5; i++)
@@ -236,6 +238,7 @@ public class UIManager : MonoBehaviour
         check.SetActive(true);
         check.GetComponent<Animator>().enabled = true;
     }
+
     public void RandomSkill(int iPanelID, int idx, int iPanel)
     {
         panelID[iPanel] = iPanelID;
@@ -271,6 +274,7 @@ public class UIManager : MonoBehaviour
         skillIntrouce.text = includeData.info;
         skillImage.sprite = includeData.image;
     }
+
     public void ChooseButtonClick(int pIdx) // 골랐을 때
     {
         Time.timeScale = 1;
@@ -328,4 +332,9 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
+
+    public void QuitGame()
+	{
+        Application.Quit();
+	}
 }
