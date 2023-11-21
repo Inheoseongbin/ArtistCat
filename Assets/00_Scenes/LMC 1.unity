@@ -9667,7 +9667,7 @@ MonoBehaviour:
   m_text: "!!!\uBCF4\uC2A4 \uCD9C\uD604!!!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0ebe092da4ab60a4ba31aadd6fd569a9, type: 2}
-  m_sharedMaterial: {fileID: 4046210235868630985, guid: 0ebe092da4ab60a4ba31aadd6fd569a9, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 3250b44955784b94d9cd87a821a1daa8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
