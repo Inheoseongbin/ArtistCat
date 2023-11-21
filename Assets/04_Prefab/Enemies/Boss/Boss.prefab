@@ -312,6 +312,7 @@ MonoBehaviour:
   _downAttackImg: {fileID: 0}
   _dashImage: {fileID: 0}
   JumpCol: {fileID: 0}
+  _jumpAttEffect: {fileID: 0}
   _isAtt: 0
 --- !u!1 &5102911369985012844
 GameObject:
@@ -714,6 +715,7 @@ MonoBehaviour:
   _downAttackImg: {fileID: 3262643784228046717}
   _dashImage: {fileID: 8973787235497301203}
   JumpCol: {fileID: 1754886816407675119}
+  _jumpAttEffect: {fileID: 1145350398709124028, guid: b484f89d6db8b79418c70086d478cc30, type: 3}
   _isAtt: 0
 --- !u!114 &-5139868615271989546
 MonoBehaviour:

@@ -27,6 +27,9 @@ public class BossSkill : BossMain
     [Header("콜라이더")]
     [SerializeField] private CapsuleCollider2D JumpCol;
 
+    [Header("파티클")]
+    [SerializeField] private GameObject _jumpAttEffect;
+
     public bool _isAtt = false;
 
     protected bool _isAiming = false;
@@ -197,6 +200,8 @@ public class BossSkill : BossMain
             _downAttackImg.SetActive(false);
 
             _bossValue._isJump = true;
+
+            Instantiate(_jumpAttEffect, transform);
 
             yield return new WaitWhile(() => _bossValue._isJump);
 
