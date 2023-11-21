@@ -12,7 +12,7 @@ public class Drawing : MonoBehaviour
     private LineRenderer currentLineRenderer;
     private LineRenderer backLineRenderer;
     private Vector2 lastPos;
-    private float _limitValue = 1.5f;
+    private float _limitValue = 1.2f;
 
     private Player player;
 
@@ -30,7 +30,7 @@ public class Drawing : MonoBehaviour
         Draw();
     }
 
-    void Draw()
+    private void Draw()
     {
         if (GameManager.Instance.IsGameOver || UIManager.Instance.IsSkillChooseOn || UIManager.Instance.IsSetting)
         {
@@ -59,6 +59,7 @@ public class Drawing : MonoBehaviour
             PoolManager.Instance.Push(brush);
         }
     }
+
     private void CreateBrush()
     {
         cam = mainCam.transform;
@@ -80,7 +81,7 @@ public class Drawing : MonoBehaviour
         backLineRenderer.SetPosition(1, camRelative);
     }
 
-    void AddPoint(Vector2 pointPos)
+    private void AddPoint(Vector2 pointPos)
     {
         currentLineRenderer.SetPosition(currentLineRenderer.positionCount++, pointPos);
         backLineRenderer.SetPosition(backLineRenderer.positionCount++, pointPos);
