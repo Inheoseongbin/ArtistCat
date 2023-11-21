@@ -5075,7 +5075,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 149, y: 13}
+  m_AnchoredPosition: {x: -144.99997, y: 12}
   m_SizeDelta: {x: 350, y: 120}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &917582270
@@ -6712,7 +6712,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -145, y: 12}
+  m_AnchoredPosition: {x: 145, y: 12}
   m_SizeDelta: {x: 350, y: 120}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1118655930
@@ -8155,7 +8155,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uACC4\uC18D \uD558\uAE30"
+  m_text: "\uACC4\uC18D\uD558\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0ebe092da4ab60a4ba31aadd6fd569a9, type: 2}
   m_sharedMaterial: {fileID: 4046210235868630985, guid: 0ebe092da4ab60a4ba31aadd6fd569a9, type: 2}
@@ -11875,6 +11875,7 @@ MonoBehaviour:
   warningTime: 2
   warningText: {fileID: 1593258718}
   bossSpawn: 0
+  _fence: {fileID: 0}
 --- !u!1 &1994942223
 GameObject:
   m_ObjectHideFlags: 0
