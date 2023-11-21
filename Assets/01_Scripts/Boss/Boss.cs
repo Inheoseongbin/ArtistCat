@@ -194,7 +194,6 @@ public class Boss : PoolableMono
 
         EnemySpawner.Instance.isBossDead = true;
         PoolManager.Instance.Push(EnemySpawner.Instance._fence);
-        Fence.bossDie();
         GameManager.Instance.isTimeStop = false;
         StartCoroutine(DieDissolve(1));
         FallExp();
