@@ -168,9 +168,10 @@ public class UIManager : MonoBehaviour
     }
     public void EndingScene()
     {
+        fadeImg.enabled = true;
         Time.timeScale = 1;
 
-        fadeImg.DOFade(1, 0.8f).OnComplete(() =>
+        fadeImg.DOFade(1, 2f).OnComplete(() =>
         {
             SceneManager.LoadScene(3);
         });
