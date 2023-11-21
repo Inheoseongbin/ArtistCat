@@ -107,6 +107,7 @@ public class EnemySpawner : MonoBehaviour
                 CreateFence();
                 bosstime = curtime + nextTime;
                 bossSpawn = true;
+                isTweenkle = false;
                 GameManager.Instance.isTimeStop = true;
             }
         }

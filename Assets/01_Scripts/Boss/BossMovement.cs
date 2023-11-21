@@ -36,8 +36,9 @@ public class BossMovement : BossMain
         {
 
             transform.position = Vector2.Lerp(transform.position, _bossValue.saveTr, 8f * Time.deltaTime);
+            float dis = Vector3.Distance(transform.position, _bossValue.saveTr);
 
-            if (transform.position == _bossValue.saveTr)
+            if (dis <= 1)
                 _bossValue._isJump = false;
 
         }

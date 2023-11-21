@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             print("ui매니저에러에러에러에러에");
         }
@@ -88,10 +88,10 @@ public class UIManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Tutorial") return; // 튜토리얼일 경우 안 해도 됨
         if (GameManager.Instance.IsGameOver || isSkillChooseOn) return; // 게임오버일 경우 / 스킬 뽑고 있을 경우 리턴
-        if(Input.GetKeyDown(KeyCode.Escape)) // 설정 눌렀을 경우
+        if (Input.GetKeyDown(KeyCode.Escape)) // 설정 눌렀을 경우
         {
             OnSetting();
-            
+
         }
 
         timeText.text = $"{Mathf.FloorToInt(GameManager.Instance.CurrentPlayTime / 60) % 60:00}" +
@@ -126,7 +126,7 @@ public class UIManager : MonoBehaviour
         bestTimeText.text = $"최고기록 {Mathf.FloorToInt(bestTime / 60) % 60:00}:{bestTime % 60:00}";
         killEnemyText.text = $"처치한 적 {GameManager.Instance.EnemyKill}마리";
     }
-    
+
     // 버튼 (다시시작&처음으로)
     public void RestartSceneBtn()
     {
@@ -166,6 +166,17 @@ public class UIManager : MonoBehaviour
                     SceneManager.LoadScene(0);
                 });
     }
+    public void EndingScene()
+    {
+        fadeImg.enabled = true;
+        Time.timeScale = 1;
+
+        fadeImg.DOFade(1, 2f).OnComplete(() =>
+        {
+            SceneManager.LoadScene(3);
+        });
+    }
+
 
     // Level UP
     public void UpdateExp(int experience, int levelUp, int level)
@@ -209,7 +220,7 @@ public class UIManager : MonoBehaviour
         }
 
         int upgradeLevel = SkillManager.Instance.CheckSkillUpgradeLevel(idx);
-        
+
         for (int i = 0; i < upgradeLevel; i++)
         {
             // 여기는 애니메이션 재생 안함
@@ -263,7 +274,7 @@ public class UIManager : MonoBehaviour
     public void ChooseButtonClick(int pIdx) // 골랐을 때
     {
         Time.timeScale = 1;
-   
+
         includeSkillPanel.transform.DOLocalMoveY(-1000f, 1f)
             .OnComplete(() =>
             {
