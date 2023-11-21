@@ -32,4 +32,8 @@ public class StartSceneManager : MonoBehaviour
         if (isFirstClick) return;
         fadeImg.DOFade(1, 0.8f).OnComplete(() => SceneManager.LoadScene(0));
     }
+    public void QuitGame()
+	{
+        Application.Quit();
+	}
 }

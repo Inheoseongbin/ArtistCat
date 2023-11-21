@@ -11870,8 +11870,8 @@ MonoBehaviour:
   bSpawnTime: 60
   eSpawnTimeMax: 2
   eSpawnTimeMin: 1
-  bosstime: 20
-  nextTime: 20
+  bosstime: 60
+  nextTime: 60
   warningTime: 2
   warningText: {fileID: 1593258718}
   bossSpawn: 0
