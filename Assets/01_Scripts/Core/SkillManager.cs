@@ -71,7 +71,7 @@ public class SkillManager : MonoBehaviour
                 healParticle.transform.position = GameManager.Instance.playerTrm.position;
                 break;
             case 1: // speed
-                player.OnSpeedUp(1f);
+                player.OnSpeedUp(0.7f);
                 break;
             case 2: // ¸¶±×³Ý
                 player.OnMagnetUpgrade(1);
