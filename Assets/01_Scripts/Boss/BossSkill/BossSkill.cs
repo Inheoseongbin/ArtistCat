@@ -63,6 +63,7 @@ public class BossSkill : BossMain
 
     private void FixedUpdate()
     {
+        print(_isAtt);
         //대쉬 이미지 에이밍
         if (_isAiming)
             DashAiming();
@@ -203,6 +204,12 @@ public class BossSkill : BossMain
 
             Instantiate(_jumpAttEffect, transform);
 
+            if (_isAtt)
+            {
+                _bossValue._playerTr.gameObject.GetComponent<PlayerHealth>().Hurt(30);
+                print("피가 닳고있다.");
+            }
+
             yield return new WaitWhile(() => _bossValue._isJump);
 
             JumpAttEnd();
@@ -228,9 +235,6 @@ public class BossSkill : BossMain
 
     private void JumpAttEnd()
     {
-        if (_isAtt)
-            _bossValue._playerTr.gameObject.GetComponent<PlayerHealth>().Hurt(15);
-
         _bossValue._isDownAttack = false;
         _isJumpStart = false;
         JumpCol.enabled = false;
@@ -260,7 +264,6 @@ public class BossSkill : BossMain
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.velocity = direction * EnemySpawner.Instance.bossTypes._bulletSpeed;
     }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

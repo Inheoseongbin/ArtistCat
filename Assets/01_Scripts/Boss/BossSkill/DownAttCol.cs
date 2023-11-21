@@ -12,6 +12,12 @@ public class DownAttCol : BossMain
             bossSkill._isAtt = true;
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+            bossSkill._isAtt = true;
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
