@@ -180,7 +180,7 @@ public class EnemySpawner : MonoBehaviour
 
     Vector2 RandomPos()
     {
-        Vector2 pos = new Vector2(Random.Range(minx, maxx), Random.Range(miny, maxy));
+        Vector2 pos = new Vector2(Random.Range(miny - range, maxy + range), Random.Range(minx - range / 2, maxx + range / 2));
         if (Vector3.Distance(player.transform.position, pos) < 15)
         {
             RandomPos();
