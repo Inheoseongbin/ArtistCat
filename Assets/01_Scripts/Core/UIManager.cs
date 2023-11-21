@@ -82,6 +82,7 @@ public class UIManager : MonoBehaviour
         bgmSlider.value = PlayerPrefs.GetFloat(bgmKey);
         effectSlider.value = PlayerPrefs.GetFloat(effectKey);
 
+        if (fadeImg == null) print("null");
         fadeImg.DOFade(0, 0.8f);
     }
     private void Update()
