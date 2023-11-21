@@ -17,6 +17,7 @@ public class Boss : PoolableMono
     public GameObject[] exp;
 
     [SerializeField] private SpriteRenderer _sr;
+	[SerializeField] private Animator ani;
     [SerializeField] private int _dieCount;
 
     [Header("UI 설정")]
@@ -74,6 +75,7 @@ public class Boss : PoolableMono
     {
         //적 컬러
         _sr.color = type._BossColor;
+        ani.runtimeAnimatorController = type.animator;
 
         //쉐이더 값 초기화
         _sr.material.SetInt(_isHit, 0);
@@ -117,6 +119,7 @@ public class Boss : PoolableMono
         _light = GetComponentInChildren<Light2D>();
         bossSkill = GetComponent<BossSkill>();
         _sr = GetComponentInChildren<SpriteRenderer>();
+        ani = GetComponentInChildren<Animator>();
 
         for (int i = 0; i < sprites.Count; i++) // 처음에 딕셔너리에 타입이랑 그림 넣어
         {

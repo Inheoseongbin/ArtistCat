@@ -16,4 +16,7 @@ public class BossType : ScriptableObject
 
     [Header("컬러")]
     public Color _BossColor;
+
+	[Header("애니메이터")]
+    public RuntimeAnimatorController animator;
 }
