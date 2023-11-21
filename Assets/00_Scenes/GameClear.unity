@@ -219,6 +219,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2096873827}
+        m_TargetAssemblyTypeName: UnityEngine.MonoBehaviour, UnityEngine
+        m_MethodName: StopAllCoroutines
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &82805896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1121,7 +1133,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1587852132}
         m_TargetAssemblyTypeName: StartSceneManager, Assembly-CSharp
-        m_MethodName: LoadStartsScene
+        m_MethodName: LoadStartScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1186,7 +1198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &759142471
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6440,7 +6452,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 759142470}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7960,6 +7972,9 @@ MonoBehaviour:
   stories:
   - {fileID: 924598237}
   - {fileID: 307065494}
+  storyText:
+  - {fileID: 1887630169}
+  - {fileID: 1786644722}
   story: {fileID: 759142470}
 --- !u!1 &2107610277
 GameObject:
