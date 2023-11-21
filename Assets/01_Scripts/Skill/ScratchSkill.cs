@@ -12,24 +12,15 @@ public class ScratchSkill : PoolableMono
 	private SpriteRenderer sp;
 	private readonly int rate = Shader.PropertyToID("_ShowRate");
 
+	private Vector3 size;
+
 	private Vector3 pos;
 
 	public override void Init()
 	{
 		col.enabled = true;
 		pos = transform.parent.position;
-/*		if (player.isFilp)
-		{
-			sp.flipX = false;
-			pos.x += 1.2f;
-			pos.y -= 0.3f;
-		}
-		else
-		{
-			sp.flipX = true;
-			pos.x -= 1.2f;
-			pos.y -= 0.3f;
-		}*/
+		transform.localScale = size;
 		transform.position = pos;
 		StartCoroutine(Rate(speed));
 	}
@@ -40,6 +31,7 @@ public class ScratchSkill : PoolableMono
 		transform.parent = player.transform;
 		sp = GetComponent<SpriteRenderer>();
 		col = GetComponent<Collider2D>();
+		size = transform.localScale;
 		Init();
 	}
 
@@ -59,6 +51,16 @@ public class ScratchSkill : PoolableMono
 			pos.y -= 0.3f;
 		}
 		transform.position = pos;
+	}
+
+	public void Upgrade()
+	{
+		Vector3 scale = size;
+		scale.x += 0.2f;
+		scale.y += 0.2f;
+		scale.z += 0.2f;
+		transform.localScale = scale;
+		size = scale;
 	}
 
 	private IEnumerator Rate(float time)
