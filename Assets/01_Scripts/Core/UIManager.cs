@@ -84,8 +84,6 @@ public class UIManager : MonoBehaviour
         bgmSlider.value = PlayerPrefs.GetFloat(bgmKey);
         effectSlider.value = PlayerPrefs.GetFloat(effectKey);
 
-        //if (fadeImg == null) print("null");
-        print("fade");
         fadeImg.DOFade(0, 2);
         StartCoroutine(StartDelay(0.8f));
     }
@@ -93,7 +91,6 @@ public class UIManager : MonoBehaviour
     IEnumerator StartDelay(float time)
 	{
         yield return new WaitForSeconds(time);
-        print("fade");
         brush.SetActive(true);
 	}
 
