@@ -27,4 +27,9 @@ public class StartSceneManager : MonoBehaviour
         if (isFirstClick) return;
         fadeImg.DOFade(1, 0.8f).OnComplete(() => SceneManager.LoadScene(1));
     }
+    public void LoadStartScene()
+    {
+        if (isFirstClick) return;
+        fadeImg.DOFade(1, 0.8f).OnComplete(() => SceneManager.LoadScene(0));
+    }
 }
