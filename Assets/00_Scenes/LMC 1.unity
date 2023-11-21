@@ -5460,7 +5460,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ea10e44eb8e6c21408d96f87f740f763, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11875,6 +11875,7 @@ MonoBehaviour:
   warningTime: 2
   warningText: {fileID: 1593258718}
   bossSpawn: 0
+  _fence: {fileID: 0}
 --- !u!1 &1994942223
 GameObject:
   m_ObjectHideFlags: 0

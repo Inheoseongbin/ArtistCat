@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/00_Scenes/woohyeok/StartScene.unity
     guid: f855bbeabaa3e1341ab28395c0e4e7d6
+  - enabled: 1
+    path: Assets/00_Scenes/StartScene.unity
+    guid: db1fdb36afa67f34b81ff8b1422978f8
   - enabled: 1
     path: Assets/00_Scenes/yeojin/Tutorial.unity
     guid: 48c163f605159f947b3bcae19ada4f1c
