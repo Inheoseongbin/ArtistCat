@@ -10,8 +10,6 @@ public class RePosition : MonoBehaviour
     }
 
 
-    //맵이랑 에리아랑 충돌을 마치면 
-    //이 스크립트는 맵임
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Area"))
