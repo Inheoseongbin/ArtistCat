@@ -165,7 +165,7 @@ public class Boss : PoolableMono
 
     public void Die()
     {
-        if(type.Count == 3)
+        if (type.Count == 3)
         {
             UIManager.Instance.EndingScene();
         }
@@ -178,6 +178,7 @@ public class Boss : PoolableMono
         EnemySpawner.Instance.bossSpawn = false;
 
         EnemySpawner.Instance.isBossDead = true;
+        PoolManager.Instance.Push(EnemySpawner.Instance._fence);
         Fence.bossDie();
         GameManager.Instance.isTimeStop = false;
         StartCoroutine(DieDissolve(1));

@@ -50,6 +50,8 @@ public class EnemySpawner : MonoBehaviour
 
     private int bossTypeCount = 0;
 
+    [HideInInspector] public Fence _fence;
+
     //이거 일단 문제
     Enemy e = null;
     Boss b = null;
@@ -114,7 +116,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void CreateFence()
     {
-        Fence _fence = PoolManager.Instance.Pop("Fence") as Fence;
+        _fence = PoolManager.Instance.Pop("Fence") as Fence;
         _fence.transform.position = player.position;
     }
 
