@@ -25,10 +25,10 @@ public class Level : MonoBehaviour
     private void Update()
     {
         // 디버그용(추후 삭제)
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            AddExperience(20);
-        }
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    AddExperience(20);
+        //}
     }
 
     public void CheckLevelUp()
