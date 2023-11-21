@@ -48,7 +48,6 @@ public class PoopSkill : PoolableMono
 
 	private void OnEnable()
 	{
-
 		Enemy e = FindAnyObjectByType<Enemy>();
 		if (e != null)
 		{
@@ -68,6 +67,7 @@ public class PoopSkill : PoolableMono
 
 			dir = new Vector3(x, y).normalized;
 		}
+		SoundManager.Instance.PlayThrowingPoop();
 	}
 
 	private void Update()

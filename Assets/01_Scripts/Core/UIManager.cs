@@ -53,6 +53,8 @@ public class UIManager : MonoBehaviour
     [Header("¾À º¯°æ")]
     [SerializeField] private SpriteRenderer fadeImg;
 
+	[SerializeField] private GameObject brush;
+
     private void Awake()
     {
         if (Instance != null)
@@ -82,8 +84,16 @@ public class UIManager : MonoBehaviour
         bgmSlider.value = PlayerPrefs.GetFloat(bgmKey);
         effectSlider.value = PlayerPrefs.GetFloat(effectKey);
 
-        fadeImg.DOFade(0, 0.8f);
+        fadeImg.DOFade(0, 2);
+        StartCoroutine(StartDelay(0.8f));
     }
+
+    IEnumerator StartDelay(float time)
+	{
+        yield return new WaitForSeconds(time);
+        brush.SetActive(true);
+	}
+
     private void Update()
     {
         if (SceneManager.GetActiveScene().name == "Tutorial") return; // Æ©Åä¸®¾óÀÏ °æ¿ì ¾È ÇØµµ µÊ
@@ -102,6 +112,7 @@ public class UIManager : MonoBehaviour
     public void OnSetting()
     {
         isSetting = !isSetting;
+        brush.SetActive(!isSetting);
         settingPanel.SetActive(isSetting);
         Time.timeScale = isSetting ? 0 : 1;
     }

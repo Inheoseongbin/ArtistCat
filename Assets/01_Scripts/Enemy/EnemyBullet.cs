@@ -25,8 +25,10 @@ public class EnemyBullet : PoolableMono
 
     private void OnEnable()
     {
+        playerDirection = (GameManager.Instance.playerTrm.position - transform.position).normalized;
         Invoke("BulletPool", 5.0f);
     }
+
     private void Awake()
     {
         sp = GetComponent<SpriteRenderer>();
