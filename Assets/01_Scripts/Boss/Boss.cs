@@ -165,6 +165,11 @@ public class Boss : PoolableMono
 
     public void Die()
     {
+        if(type.Count == 3)
+        {
+            UIManager.Instance.EndingScene();
+        }
+
         ObjectActive();
 
         SoundManager.Instance.PlayBossDie();
