@@ -63,6 +63,7 @@ public class BossSkill : BossMain
 
     private void FixedUpdate()
     {
+        print(_isAtt);
         //대쉬 이미지 에이밍
         if (_isAiming)
             DashAiming();
@@ -203,6 +204,11 @@ public class BossSkill : BossMain
 
             Instantiate(_jumpAttEffect, transform);
 
+            if (_isAtt)
+            {
+                _bossValue._playerTr.gameObject.GetComponent<PlayerHealth>().Hurt(30);
+            }
+
             yield return new WaitWhile(() => _bossValue._isJump);
 
             JumpAttEnd();
@@ -222,15 +228,12 @@ public class BossSkill : BossMain
     private void ShowJumpAtt()
     {
         _downAttackImg.SetActive(true);
-        _bossValue.saveTr.y -= 5;
+        _bossValue.saveTr = _bossValue._playerTr.position;
         _downAttackImg.transform.position = _bossValue.saveTr;
     }
 
     private void JumpAttEnd()
     {
-        if (_isAtt)
-            _bossValue._playerTr.gameObject.GetComponent<PlayerHealth>().Hurt(15);
-
         _bossValue._isDownAttack = false;
         _isJumpStart = false;
         JumpCol.enabled = false;
@@ -261,20 +264,18 @@ public class BossSkill : BossMain
         rb.velocity = direction * EnemySpawner.Instance.bossTypes._bulletSpeed;
     }
 
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             if (_bossValue._isDash)
-                Knockback(collision.gameObject, viewDir);
+                Knockback();
         }
     }
 
-    private void Knockback(GameObject colObj, Vector2 knockDir)
+    private void Knockback()
     {
         _isKnock = true;
-        //   colObj.gameObject.GetComponent<Rigidbody2D>().AddForce(knockDir * _knockPower, ForceMode2D.Impulse);
 
         _rb.velocity = Vector2.zero;
     }

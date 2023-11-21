@@ -121,7 +121,7 @@ public class Boss : PoolableMono
             StartCoroutine(Hit());
         }
 
-        if (dieCount == 0 && !EnemySpawner.Instance.isBossDead)
+        if (dieCount == 0 && !EnemySpawner.Instance.isBossDead || Input.GetKeyDown(KeyCode.Q))
             Die();
     }
 
