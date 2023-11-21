@@ -935,10 +935,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b5e686470cb01488e804cb85bfc9b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stories:
+  openingStories:
   - {fileID: 1996796182}
   - {fileID: 444871682}
   - {fileID: 1984750563}
+  storyText:
+  - {fileID: 822282514}
+  - {fileID: 2049648361}
+  - {fileID: 2062196797}
 --- !u!1 &444871682
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,7 +1134,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 404392447}
         m_TargetAssemblyTypeName: Story, Assembly-CSharp
-        m_MethodName: StoryPlay
+        m_MethodName: IntroStory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

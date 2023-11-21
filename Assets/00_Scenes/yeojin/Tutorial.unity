@@ -2470,7 +2470,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -369128651
   m_SortingOrder: 299
   m_TargetDisplay: 0
 --- !u!224 &361875642
@@ -7995,7 +7995,7 @@ MonoBehaviour:
   playerHurtSound: {fileID: 0}
   playerDieSound: {fileID: 0}
   playerSuccessAtkSound: {fileID: 0}
-  selectExpSound: {fileID: 0}
+  collectExpSound: {fileID: 0}
   levelUpSound: {fileID: 0}
   enemyHurtSound: {fileID: 0}
   enemyDieSound: {fileID: 0}
@@ -8009,6 +8009,7 @@ MonoBehaviour:
   skillUIOffSound: {fileID: 0}
   gameFailSound: {fileID: 0}
   gameSuccessSound: {fileID: 0}
+  comboSound: {fileID: 0}
   throwingPoopSound: {fileID: 0}
   landFishThronSound: {fileID: 0}
   rollAroundStringSound: {fileID: 0}
@@ -12209,7 +12210,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -369128651
   m_SortingOrder: 99
   m_TargetDisplay: 0
 --- !u!224 &2103574434

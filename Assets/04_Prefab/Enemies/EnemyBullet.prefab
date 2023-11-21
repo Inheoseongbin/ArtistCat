@@ -100,9 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: 87c47a3b68e6394459e397ee05ef0a1e, type: 3}
-  - {fileID: 21300000, guid: 725e961f75ce7bd4fa81e3deb78092f3, type: 3}
-  - {fileID: 21300000, guid: 1039f4ee451a8794cbb8beed613620cf, type: 3}
+  - {fileID: 21300000, guid: 6c87d00f4fce95c40b57f43aca666938, type: 3}
   speed: 5
 --- !u!58 &7418088353143247793
 CircleCollider2D:

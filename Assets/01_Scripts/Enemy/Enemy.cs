@@ -38,6 +38,7 @@ public class Enemy : PoolableMono
 
     public override void Init()
     {
+        typeList.Clear();
         enemyTypes.Clear();
         _hitDecision.enabled = true;
         light2D.enabled = true;
