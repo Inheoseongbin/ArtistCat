@@ -18,6 +18,7 @@ public class GameClear : MonoBehaviour
 	public void Story()
 	{
 		ResetStory();
+		story.SetActive(true);
 		StartCoroutine(StoryStart());
 	}
 
@@ -40,6 +41,8 @@ public class GameClear : MonoBehaviour
 
 	public void ResetStory()
 	{
+		story.transform.DOLocalMoveY(0, 0.2f);
+		story.SetActive(false);
 		StopAllCoroutines();
 		foreach (GameObject g in stories)
 		{
