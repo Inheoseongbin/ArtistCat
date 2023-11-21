@@ -24,6 +24,9 @@ public class BossSkill : BossMain
     [SerializeField] private GameObject _downAttackImg;
     [SerializeField] private GameObject _dashImage;
 
+    [Header("콜라이더")]
+    [SerializeField] private CapsuleCollider2D JumpCol;
+
     public bool _isAtt = false;
 
     protected bool _isAiming = false;
@@ -71,6 +74,8 @@ public class BossSkill : BossMain
 
     public void Attack()
     {
+        _isJumpStart = false;
+
         StopAllCoroutines();
         StartCoroutine(ShootRoutine());
         StartCoroutine(DashRoutine());
@@ -84,6 +89,8 @@ public class BossSkill : BossMain
         dTime = EnemySpawner.Instance.bossTypes._dashCool - _waitDashTime - _dashingTime;
         while (true)
         {
+
+            yield return new WaitWhile(() => _isJumpStart);
             yield return new WaitForSeconds(dTime);
 
             ReadyDash();
@@ -177,18 +184,13 @@ public class BossSkill : BossMain
         while (true)
         {
             yield return new WaitWhile(() => !_isJumpStart);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2.5f);
 
-            _bossValue._isDownAttack = true;
-            _bossValue.saveTr = transform.position;
-            _bossValue.saveTr.y = transform.position.y + 5;
-            _bossValue._isJump = true;
+            JumpAttSet();
 
             yield return new WaitWhile(() => _bossValue._isJump);
 
-            _downAttackImg.SetActive(true);
-            _bossValue.saveTr.y -= 5;
-            _downAttackImg.transform.position = _bossValue.saveTr;
+            ShowJumpAtt();
 
             yield return new WaitForSeconds(_waitDownAttack);
 
@@ -198,15 +200,39 @@ public class BossSkill : BossMain
 
             yield return new WaitWhile(() => _bossValue._isJump);
 
-            if (_isAtt)
-                _bossValue._playerTr.gameObject.GetComponent<PlayerHealth>().Hurt(15);
-
-            _bossValue._isDownAttack = false;
-            _isJumpStart = false;
+            JumpAttEnd();
         }
     }
+    #region 점프 요소
+    private void JumpAttSet()
+    {
+        JumpCol.enabled = true;
 
-    void ShootBullet(float angle, Vector2 pos)
+        _bossValue._isDownAttack = true;
+        _bossValue.saveTr = transform.position;
+        _bossValue.saveTr.y = transform.position.y + 5;
+        _bossValue._isJump = true;
+    }
+
+    private void ShowJumpAtt()
+    {
+        _downAttackImg.SetActive(true);
+        _bossValue.saveTr.y -= 5;
+        _downAttackImg.transform.position = _bossValue.saveTr;
+    }
+
+    private void JumpAttEnd()
+    {
+        if (_isAtt)
+            _bossValue._playerTr.gameObject.GetComponent<PlayerHealth>().Hurt(15);
+
+        _bossValue._isDownAttack = false;
+        _isJumpStart = false;
+        JumpCol.enabled = false;
+    }
+    #endregion 점프 요소
+
+    private void ShootBullet(float angle, Vector2 pos)
     {
         Shoot(angle, pos);
         SoundManager.Instance.PlayBossShootAtk();
