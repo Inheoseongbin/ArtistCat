@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class RePosition : MonoBehaviour
 {
@@ -41,8 +36,6 @@ public class RePosition : MonoBehaviour
             {
                 transform.Translate(Vector3.up * dirY * 40);
             }
-            //Debug.Log($"{transform.gameObject.name} : {Vector2.Distance(playerPos, transform.position)}");
         }
     }
-
 }
